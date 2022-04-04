@@ -1,11 +1,10 @@
 module.exports = {
-    corePlugins: {
-      // ...
-    textDecoration: false,
+    content: [
+        "./pages/**/*.{js,ts,jsx,tsx}",
+        "./components/**/*.{js,ts,jsx,tsx}",
+    ],
+    theme: {
+        extend: {},
     },
-  content: ["./src/**/*.{js,jsx,ts,tsx}"],
-  theme: {
-    extend: {},
-  },
-  plugins: [require("tailwind-scrollbar-hide")],
+    plugins: [],
 };
