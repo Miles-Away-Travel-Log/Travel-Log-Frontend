@@ -1,6 +1,49 @@
+import Cookies from "js-cookie";
+
 export default function Login() {
+    async function submit(e) {
+        e.preventDefault();
+        console.log(process.env.NEXT_PUBLIC_FETCH_URL_USER);
+        const rawResponse = await fetch(
+            process.env.NEXT_PUBLIC_FETCH_URL_USER + "/login",
+            {
+                method: "POST",
+                headers: {
+                    Accept: "application/json",
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    userName: e.target.username.value,
+                    password: e.target.password.value,
+                }),
+            }
+        );
+
+        if (rawResponse.status === 200) {
+            const data = await rawResponse.json();
+            sessionStorage.token = data.token;
+            Cookies.set(
+                "token",
+                data.token,
+                { expires: 1 },
+                { sameSite: "none" }
+            );
+            Cookies.set(
+                "user",
+                data.user.id,
+                { expires: 1 },
+                { sameSite: "none" }
+            );
+        } else {
+            alert("Invalid login credentials");
+        }
+    }
+
     return (
-        <div className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 flex flex-col text-[30px]">
+        <form
+            className="shadow-md rounded px-8 pt-6 pb-8 mb-4 flex flex-col text-[30px]"
+            onSubmit={submit}
+        >
             <div className="mb-4">
                 <label
                     className="block text-grey-darker text-sm font-bold mb-2 text-[30px]"
@@ -13,6 +56,7 @@ export default function Login() {
                     id="username"
                     type="text"
                     placeholder="Username"
+                    name="username"
                 />
             </div>
             <div className="mb-6">
@@ -27,6 +71,7 @@ export default function Login() {
                     id="password"
                     type="password"
                     placeholder="******************"
+                    name="password"
                 />
                 <p className="text-red text-xs italic">
                     Please choose a password.
@@ -34,18 +79,12 @@ export default function Login() {
             </div>
             <div className="flex items-center justify-between">
                 <button
-                    className="bg-blue hover:bg-blue-dark text-white font-bold py-2 px-4 rounded"
-                    type="button"
+                    className="bg-blue-500 hover:bg-blue-dark text-white font-bold py-2 px-4 rounded"
+                    type="submit"
                 >
                     Sign In
                 </button>
-                <a
-                    className="inline-block align-baseline font-bold text-sm text-blue hover:text-blue-darker"
-                    href="#"
-                >
-                    forgot Password?
-                </a>
             </div>
-        </div>
+        </form>
     );
 }
