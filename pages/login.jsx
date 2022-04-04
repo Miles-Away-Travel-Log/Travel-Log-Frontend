@@ -3,7 +3,6 @@ import Cookies from "js-cookie";
 export default function Login() {
     async function submit(e) {
         e.preventDefault();
-        console.log(process.env.NEXT_PUBLIC_FETCH_URL_USER);
         const rawResponse = await fetch(
             process.env.NEXT_PUBLIC_FETCH_URL_USER + "/login",
             {
