@@ -1,6 +1,8 @@
 import Cookies from "js-cookie";
+import { useRouter } from "next/router";
 
 export default function Login() {
+    const router = useRouter();
     async function submit(e) {
         e.preventDefault();
         const rawResponse = await fetch(
@@ -33,6 +35,7 @@ export default function Login() {
                 { expires: 1 },
                 { sameSite: "none" }
             );
+            router.replace("/landingPageUser");
         } else {
             alert("Invalid login credentials");
         }
