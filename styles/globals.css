@@ -3,8 +3,4 @@
 @tailwind utilities;
 
 @layer components {
-
-    .avatar{
-        margin: 0 auto;
-    }
 }
