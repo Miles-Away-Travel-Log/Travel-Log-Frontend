@@ -1,7 +1,10 @@
 import { useRouter } from "next/router";
+import Image from 'next/image';
+import avatar from "../public/images/images-register/avatar.svg"
 import { useAppData } from "../Context/DataStorage.js";
 import { useEffect, useState } from "react";
 import { ImEyeBlocked, ImEye } from "react-icons/im";
+
 
 export default function Register() {
     const router = useRouter();
@@ -143,16 +146,24 @@ export default function Register() {
     }
 
     return (
-        <div className="bg-grey-lighter min-h-screen flex flex-col">
+        <div className="bg-[url('../public/images/images-register/mado-el-khouly-MA8YoAoKpfY-unsplash.jpg')] bg-cover min-h-screen flex flex-col">
             <div className="container max-w-sm mx-auto flex-1 flex flex-col items-center justify-center px-2">
                 <form
-                    className="bg-white px-6 py-8 rounded shadow-md text-black w-full"
+                    className=" px-6 py-8 text-white w-full"
                     onSubmit={registerUser}
                 >
-                    <h1 className="mb-8 text-3xl text-center">Sign up</h1>
+                    <div className="flex justify-center w-full">
+                   <Image
+                    src={avatar} alt="Avatar" width={100} height={100}
+                   />
+                   
+                    </div>
+                   
+
+                    <h1 className="mb-8 text-3xl text-center">CREATE ACCOUNT</h1>
                     <input
                         type="text"
-                        className="block border border-grey-light w-full p-3 rounded mb-1"
+                        className="block border border-grey-light w-full p-3 rounded-full mb-1"
                         name="firstName"
                         placeholder="First Name"
                         value={formValues.firstName}
@@ -163,7 +174,7 @@ export default function Register() {
                     </p>
                     <input
                         type="text"
-                        className="block border border-grey-light w-full p-3 rounded mb-1"
+                        className="block border border-grey-light w-full p-3 rounded-full mb-1"
                         name="lastName"
                         placeholder="Last Name"
                         value={formValues.lastName}
@@ -174,7 +185,7 @@ export default function Register() {
                     </p>
                     <input
                         type="text"
-                        className="block border border-grey-light w-full p-3 rounded mb-1"
+                        className="block border border-grey-light w-full p-3 rounded-full mb-1"
                         name="userName"
                         placeholder="User Name"
                         value={formValues.userName}
@@ -185,7 +196,7 @@ export default function Register() {
                     </p>
                     <input
                         type="text"
-                        className="block border border-grey-light w-full p-3 rounded mb-1"
+                        className="block border border-grey-light w-full p-3 rounded-full mb-1"
                         name="email"
                         placeholder="Email"
                         value={formValues.email}
@@ -197,7 +208,7 @@ export default function Register() {
                     <div className="relative">
                         <input
                             type={passwordInputType}
-                            className="block border border-grey-light w-full p-3 rounded mb-1"
+                            className="block border border-grey-light w-full p-3 rounded-full mb-1"
                             name="password"
                             placeholder="Password"
                             value={formValues.password}
@@ -227,7 +238,7 @@ export default function Register() {
                     </p>
                     <input
                         type="password"
-                        className="block border border-grey-light w-full p-3 rounded mb-1"
+                        className="block border border-grey-light w-full p-3 rounded-full mb-1"
                         name="confirm_password"
                         placeholder="Confirm Password"
                         value={formValues.confirm_password}
@@ -246,7 +257,7 @@ export default function Register() {
                     </p>
                     <input
                         type="text"
-                        className="block border border-grey-light w-full p-3 rounded mb-1"
+                        className="block border border-grey-light w-full p-3 rounded-full mb-1"
                         name="city"
                         placeholder="City"
                         value={formValues.city}
@@ -257,7 +268,7 @@ export default function Register() {
                     </p>
                     <input
                         type="text"
-                        className="block border border-grey-light w-full p-3 rounded mb-1"
+                        className="block border border-grey-light w-full p-3 rounded-full mb-1"
                         name="country"
                         placeholder="Country"
                         value={formValues.country}
@@ -268,7 +279,7 @@ export default function Register() {
                     </p>
                     <button
                         type="submit"
-                        className="w-full text-center py-3 rounded bg-green-500 text-white hover:bg-green-dark focus:outline-none my-1"
+                        className="w-full text-center py-3 rounded-full bg-[#90A5A9] text-white hover:bg-[#C4C4C4] focus:outline-none my-1"
                     >
                         Create Account
                     </button>
@@ -290,7 +301,7 @@ export default function Register() {
                     </div>
                 </form>
 
-                <div className="text-grey-dark mt-6">
+                <div className="text-white mt-6">
                     Already have an account?
                     <a
                         className="no-underline border-b border-blue text-blue"

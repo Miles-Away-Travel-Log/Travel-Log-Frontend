@@ -4,7 +4,12 @@ module.exports = {
         "./components/**/*.{js,ts,jsx,tsx}",
     ],
     theme: {
-        extend: {},
+        extend: {
+            backgroundImage: {
+                "register-img":
+                    "url('../public/images/images-register/mado-el-khouly-MA8YoAoKpfY-unsplash.jpg')",
+            },
+        },
     },
     plugins: [],
 };
