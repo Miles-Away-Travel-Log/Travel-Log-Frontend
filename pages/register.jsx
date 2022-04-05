@@ -1,4 +1,6 @@
 import { useRouter } from "next/router";
+import Image from 'next/image';
+import avatar from "../public/images/images-register/avatar.svg"
 
 export default function Register() {
     const router = useRouter();
@@ -40,65 +42,73 @@ export default function Register() {
         }
     }
     return (
-        <div className="bg-grey-lighter min-h-screen flex flex-col">
+        <div className="bg-[url('../public/images/images-register/mado-el-khouly-MA8YoAoKpfY-unsplash.jpg')] bg-cover min-h-screen flex flex-col">
             <div className="container max-w-sm mx-auto flex-1 flex flex-col items-center justify-center px-2">
                 <form
-                    className="bg-white px-6 py-8 rounded shadow-md text-black w-full"
+                    className=" px-6 py-8 text-white w-full"
                     onSubmit={registerUser}
                 >
-                    <h1 className="mb-8 text-3xl text-center">Sign up</h1>
+                    <div className="flex justify-center w-full">
+                   <Image
+                    src={avatar} alt="Avatar" width={100} height={100}
+                   />
+                   
+                    </div>
+                   
+
+                    <h1 className="mb-8 text-3xl text-center">CREATE ACCOUNT</h1>
                     <input
                         type="text"
-                        className="block border border-grey-light w-full p-3 rounded mb-4"
+                        className="block border border-grey-light w-full p-3 rounded-full mb-4"
                         name="firstName"
                         placeholder="First Name"
                     />
                     <input
                         type="text"
-                        className="block border border-grey-light w-full p-3 rounded mb-4"
+                        className="block border border-grey-light w-full p-3 rounded-full mb-4"
                         name="lastName"
                         placeholder="Last Name"
                     />
                     <input
                         type="text"
-                        className="block border border-grey-light w-full p-3 rounded mb-4"
+                        className="block border border-grey-light w-full p-3 rounded-full mb-4"
                         name="userName"
                         placeholder="User Name"
                     />
                     <input
                         type="text"
-                        className="block border border-grey-light w-full p-3 rounded mb-4"
+                        className="block border border-grey-light w-full p-3 rounded-full mb-4"
                         name="email"
                         placeholder="Email"
                     />
 
                     <input
                         type="password"
-                        className="block border border-grey-light w-full p-3 rounded mb-4"
+                        className="block border border-grey-light w-full p-3 rounded-full mb-4"
                         name="password"
                         placeholder="Password"
                     />
                     <input
                         type="password"
-                        className="block border border-grey-light w-full p-3 rounded mb-4"
+                        className="block border border-grey-light w-full p-3 rounded-full mb-4"
                         name="confirm_password"
                         placeholder="Confirm Password"
                     />
                     <input
                         type="text"
-                        className="block border border-grey-light w-full p-3 rounded mb-4"
+                        className="block border border-grey-light w-full p-3 rounded-full mb-4"
                         name="city"
                         placeholder="City"
                     />
                     <input
                         type="text"
-                        className="block border border-grey-light w-full p-3 rounded mb-4"
+                        className="block border border-grey-light w-full p-3 rounded-full mb-4"
                         name="country"
                         placeholder="Country"
                     />
                     <button
                         type="submit"
-                        className="w-full text-center py-3 rounded bg-green-500 text-white hover:bg-green-dark focus:outline-none my-1"
+                        className="w-full text-center py-3 rounded-full bg-[#90A5A9] text-white hover:bg-[#C4C4C4] focus:outline-none my-1"
                     >
                         Create Account
                     </button>
@@ -121,7 +131,7 @@ export default function Register() {
                     </div>
                 </form>
 
-                <div className="text-grey-dark mt-6">
+                <div className="text-white mt-6">
                     Already have an account?
                     <a
                         className="no-underline border-b border-blue text-blue"
