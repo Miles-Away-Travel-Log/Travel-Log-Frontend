@@ -1,116 +1,77 @@
-.container {
-  padding: 0 2rem;
-}
-
-.main {
-  min-height: 100vh;
-  padding: 4rem 0;
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
-
-.footer {
-  display: flex;
-  flex: 1;
-  padding: 2rem 0;
-  border-top: 1px solid #eaeaea;
-  justify-content: center;
-  align-items: center;
-}
-
-.footer a {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-grow: 1;
-}
-
-.title a {
-  color: #0070f3;
-  text-decoration: none;
-}
-
-.title a:hover,
-.title a:focus,
-.title a:active {
-  text-decoration: underline;
-}
-
-.title {
+/* our css*/
+/* * {
   margin: 0;
-  line-height: 1.15;
-  font-size: 4rem;
-}
+  padding: 0;
+  box-sizing: border-box;
+} */
 
-.title,
-.description {
-  text-align: center;
-}
-
-.description {
-  margin: 4rem 0;
-  line-height: 1.5;
-  font-size: 1.5rem;
-}
-
-.code {
-  background: #fafafa;
-  border-radius: 5px;
-  padding: 0.75rem;
-  font-size: 1.1rem;
-  font-family: Menlo, Monaco, Lucida Console, Liberation Mono, DejaVu Sans Mono,
-    Bitstream Vera Sans Mono, Courier New, monospace;
-}
-
-.grid {
+.landingpageContainer img {
+  background-repeat: no-repeat;
+  background-size: cover;
+  object-fit: cover;
+  width: 100vw;
+  height: 100vh;
   display: flex;
-  align-items: center;
   justify-content: center;
-  flex-wrap: wrap;
-  max-width: 800px;
+  object-position: center;
 }
 
-.card {
-  margin: 1rem;
-  padding: 1.5rem;
-  text-align: left;
-  color: inherit;
-  text-decoration: none;
-  border: 1px solid #eaeaea;
-  border-radius: 10px;
-  transition: color 0.15s ease, border-color 0.15s ease;
-  max-width: 300px;
+.landingpageContainer {
+  position: relative;
 }
 
-.card:hover,
-.card:focus,
-.card:active {
-  color: #0070f3;
-  border-color: #0070f3;
+.landingpageLogo {
+  position: absolute;
+  top: 33vh;
+  object-fit: cover;
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 
-.card h2 {
-  margin: 0 0 1rem 0;
-  font-size: 1.5rem;
+.landingpageContainerLogo {
+  display: flex;
+  justify-content: center;
 }
 
-.card p {
-  margin: 0;
-  font-size: 1.25rem;
-  line-height: 1.5;
+.landingpageContainerLogo img {
+  width:200px;
+  height: 200px;
+  background-repeat: no-repeat;
+  background-size: cover;
+  object-fit: cover;
+  margin: 0 auto;
 }
 
-.logo {
-  height: 1em;
-  margin-left: 0.5rem;
+.landingpageContainerAbout {
+  margin: 1.5em;
+  padding: 1em;
+  background-color: #C4C4C4;
+  color: white;
+  border-radius: 1em;
+  height: 100vh;
 }
 
-@media (max-width: 600px) {
-  .grid {
-    width: 100%;
-    flex-direction: column;
-  }
+.landingpageContainerGlobe {
+  display: flex;
+  justify-content: center;
+  margin: 2em;
+  
+
+}
+
+.landingpageGlobe img {
+  width:200px;
+  height: 200px;
+  background-repeat: no-repeat;
+  background-size: cover;
+  object-fit: cover;
+  margin: 0 auto;
+
+}
+
+.landingpageContainerButton {
+  margin: 1em;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 1em; 
 }
