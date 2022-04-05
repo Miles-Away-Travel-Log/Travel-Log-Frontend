@@ -133,8 +133,6 @@ export default function Register() {
                 const err = await rawResponse.json();
                 console.log("backend error", err);
             }
-
-            setFormValues(initialValues);
         }
     }
 
