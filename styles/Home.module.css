@@ -6,72 +6,85 @@
 } */
 
 .landingpageContainer img {
-  background-repeat: no-repeat;
-  background-size: cover;
-  object-fit: cover;
-  width: 100vw;
-  height: 100vh;
-  display: flex;
-  justify-content: center;
-  object-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    object-fit: cover;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    object-position: center;
 }
 
 .landingpageContainer {
-  position: relative;
+    position: relative;
 }
 
 .landingpageLogo {
-  position: absolute;
-  top: 33vh;
-  object-fit: cover;
-  background-repeat: no-repeat;
-  background-size: cover;
+    position: absolute;
+    top: 33vh;
+    object-fit: cover;
+    background-repeat: no-repeat;
+    background-size: cover;
 }
 
 .landingpageContainerLogo {
-  display: flex;
-  justify-content: center;
+    display: flex;
+    justify-content: center;
 }
 
 .landingpageContainerLogo img {
-  width:200px;
-  height: 200px;
-  background-repeat: no-repeat;
-  background-size: cover;
-  object-fit: cover;
-  margin: 0 auto;
+    width: 200px;
+    height: 200px;
+    background-repeat: no-repeat;
+    background-size: cover;
+    object-fit: cover;
+    margin: 0 auto;
 }
 
 .landingpageContainerAbout {
-  margin: 1.5em;
-  padding: 1em;
-  background-color: #C4C4C4;
-  color: white;
-  border-radius: 1em;
-  height: 100vh;
+    margin: 1.5em;
+    padding: 1em;
+    background-color: #c4c4c4;
+    color: white;
+    border-radius: 1em;
+    height: 100vh;
 }
 
 .landingpageContainerGlobe {
-  display: flex;
-  justify-content: center;
-  margin: 2em;
-  
-
+    display: flex;
+    justify-content: center;
+    margin: 2em;
 }
 
 .landingpageGlobe img {
-  width:200px;
-  height: 200px;
-  background-repeat: no-repeat;
-  background-size: cover;
-  object-fit: cover;
-  margin: 0 auto;
-
+    width: 200px;
+    height: 200px;
+    background-repeat: no-repeat;
+    background-size: cover;
+    object-fit: cover;
+    margin: 0 auto;
 }
 
 .landingpageContainerButton {
-  margin: 1em;
-  display: flex;
-  justify-content: center;
-  margin-bottom: 1em; 
+    margin: 1em;
+    display: flex;
+    justify-content: center;
+    margin-bottom: 1em;
+}
+.landingpageContainerButtonLogin {
+    margin: 1em;
+    display: flex;
+    justify-content: center;
+    margin-bottom: 1em;
+}
+
+.landingpageContainerButtonLogin button {
+    width: 150px;
+}
+
+@media (min-width: 360px) {
+}
+
+@media (min-width: 992px) {
 }

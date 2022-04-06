@@ -6,9 +6,11 @@ import { route } from "next/dist/server/router";
 
 export default function Home() {
     const router = useRouter();
-    function switchToRegister(e) {
-        e.preventDefault();
+    function switchToRegister() {
         router.replace("/register");
+    }
+    function switchToLogin() {
+        router.replace("/login");
     }
 
     return (
@@ -46,6 +48,14 @@ export default function Home() {
                         class="bg-[#90A5A9] hover:bg-[#C4C4C4] text-white font-bold py-2 px-4 rounded-full"
                     >
                         REGISTER NOW
+                    </button>
+                </div>
+                <div className={styles.landingpageContainerButtonLogin}>
+                    <button
+                        onClick={switchToLogin}
+                        class="bg-[#90A5A9] hover:bg-[#C4C4C4] text-white font-bold py-2 px-4 rounded-full"
+                    >
+                        LOGIN
                     </button>
                 </div>
             </div>
