@@ -146,13 +146,13 @@ export default function Register() {
     }
 
     return (
-        <div className="bg-[url('../public/images/images-register/mado-el-khouly-MA8YoAoKpfY-unsplash.jpg')] bg-cover min-h-screen flex flex-col">
+        <div className="bg-[url('../public/images/images-register/willian-justen-de-vasconcellos-T_Qe4QlMIvQ-unsplash.jpg')] bg-cover min-h-screen flex flex-col">
             <div className="container max-w-sm mx-auto flex-1 flex flex-col items-center justify-center px-2">
                 <form
                     className=" px-6 py-8 text-white w-full"
                     onSubmit={registerUser}
                 >
-                    <div className="flex justify-center w-full">
+                    <div className="flex justify-center w-full mb-8">
                    <Image
                     src={avatar} alt="Avatar" width={100} height={100}
                    />
@@ -163,7 +163,7 @@ export default function Register() {
                     <h1 className="mb-8 text-3xl text-center">CREATE ACCOUNT</h1>
                     <input
                         type="text"
-                        className="block border border-grey-light w-full p-3 rounded-full mb-1"
+                        className="block border border-grey-light w-full p-3 rounded-full mb-1 text-black"
                         name="firstName"
                         placeholder="First Name"
                         value={formValues.firstName}
@@ -174,7 +174,7 @@ export default function Register() {
                     </p>
                     <input
                         type="text"
-                        className="block border border-grey-light w-full p-3 rounded-full mb-1"
+                        className="block border border-grey-light w-full p-3 rounded-full mb-1 text-black"
                         name="lastName"
                         placeholder="Last Name"
                         value={formValues.lastName}
@@ -185,7 +185,7 @@ export default function Register() {
                     </p>
                     <input
                         type="text"
-                        className="block border border-grey-light w-full p-3 rounded-full mb-1"
+                        className="block border border-grey-light w-full p-3 rounded-full mb-1 text-black"
                         name="userName"
                         placeholder="User Name"
                         value={formValues.userName}
@@ -196,7 +196,7 @@ export default function Register() {
                     </p>
                     <input
                         type="text"
-                        className="block border border-grey-light w-full p-3 rounded-full mb-1"
+                        className="block border border-grey-light w-full p-3 rounded-full mb-1 text-black"
                         name="email"
                         placeholder="Email"
                         value={formValues.email}
@@ -208,7 +208,7 @@ export default function Register() {
                     <div className="relative">
                         <input
                             type={passwordInputType}
-                            className="block border border-grey-light w-full p-3 rounded-full mb-1"
+                            className="block border border-grey-light w-full p-3 rounded-full mb-1 text-black"
                             name="password"
                             placeholder="Password"
                             value={formValues.password}
@@ -223,7 +223,7 @@ export default function Register() {
                             }}
                         />
                         <span
-                            className="absolute right-[5px] top-[15px] text-[20px]"
+                            className="absolute right-[5px] top-[15px] text-[20px] text-black"
                             onClick={handleShowPasswordButton}
                         >
                             {passwordInputType === "password" ? (
@@ -238,7 +238,7 @@ export default function Register() {
                     </p>
                     <input
                         type="password"
-                        className="block border border-grey-light w-full p-3 rounded-full mb-1"
+                        className="block border border-grey-light w-full p-3 rounded-full mb-1 text-black"
                         name="confirm_password"
                         placeholder="Confirm Password"
                         value={formValues.confirm_password}
@@ -257,7 +257,7 @@ export default function Register() {
                     </p>
                     <input
                         type="text"
-                        className="block border border-grey-light w-full p-3 rounded-full mb-1"
+                        className="block border border-grey-light w-full p-3 rounded-full mb-1 text-black"
                         name="city"
                         placeholder="City"
                         value={formValues.city}
@@ -268,7 +268,7 @@ export default function Register() {
                     </p>
                     <input
                         type="text"
-                        className="block border border-grey-light w-full p-3 rounded-full mb-1"
+                        className="block border border-grey-light w-full p-3 rounded-full mb-1 text-black"
                         name="country"
                         placeholder="Country"
                         value={formValues.country}
