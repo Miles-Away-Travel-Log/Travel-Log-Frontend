@@ -1,10 +1,9 @@
 import { useRouter } from "next/router";
-import Image from 'next/image';
-import avatar from "../public/images/images-register/avatar.svg"
+import Image from "next/image";
+import avatar from "../public/images/images-register/avatar.svg";
 import { useAppData } from "../Context/DataStorage.js";
 import { useEffect, useState } from "react";
 import { ImEyeBlocked, ImEye } from "react-icons/im";
-
 
 export default function Register() {
     const router = useRouter();
@@ -149,18 +148,21 @@ export default function Register() {
         <div className="bg-[url('../public/images/images-register/mado-el-khouly-MA8YoAoKpfY-unsplash.jpg')] bg-cover min-h-screen flex flex-col">
             <div className="container max-w-sm mx-auto flex-1 flex flex-col items-center justify-center px-2">
                 <form
-                    className=" px-6 py-8 text-white w-full"
+                    className=" px-6 py-8 text-black w-full"
                     onSubmit={registerUser}
                 >
                     <div className="flex justify-center w-full">
-                   <Image
-                    src={avatar} alt="Avatar" width={100} height={100}
-                   />
-                   
+                        <Image
+                            src={avatar}
+                            alt="Avatar"
+                            width={100}
+                            height={100}
+                        />
                     </div>
-                   
 
-                    <h1 className="mb-8 text-3xl text-center">CREATE ACCOUNT</h1>
+                    <h1 className="mb-8 text-3xl text-center">
+                        CREATE ACCOUNT
+                    </h1>
                     <input
                         type="text"
                         className="block border border-grey-light w-full p-3 rounded-full mb-1"

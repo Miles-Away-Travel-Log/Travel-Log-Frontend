@@ -2,16 +2,36 @@ import { useState } from "react";
 import { useAppData } from "../Context/DataStorage.js";
 
 export default function Budget() {
-    const { userId } = useAppData();
-
-    const [outIn, setOutIn] = useState("income");
+    const {
+        handlePostBudgetItem,
+        budgetItems,
+        setOutIn,
+        outIn,
+        category,
+        setCategory,
+    } = useAppData();
 
     function handleSelectIncomeExpense(e) {
         setOutIn(e.target.value);
     }
+
+    function handleCategory(e) {
+        setCategory(e.target.value);
+    }
+
+    // Ab hier weitermachen
+
+    function blabla(input) {
+        return input.map((cV) => {
+            return <li key={new Date()}>{cV.value}</li>;
+        });
+    }
     return (
         <div className="budgetplaner-container w-full flex justify-center items-center h-screen">
-            <form className="flex flex-col w-[375px]">
+            <form
+                className="flex flex-col w-[375px]"
+                onSubmit={handlePostBudgetItem}
+            >
                 <fieldset
                     className={
                         outIn === "income"
@@ -31,8 +51,14 @@ export default function Budget() {
                         </select>
                     </legend>
                     <input
+                        type="date"
+                        name="date"
+                        className="block border border-grey-light w-2/3 h-1/2 rounded-full pl-2"
+                    />
+                    <input
                         className="block border border-grey-light w-2/3 p-3 rounded-full mb-2 h-1/2 mt-2"
                         type="text"
+                        name="amount"
                         placeholder={outIn === "income" ? "Income" : "Expense"}
                     />
                     {outIn === "income" ? (
@@ -40,6 +66,7 @@ export default function Budget() {
                             name="income"
                             id="income"
                             className="w-1/2 h-1/2 rounded-full mb-2 pl-2"
+                            onChange={handleCategory}
                         >
                             <option value="salary">Salary</option>
                             <option value="present">Present</option>
@@ -49,6 +76,7 @@ export default function Budget() {
                             name="expense"
                             id="expense"
                             className="w-1/2 h-1/2 rounded-full mb-2 pl-2"
+                            onChange={handleCategory}
                         >
                             <option value="general">General</option>
                             <option value="food">Food</option>
@@ -65,7 +93,7 @@ export default function Budget() {
                         </select>
                     )}
                     <textarea
-                        name="message-expense"
+                        name="description"
                         cols="20"
                         rows="10"
                         className="border border-grey-light mb-2 pl-2"
@@ -79,6 +107,7 @@ export default function Budget() {
                     </button>
                 </fieldset>
             </form>
+            <ol>{blabla(budgetItems)}</ol>
         </div>
     );
 }
