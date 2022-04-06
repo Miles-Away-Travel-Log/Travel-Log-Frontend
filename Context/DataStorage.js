@@ -16,6 +16,7 @@ function AppState(props) {
 
     const [formValues, setFormValues] = useState(initialValues);
     const [formErrors, setFormErrors] = useState({});
+    const [userId, setUserId] = useState(null);
 
     return (
         <DataStorage.Provider
@@ -25,6 +26,8 @@ function AppState(props) {
                 setFormValues,
                 formErrors,
                 setFormErrors,
+                setUserId,
+                userId,
             }}
         >
             {props.children}
