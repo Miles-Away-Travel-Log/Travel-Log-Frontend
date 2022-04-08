@@ -1,14 +1,21 @@
-import { useState } from "react";
 import { useAppData } from "../Context/DataStorage.js";
+import BalanceSheet from "../components/BalanceSheet.js";
+import { useRouter } from "next/router";
 
 export default function Budget() {
+    const router = useRouter();
+
     const {
         handlePostBudgetItem,
+        handlePostSeedMoney,
+        handleDeleteSeedMoney,
         budgetItems,
         setOutIn,
         outIn,
         category,
         setCategory,
+        seedMoney,
+        setSeedMoney,
     } = useAppData();
 
     function handleSelectIncomeExpense(e) {
@@ -19,17 +26,56 @@ export default function Budget() {
         setCategory(e.target.value);
     }
 
-    // Ab hier weitermachen
-
-    function blabla(input) {
-        return input.map((cV) => {
-            return <li key={new Date()}>{cV.value}</li>;
-        });
+    function handleDeleteCurrentBudget(e) {
+        e.preventDefault();
+        setSeedMoney("");
     }
+
+    // hier weiter machen
+    //
+    //
+
     return (
-        <div className="budgetplaner-container w-full flex justify-center items-center h-screen">
+        <div className="w-full flex flex-col justify-center items-center h-full">
+            {seedMoney.length !== 0 ? (
+                <form
+                    className="flex flex-col w-[375px] h-1/6 p-2"
+                    onSubmit={handleDeleteSeedMoney}
+                >
+                    <fieldset className="flex flex-col border-solid border-2 border-blue-500 justify-center items-center">
+                        <legend>Budget</legend>
+                        <div className="bg-gray-400">
+                            {seedMoney[0].total} €
+                        </div>
+                        <button className="w-1/2 text-center py-3 rounded-full bg-amber-500 text-white hover:bg-[#C4C4C4] focus:outline-none my-1">
+                            Delete Current Budget
+                        </button>
+                    </fieldset>
+                </form>
+            ) : (
+                <form
+                    className="flex flex-col w-[375px] h-1/6 p-2"
+                    onSubmit={handlePostSeedMoney}
+                >
+                    <fieldset className="flex flex-col border-solid border-2 border-blue-500 justify-center items-center">
+                        <legend>Budget</legend>
+                        <input
+                            type="text"
+                            name="seedmoney"
+                            className="block border border-grey-light w-2/3 h-1/3 rounded-full pl-2 mb-2"
+                            placeholder="Current budget"
+                        />
+                        <button
+                            className="w-1/2 text-center py-3 rounded-full bg-amber-500 text-white hover:bg-[#C4C4C4] focus:outline-none my-1"
+                            type="submit"
+                        >
+                            Set current budget
+                        </button>
+                    </fieldset>
+                </form>
+            )}
             <form
-                className="flex flex-col w-[375px]"
+                className="flex flex-col w-[375px] p-2"
                 onSubmit={handlePostBudgetItem}
             >
                 <fieldset
@@ -70,6 +116,7 @@ export default function Budget() {
                         >
                             <option value="salary">Salary</option>
                             <option value="present">Present</option>
+                            <option value="other">Other</option>
                         </select>
                     ) : (
                         <select
@@ -90,6 +137,7 @@ export default function Budget() {
                             <option value="clothing">Clothing</option>
                             <option value="mobile">Mobile</option>
                             <option value="present">Present</option>
+                            <option value="other">Other</option>
                         </select>
                     )}
                     <textarea
@@ -107,7 +155,21 @@ export default function Budget() {
                     </button>
                 </fieldset>
             </form>
-            <ol>{blabla(budgetItems)}</ol>
+            <BalanceSheet />
+            <div>
+                <button
+                    className="w-full text-center py-3 rounded-full bg-fuchsia-500 text-white hover:bg-[#C4C4C4] focus:outline-none my-1"
+                    onClick={() => router.replace("/transactions")}
+                >
+                    Transactions
+                </button>
+                <button
+                    className="w-full text-center py-3 rounded-full bg-rose-600 text-white hover:bg-[#C4C4C4] focus:outline-none my-1"
+                    onClick={() => router.replace("/barChart")}
+                >
+                    Chart
+                </button>
+            </div>
         </div>
     );
 }

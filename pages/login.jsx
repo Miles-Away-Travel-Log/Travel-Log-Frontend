@@ -7,7 +7,7 @@ import { useAppData } from "../Context/DataStorage.js";
 export default function Login() {
     const router = useRouter();
 
-    const { setUserId } = useAppData();
+    const { setUserId, setSeedMoney } = useAppData();
 
     async function submit(e) {
         e.preventDefault();
@@ -42,6 +42,7 @@ export default function Login() {
                 { sameSite: "none" }
             );
             setUserId(data.user.id);
+            setSeedMoney(data.user.seedMoney);
             router.replace("/landingPageUser");
         } else {
             alert("Invalid login credentials");
