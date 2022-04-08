@@ -18,6 +18,33 @@ function AppState(props) {
         country: "",
     };
 
+    const markerTest = [
+        { name: "Andreas", visible: false, coordinates: {latitude: 51.3233680719318, longitude: 12.372418865370589} },
+        { name: "Albert", visible: false, coordinates: {latitude: 51.33907051907917, longitude: 12.401449243834573} },
+        { name: "Connect", visible: false },
+    ];
+
+    const mapMarkerTestReducer = (originalArray, action) => {
+        switch (action.type) {
+            case "toggle":
+                const toggleArray = [...originalArray];
+                return toggleArray.map(item => {
+                    if (item.name === action.name) {
+                        return {...item, visible: !action.visible}
+                    }
+                return item;})
+                break;
+          
+            default:
+                return originalArray
+                break;
+        }
+    };
+
+    const [mapLayoutTest, setMapLayoutTest] = useState(
+        "mapbox://styles/mapbox/streets-v9"
+    );
+    const [mapMarkerTest, dispatchMapMarkerTest] = useReducer(mapMarkerTestReducer ,markerTest);
     const [formValues, setFormValues] = useState(initialValues);
     const [formErrors, setFormErrors] = useState({});
     const [userId, setUserId] = useState(null);
@@ -134,6 +161,10 @@ function AppState(props) {
     return (
         <DataStorage.Provider
             value={{
+                mapLayoutTest,
+                setMapLayoutTest,
+                mapMarkerTest,
+                dispatchMapMarkerTest,
                 initialValues,
                 formValues,
                 setFormValues,
