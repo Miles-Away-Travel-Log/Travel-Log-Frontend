@@ -3,4 +3,15 @@
 @tailwind utilities;
 
 @layer components {
+    .date:after {
+        content: "";
+        position: absolute;
+        border-top: 1px solid #b3b3b3;
+        top: 12px;
+        width: 100px;
+    }
+
+    .date:after {
+        margin-left: 15px;
+    }
 }
