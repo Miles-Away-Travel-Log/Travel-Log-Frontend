@@ -42,7 +42,7 @@ export default function MapTestCenter() {
                         >
                             <p
                                 onClick={() => setSelectedLocation(results)}
-                                className="cursor-pointer text-2xl animated-bounce"
+                                className="cursor-pointer text-2xl animate-bounce"
                             >
                                 📍
                             </p>
