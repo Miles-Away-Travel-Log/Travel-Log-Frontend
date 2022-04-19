@@ -1,7 +1,7 @@
 import MapDummy from "../../components/map-dummy.jsx";
 import getCenter from "geolib/es/getCenter";
 import Map, { Marker, Popup } from "react-map-gl";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import "mapbox-gl/dist/mapbox-gl.css";
 
 export default function MapTestCenter() {
@@ -15,9 +15,10 @@ export default function MapTestCenter() {
 
     const center = getCenter(testCoordinatesArray);
 
+    useEffect(() => {console.log(selectedLocation)}, [selectedLocation]);
+
     return (
         <div className="h-screen w-screen">
-            {console.log(center)}
             <Map
                 initialViewState={{
                     longitude: center.longitude,
@@ -28,25 +29,39 @@ export default function MapTestCenter() {
                 style={{ width: "100%", height: "100%" }}
                 mapStyle="mapbox://styles/mapbox/streets-v9"
             >
-                {/* {console.log(testCoordinatesArray)} */}
-                {console.log(testCoordinatesArray)}
-                {console.log(center)}
-                {testCoordinatesArray.map((results) => (
-                    <div key={results.longitude}>
+                {/* {console.log(center)} */}
+                {testCoordinatesArray.map((result) => (
+                    <div key={result.longitude}>
                         <Marker
-                            longitude={results.longitude}
-                            latitude={results.latitude}
+                            longitude={result.longitude}
+                            latitude={result.latitude}
                             // offsetLeft={-20}
-                            // offsetTop={-10}
+                            // offsetTop={-5}
                             anchor="bottom"
                         >
                             <p
-                                onClick={() => setSelectedLocation(results)}
+                                onClick={() => setSelectedLocation(result)
+                                }
                                 className="cursor-pointer text-2xl animate-bounce"
                             >
-                                📍
+                                {/* 📍 */}
+                                🔻
                             </p>
                         </Marker>
+                        {selectedLocation.longitude === result.longitude ? 
+                            <Popup
+                                // onClose={() => setSelectedLocation({})}
+                                // closeOnClick={true}
+                                latitude={result.latitude}
+                                longitude={result.longitude}
+                            >
+                                {result.name}
+                                test
+
+                            </Popup>
+                         : (
+                            false
+                        )}
                     </div>
                 ))}
             </Map>
