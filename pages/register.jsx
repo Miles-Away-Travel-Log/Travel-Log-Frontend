@@ -1,10 +1,9 @@
 import { useRouter } from "next/router";
-import Image from 'next/image';
-import avatar from "../public/images/images-register/avatar.svg"
+import Image from "next/image";
+import avatar from "../public/images/images-register/avatar.svg";
 import { useAppData } from "../Context/DataStorage.js";
 import { useEffect, useState } from "react";
 import { ImEyeBlocked, ImEye } from "react-icons/im";
-
 
 export default function Register() {
     const router = useRouter();
@@ -14,16 +13,15 @@ export default function Register() {
     const [passwordInputType, setPasswordInputType] = useState("password");
 
     const {
-        initialValues,
-        formValues,
-        setFormValues,
-        formErrors,
-        setFormErrors,
+        registerFormValues,
+        setRegisterFormValues,
+        registerFormErrors,
+        setRegisterFormErrors,
     } = useAppData();
 
     function handleChange(event) {
         const { name, value } = event.target;
-        setFormValues({ ...formValues, [name]: value });
+        setRegisterFormValues({ ...registerFormValues, [name]: value });
     }
 
     function validate(values) {
@@ -100,14 +98,14 @@ export default function Register() {
     }
 
     useEffect(() => {
-        setFormErrors(validate(formValues));
+        setRegisterFormErrors(validate(registerFormValues));
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [formValues]);
+    }, [registerFormValues]);
 
     async function registerUser(e) {
         e.preventDefault();
         setIsSubmit(true);
-        if (Object.keys(formErrors).length === 0) {
+        if (Object.keys(registerFormErrors).length === 0) {
             // user erstellen
             const rawResponse = await fetch(
                 process.env.NEXT_PUBLIC_FETCH_URL_USER + "/register",
@@ -118,13 +116,13 @@ export default function Register() {
                         "Content-Type": "application/json",
                     },
                     body: JSON.stringify({
-                        firstName: formValues.firstName,
-                        lastName: formValues.lastName,
-                        userName: formValues.userName,
-                        email: formValues.email,
-                        password: formValues.password,
-                        city: formValues.city,
-                        country: formValues.country,
+                        firstName: registerFormValues.firstName,
+                        lastName: registerFormValues.lastName,
+                        userName: registerFormValues.userName,
+                        email: registerFormValues.email,
+                        password: registerFormValues.password,
+                        city: registerFormValues.city,
+                        country: registerFormValues.country,
                     }),
                 }
             );
@@ -149,61 +147,62 @@ export default function Register() {
         <div className="bg-[url('../public/images/images-register/willian-justen-de-vasconcellos-T_Qe4QlMIvQ-unsplash.jpg')] bg-cover min-h-screen flex flex-col">
             <div className="container max-w-sm mx-auto flex-1 flex flex-col items-center justify-center px-2">
                 <form
-                    className=" px-6 py-8 text-white w-full"
+                    className=" px-6 py-8 text-black w-full"
                     onSubmit={registerUser}
                 >
+
                     <div className="flex justify-center w-full mb-8">
                    <Image
                     src={avatar} alt="Avatar" width={100} height={100}
                    />
-                   
-                    </div>
-                   
+                      </div>
 
-                    <h1 className="mb-8 text-3xl text-center">CREATE ACCOUNT</h1>
+                    <h1 className="mb-8 text-3xl text-center">
+                        CREATE ACCOUNT
+                    </h1>
                     <input
                         type="text"
                         className="block border border-grey-light w-full p-3 rounded-full mb-1 text-black"
                         name="firstName"
                         placeholder="First Name"
-                        value={formValues.firstName}
+                        value={registerFormValues.firstName}
                         onChange={handleChange}
                     />
                     <p className="text-sm text-red-600 mb-4">
-                        {isSubmit && formErrors.firstName}
+                        {isSubmit && registerFormErrors.firstName}
                     </p>
                     <input
                         type="text"
                         className="block border border-grey-light w-full p-3 rounded-full mb-1 text-black"
                         name="lastName"
                         placeholder="Last Name"
-                        value={formValues.lastName}
+                        value={registerFormValues.lastName}
                         onChange={handleChange}
                     />
                     <p className="text-sm text-red-600 mb-4">
-                        {isSubmit && formErrors.lastName}
+                        {isSubmit && registerFormErrors.lastName}
                     </p>
                     <input
                         type="text"
                         className="block border border-grey-light w-full p-3 rounded-full mb-1 text-black"
                         name="userName"
                         placeholder="User Name"
-                        value={formValues.userName}
+                        value={registerFormValues.userName}
                         onChange={handleChange}
                     />
                     <p className="text-sm text-red-600 mb-4">
-                        {isSubmit && formErrors.userName}
+                        {isSubmit && registerFormErrors.userName}
                     </p>
                     <input
                         type="text"
                         className="block border border-grey-light w-full p-3 rounded-full mb-1 text-black"
                         name="email"
                         placeholder="Email"
-                        value={formValues.email}
+                        value={registerFormValues.email}
                         onChange={handleChange}
                     />
                     <p className="text-sm text-red-600 mb-4">
-                        {isSubmit && formErrors.email}
+                        {isSubmit && registerFormErrors.email}
                     </p>
                     <div className="relative">
                         <input
@@ -211,7 +210,7 @@ export default function Register() {
                             className="block border border-grey-light w-full p-3 rounded-full mb-1 text-black"
                             name="password"
                             placeholder="Password"
-                            value={formValues.password}
+                            value={registerFormValues.password}
                             onChange={handleChange}
                             onPaste={(e) => {
                                 e.preventDefault();
@@ -234,14 +233,14 @@ export default function Register() {
                         </span>
                     </div>
                     <p className="text-sm text-red-600 mb-4">
-                        {isSubmit && formErrors.password}
+                        {isSubmit && registerFormErrors.password}
                     </p>
                     <input
                         type="password"
                         className="block border border-grey-light w-full p-3 rounded-full mb-1 text-black"
                         name="confirm_password"
                         placeholder="Confirm Password"
-                        value={formValues.confirm_password}
+                        value={registerFormValues.confirm_password}
                         onChange={handleChange}
                         onPaste={(e) => {
                             e.preventDefault();
@@ -253,29 +252,29 @@ export default function Register() {
                         }}
                     />
                     <p className="text-sm text-red-600 mb-4">
-                        {isSubmit && formErrors.confirm_password}
+                        {isSubmit && registerFormErrors.confirm_password}
                     </p>
                     <input
                         type="text"
                         className="block border border-grey-light w-full p-3 rounded-full mb-1 text-black"
                         name="city"
                         placeholder="City"
-                        value={formValues.city}
+                        value={registerFormValues.city}
                         onChange={handleChange}
                     />
                     <p className="text-sm text-red-600 mb-4">
-                        {isSubmit && formErrors.city}
+                        {isSubmit && registerFormErrors.city}
                     </p>
                     <input
                         type="text"
                         className="block border border-grey-light w-full p-3 rounded-full mb-1 text-black"
                         name="country"
                         placeholder="Country"
-                        value={formValues.country}
+                        value={registerFormValues.country}
                         onChange={handleChange}
                     />
                     <p className="text-sm text-red-600 mb-4">
-                        {isSubmit && formErrors.country}
+                        {isSubmit && registerFormErrors.country}
                     </p>
                     <button
                         type="submit"
