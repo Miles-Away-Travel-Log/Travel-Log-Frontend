@@ -1,5 +1,9 @@
+import Navbar from '../Components/Navbar.jsx'
+
+
 export default function LandingPageUser() {
     return (
+        <div>
         <div className="max-w-sm bg-white rounded-lg border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700">
             <div className="flex justify-end px-4 pt-4">
                 <button
@@ -80,6 +84,8 @@ export default function LandingPageUser() {
                     </a>
                 </div>
             </div>
+            </div>
+            <Navbar/>
         </div>
     );
 }

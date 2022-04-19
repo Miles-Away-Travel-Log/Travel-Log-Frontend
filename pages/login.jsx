@@ -1,8 +1,10 @@
 import Cookies from "js-cookie";
 import { useRouter } from "next/router";
+import Navbar from '../Components/Navbar.jsx'
 import Image from "next/image";
 import avatar from "../public/images/images-register/avatar.svg";
 import { useAppData } from "../Context/DataStorage.js";
+
 
 export default function Login() {
     const router = useRouter();
@@ -61,48 +63,50 @@ export default function Login() {
                    />
                     </div>
                     <h1 className="mb-8 text-3xl text-center text-white">MEMBER LOGIN</h1>
-                <div className="mb-4">
-                    <label
-                        className="block text-white text-sm font-bold mb-2 "
-                        htmlFor="username"
-                    >
-                        Username
-                    </label>
-                    <input
-                        className="shadow appearance-none border rounded-full w-full px-3 text-grey-darker"
-                        id="username"
-                        type="text"
-                        placeholder="Username"
-                        name="username"
-                    />
-                </div>
-                <div className="mb-6">
-                    <label
-                        className="block text-white text-sm font-bold mb-2"
-                        htmlFor="password"
-                    >
-                        Password
-                    </label>
-                    <input
-                        className="shadow appearance-none border border-red rounded-full w-full px-3 text-grey-darker mb-3"
-                        id="password"
-                        type="password"
-                        placeholder="******************"
-                        name="password"
-                    />
-                    <p className="text-white text-xs italic">
-                        Please choose a password.
-                    </p>
-                </div>
-                <div className="flex items-center justify-center">
-                    <button
-                        className="bg-[#90A5A9] hover:bg-[#C4C4C4] text-white font-bold px-4 rounded-full"
-                        type="submit"
-                    >
-                        Sign In
-                    </button>
-                </div>
-            </form>
+
+            <div className="mb-4">
+                <label
+                    className="block text-white text-sm font-bold mb-2 "
+                    htmlFor="username"
+                >
+                    Username
+                </label>
+                <input
+                    className="shadow appearance-none border rounded-full w-full px-3 text-grey-darker"
+                    id="username"
+                    type="text"
+                    placeholder="Username"
+                    name="username"
+                />
+            </div>
+            <div className="mb-6">
+                <label
+                    className="block text-white text-sm font-bold mb-2"
+                    htmlFor="password"
+                >
+                    Password
+                </label>
+                <input
+                    className="shadow appearance-none border border-red rounded-full w-full px-3 text-grey-darker mb-3"
+                    id="password"
+                    type="password"
+                    placeholder="******************"
+                    name="password"
+                />
+                <p className="text-white text-xs italic">
+                    Please choose a password.
+                </p>
+            </div>
+            <div className="flex items-center justify-center">
+                <button
+                    className="bg-[#90A5A9] hover:bg-[#C4C4C4] text-white font-bold px-4 rounded-full"
+                    type="submit"
+                >
+                    Sign In
+                </button>
+            </div>
+        </form>
+        <Navbar/>
         </div>
     );
 }
