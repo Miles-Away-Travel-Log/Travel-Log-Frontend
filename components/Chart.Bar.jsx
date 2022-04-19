@@ -10,7 +10,7 @@ import {
 } from "chart.js";
 import { Bar } from "react-chartjs-2";
 import { useAppData } from "../Context/DataStorage.js";
-import { useRouter } from "next/router";
+import ChartDataLabels from "chartjs-plugin-datalabels";
 
 ChartJS.register(
     CategoryScale,
@@ -18,12 +18,13 @@ ChartJS.register(
     BarElement,
     Title,
     Tooltip,
-    Legend
+    Legend,
+    ChartDataLabels
 );
 
 function BarChart() {
     const { budgetItems, seedMoney } = useAppData();
-    const router = useRouter();
+
     const options = {
         responsive: true,
         plugins: {
@@ -33,6 +34,9 @@ function BarChart() {
             title: {
                 display: true,
                 text: "Balance chart",
+            },
+            datalabels: {
+                display: false,
             },
         },
 
@@ -80,13 +84,7 @@ function BarChart() {
         ],
     };
     return (
-        <div>
-            <button
-                className="bg-fuchsia-500 border border-solid shadow rounded-full w-[200px] h-[50px]"
-                onClick={() => router.replace("budget")}
-            >
-                Back to Budget
-            </button>
+        <div className="w-2/3">
             <Bar options={options} data={data} />
         </div>
     );
