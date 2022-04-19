@@ -51,17 +51,16 @@ export default function Login() {
 
     return (
         <div className="bg-[url('../public/images/images-login/pawel-czerwinski-6lQDFGOB1iw-unsplash.jpg')] bg-cover min-h-screen">
-            <form
-                className="r px-8 pt-6 pb-8 mb-4 flex flex-col text-[30px]"
-                onSubmit={submit}
-            >
-                <div className="flex justify-center w-full mb-8">
-                    <Image src={avatar} alt="Avatar" width={100} height={100} />
-                </div>
-                <h1 className="mb-8 text-3xl text-center text-white">
-                    MEMBER LOGIN
-                </h1>
-
+        <form
+            className="r px-8 pt-6 pb-8 mb-4 flex flex-col text-[30px] max-w-sm mx-auto"
+            onSubmit={submit}  
+        >
+            <div className="flex justify-center w-full mb-8">
+                   <Image
+                    src={avatar} alt="Avatar" width={100} height={100}
+                   />
+                    </div>
+                    <h1 className="mb-8 text-3xl text-center text-white">MEMBER LOGIN</h1>
                 <div className="mb-4">
                     <label
                         className="block text-white text-sm font-bold mb-2 "
