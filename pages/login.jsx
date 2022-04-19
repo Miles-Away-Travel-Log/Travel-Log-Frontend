@@ -1,12 +1,16 @@
 import Cookies from "js-cookie";
 import { useRouter } from "next/router";
-import Image from 'next/image';
-import avatar from "../public/images/images-register/avatar.svg"
 import Navbar from '../Components/Navbar.jsx'
+import Image from "next/image";
+import avatar from "../public/images/images-register/avatar.svg";
+import { useAppData } from "../Context/DataStorage.js";
 
 
 export default function Login() {
     const router = useRouter();
+
+    const { setUserId, setSeedMoney } = useAppData();
+
     async function submit(e) {
         e.preventDefault();
         const rawResponse = await fetch(
@@ -39,6 +43,8 @@ export default function Login() {
                 { expires: 1 },
                 { sameSite: "none" }
             );
+            setUserId(data.user.id);
+            setSeedMoney(data.user.seedMoney);
             router.replace("/landingPageUser");
         } else {
             alert("Invalid login credentials");
@@ -48,7 +54,7 @@ export default function Login() {
     return (
         <div className="bg-[url('../public/images/images-login/pawel-czerwinski-6lQDFGOB1iw-unsplash.jpg')] bg-cover min-h-screen">
         <form
-            className="r px-8 pt-6 pb-8 mb-4 flex flex-col text-[30px]"
+            className="r px-8 pt-6 pb-8 mb-4 flex flex-col text-[30px] max-w-sm mx-auto"
             onSubmit={submit}  
         >
             <div className="flex justify-center w-full mb-8">

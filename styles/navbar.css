@@ -42,7 +42,6 @@ html {
     justify-content: center;
     background-color: var(--bgColorMenu);
     margin: 0 auto;
-    /* border-radius: 3em */
   }
   
   .menu__item {
