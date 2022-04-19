@@ -1,4 +1,4 @@
-import { createContext, useContext, useState, useEffect } from "react";
+import { createContext, useContext, useState, useEffect, useReducer } from "react";
 import Cookies from "js-cookie";
 import { useRouter } from "next/router";
 
@@ -7,7 +7,7 @@ const DataStorage = createContext();
 function AppState(props) {
     const router = useRouter();
 
-    const initialValues = {
+    const registerInitialValues = {
         firstName: "",
         lastName: "",
         userName: "",
@@ -45,8 +45,8 @@ function AppState(props) {
         "mapbox://styles/mapbox/streets-v9"
     );
     const [mapMarkerTest, dispatchMapMarkerTest] = useReducer(mapMarkerTestReducer ,markerTest);
-    const [formValues, setFormValues] = useState(initialValues);
-    const [formErrors, setFormErrors] = useState({});
+    const [registerFormValues, setRegisterFormValues] = useState(registerInitialValues);
+    const [registerFormErrors, setRegisterFormErrors] = useState({});
     const [userId, setUserId] = useState(null);
     const [user, setUser] = useState("");
     const [budgetItems, setBudgetItems] = useState([]);
@@ -165,11 +165,11 @@ function AppState(props) {
                 setMapLayoutTest,
                 mapMarkerTest,
                 dispatchMapMarkerTest,
-                initialValues,
-                formValues,
-                setFormValues,
-                formErrors,
-                setFormErrors,
+                registerInitialValues,
+                registerFormValues,
+                setRegisterFormValues,
+                registerFormErrors,
+                setRegisterFormErrors,
                 setUserId,
                 userId,
                 handlePostBudgetItem,
