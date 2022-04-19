@@ -2,6 +2,8 @@ import Cookies from "js-cookie";
 import { useRouter } from "next/router";
 import Image from 'next/image';
 import avatar from "../public/images/images-register/avatar.svg"
+import Navbar from '../Components/Navbar.jsx'
+
 
 export default function Login() {
     const router = useRouter();
@@ -98,6 +100,7 @@ export default function Login() {
                 </button>
             </div>
         </form>
+        <Navbar/>
         </div>
     );
 }
