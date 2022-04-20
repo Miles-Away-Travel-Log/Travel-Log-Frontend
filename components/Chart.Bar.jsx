@@ -51,10 +51,14 @@ function BarChart() {
         },
     };
 
+    // Alle Daten (Datum) aus dem BudgetItem Array werden in ein neues Array gespeichert
     const listDates = budgetItems.map((item) => item.date);
+
+    // listDates wird in ein neues Array gespeichert, welches nur die Daten enthält, die nicht doppelt vorkommen
     const labels = [...new Set(listDates)];
 
-    const sum = labels.map((label) => {
+    // Für jedes Datum wird die Summe des Einkommens und die Summe der Ausgaben berechnet und in ein neues Array gespeichert
+    const totalIncomeExpensePerDate = labels.map((label) => {
         const listIncomeExpenseForLabel = budgetItems.filter(
             (item) => item.date === label
         );
@@ -73,18 +77,18 @@ function BarChart() {
         datasets: [
             {
                 label: "Income",
-                data: sum.map((item) => item[0]),
+                data: totalIncomeExpensePerDate.map((item) => item[0]),
                 backgroundColor: "rgba(80, 231, 138, 1)",
             },
             {
                 label: "Expense",
-                data: sum.map((item) => item[1]),
+                data: totalIncomeExpensePerDate.map((item) => item[1]),
                 backgroundColor: "rgba(244, 50, 138, 1)",
             },
         ],
     };
     return (
-        <div className="w-2/3">
+        <div className="w-full lg:w-2/3">
             <Bar options={options} data={data} />
         </div>
     );

@@ -14,15 +14,15 @@ function Chart() {
         <div className="w-full flex flex-col justify-center items-center h-screen">
             <div className="w-full flex flex-row justify-around items-center">
                 <MdKeyboardBackspace
-                    className="text-[10rem]"
+                    className="text-[4rem] lg:text-[10rem] cursor-pointer"
                     onClick={() => router.replace("budget")}
                 />
                 <FaChartBar
-                    className="text-[10rem]"
+                    className="text-[4rem] lg:text-[10rem] cursor-pointer"
                     onClick={() => setChart("bar")}
                 />
                 <FaChartPie
-                    className="text-[10rem]"
+                    className="text-[4rem] lg:text-[10rem] cursor-pointer"
                     onClick={() => setChart("pie")}
                 />
             </div>

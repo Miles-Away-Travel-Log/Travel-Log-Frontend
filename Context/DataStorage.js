@@ -1,4 +1,10 @@
-import { createContext, useContext, useState, useEffect, useReducer } from "react";
+import {
+    createContext,
+    useContext,
+    useState,
+    useEffect,
+    useReducer,
+} from "react";
 import Cookies from "js-cookie";
 import { useRouter } from "next/router";
 
@@ -19,8 +25,22 @@ function AppState(props) {
     };
 
     const markerTest = [
-        { name: "Andreas", visible: false, coordinates: {latitude: 51.3233680719318, longitude: 12.372418865370589} },
-        { name: "Albert", visible: false, coordinates: {latitude: 51.33907051907917, longitude: 12.401449243834573} },
+        {
+            name: "Andreas",
+            visible: false,
+            coordinates: {
+                latitude: 51.3233680719318,
+                longitude: 12.372418865370589,
+            },
+        },
+        {
+            name: "Albert",
+            visible: false,
+            coordinates: {
+                latitude: 51.33907051907917,
+                longitude: 12.401449243834573,
+            },
+        },
         { name: "Connect", visible: false },
     ];
 
@@ -28,15 +48,16 @@ function AppState(props) {
         switch (action.type) {
             case "toggle":
                 const toggleArray = [...originalArray];
-                return toggleArray.map(item => {
+                return toggleArray.map((item) => {
                     if (item.name === action.name) {
-                        return {...item, visible: !action.visible}
+                        return { ...item, visible: !action.visible };
                     }
-                return item;})
+                    return item;
+                });
                 break;
-          
+
             default:
-                return originalArray
+                return originalArray;
                 break;
         }
     };
@@ -44,13 +65,18 @@ function AppState(props) {
     const [mapLayoutTest, setMapLayoutTest] = useState(
         "mapbox://styles/mapbox/streets-v9"
     );
-    const [mapMarkerTest, dispatchMapMarkerTest] = useReducer(mapMarkerTestReducer ,markerTest);
-    const [registerFormValues, setRegisterFormValues] = useState(registerInitialValues);
+    const [mapMarkerTest, dispatchMapMarkerTest] = useReducer(
+        mapMarkerTestReducer,
+        markerTest
+    );
+    const [registerFormValues, setRegisterFormValues] = useState(
+        registerInitialValues
+    );
     const [registerFormErrors, setRegisterFormErrors] = useState({});
     const [userId, setUserId] = useState(null);
     const [user, setUser] = useState("");
     const [budgetItems, setBudgetItems] = useState([]);
-    const [outIn, setOutIn] = useState("income");
+    const [outIn, setOutIn] = useState("expense");
     const [category, setCategory] = useState("");
     const [seedMoney, setSeedMoney] = useState("");
 
