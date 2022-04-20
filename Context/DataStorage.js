@@ -53,6 +53,7 @@ function AppState(props) {
     const [outIn, setOutIn] = useState("income");
     const [category, setCategory] = useState("");
     const [seedMoney, setSeedMoney] = useState("");
+    
 
     function handleGetUser() {
         fetch(
