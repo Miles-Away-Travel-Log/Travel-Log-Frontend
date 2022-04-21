@@ -2,9 +2,7 @@ import React from "react";
 import { useRouter } from "next/router";
 import { useState } from "react";
 import { GrDocumentPdf, GrDocumentCsv } from "react-icons/gr";
-import { jsPDF } from "jspdf";
-import html2canvas from "html2canvas";
-import { CSVLink, CSVDownload } from "react-csv";
+import { CSVLink } from "react-csv";
 import { useAppData } from "../Context/DataStorage.js";
 
 function ListIncomeExpense({ budgetItems }) {
