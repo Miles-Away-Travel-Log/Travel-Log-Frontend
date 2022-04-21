@@ -15,4 +15,10 @@
     .date:after {
         margin-left: 15px;
     }
+
+    @media print {
+        #content-pdf {
+            width: 50%;
+        }
+    }
 }

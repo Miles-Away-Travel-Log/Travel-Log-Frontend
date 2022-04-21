@@ -6,7 +6,7 @@ function Transactions() {
     const { budgetItems } = useAppData();
 
     return (
-        <div>
+        <div className="w-screen">
             <ListIncomeExpense budgetItems={budgetItems} />
         </div>
     );

@@ -92,8 +92,8 @@ export default function Budget() {
                             id="income-expense"
                             onChange={handleSelectIncomeExpense}
                         >
-                            <option value="income">Income</option>
                             <option value="expense">Expense</option>
+                            <option value="income">Income</option>
                         </select>
                     </legend>
                     <input
@@ -165,7 +165,7 @@ export default function Budget() {
                 </button>
                 <button
                     className="w-full text-center py-3 rounded-full bg-rose-600 text-white hover:bg-[#C4C4C4] focus:outline-none my-1"
-                    onClick={() => router.replace("/barChart")}
+                    onClick={() => router.replace("/charts")}
                 >
                     Chart
                 </button>
