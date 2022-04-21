@@ -5,23 +5,32 @@ import { useAppData } from "../Context/DataStorage.js";
 import { useEffect, useState } from "react";
 import { ImEyeBlocked, ImEye } from "react-icons/im";
 
-export default function Register() {
+export default function EditProfile() {
     const router = useRouter();
+    const { userId, user } = useAppData();
+
+    const userInitialValues = {
+        firstName: "",
+        lastName: "",
+        userName: "",
+        email: "",
+        password: "",
+        confirm_password: "",
+        city: "",
+        country: "",
+        status: "",
+    };
+    
     const [isSubmit, setIsSubmit] = useState(false);
+    const [formValues, setFormValues] = useState(userInitialValues);
+    const [formErrors, setFormErrors] = useState({});
 
     // Show Passwort and hide it
     const [passwordInputType, setPasswordInputType] = useState("password");
 
-    const {
-        registerFormValues,
-        setRegisterFormValues,
-        registerFormErrors,
-        setRegisterFormErrors,
-    } = useAppData();
-
     function handleChange(event) {
         const { name, value } = event.target;
-        setRegisterFormValues({ ...registerFormValues, [name]: value });
+        setFormValues({ ...formValues, [name]: value });
     }
 
     function validate(values) {
@@ -98,38 +107,50 @@ export default function Register() {
     }
 
     useEffect(() => {
-        setRegisterFormErrors(validate(registerFormValues));
+        setFormErrors(validate(formValues));
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [registerFormValues]);
+    }, [formValues]);
 
-    async function registerUser(e) {
+    useEffect(() => {
+        if (!user) {
+            return;
+        }
+        setFormValues({
+            ...user,
+            password: "",
+            confirm_password: "",
+        });
+    }, [user]);
+
+    async function updateUser(e) {
         e.preventDefault();
         setIsSubmit(true);
-        if (Object.keys(registerFormErrors).length === 0) {
+        if (Object.keys(formErrors).length === 0) {
             // user erstellen
             const rawResponse = await fetch(
-                process.env.NEXT_PUBLIC_FETCH_URL_USER + "/register",
+                `${process.env.NEXT_PUBLIC_FETCH_URL_USER}/${userId}`,
                 {
-                    method: "POST",
+                    method: "PUT",
                     headers: {
                         Accept: "application/json",
                         "Content-Type": "application/json",
                     },
                     body: JSON.stringify({
-                        firstName: registerFormValues.firstName,
-                        lastName: registerFormValues.lastName,
-                        userName: registerFormValues.userName,
-                        email: registerFormValues.email,
-                        password: registerFormValues.password,
-                        city: registerFormValues.city,
-                        country: registerFormValues.country,
+                        firstName: formValues.firstName,
+                        lastName: formValues.lastName,
+                        userName: formValues.userName,
+                        email: formValues.email,
+                        password: formValues.password,
+                        city: formValues.city,
+                        country: formValues.country,
+                        status: formValues.status,
                     }),
                 }
             );
 
-            if (rawResponse.status === 201) {
-                // falls erfolgreich, dann login
-                router.replace("/login");
+            if (rawResponse.status === 200) {
+                // falls erfolgreich, dann:
+                router.replace("/landingPageUser");
             } else {
                 const err = await rawResponse.json();
                 console.log("backend error", err);
@@ -148,69 +169,88 @@ export default function Register() {
             <div className="container max-w-sm mx-auto flex-1 flex flex-col items-center justify-center px-2">
                 <form
                     className=" px-6 py-8 text-black w-full"
-                    onSubmit={registerUser}
+                    onSubmit={updateUser}
                 >
-
                     <div className="flex justify-center w-full mb-8">
-                   <Image
-                    src={avatar} alt="Avatar" width={100} height={100}
-                   />
-                      </div>
+                        <Image
+                            src={avatar}
+                            alt="Avatar"
+                            width={100}
+                            height={100}
+                        />
+                    </div>
 
-                    <h1 className="mb-8 text-3xl text-center">
-                        CREATE ACCOUNT
+                    <h1 className="mb-8 text-3xl text-center text-white">
+                        EDIT YOUR PROFILE
                     </h1>
-                    <input
+                    {/* <input
                         type="text"
                         className="block border border-grey-light w-full p-3 rounded-full mb-1 text-black"
                         name="firstName"
-                        placeholder="First Name"
-                        value={registerFormValues.firstName}
+                        placeholder={user.firstName}
+                        value={formValues.firstName}
                         onChange={handleChange}
                     />
                     <p className="text-sm text-red-600 mb-4">
-                        {isSubmit && registerFormErrors.firstName}
+                        {isSubmit && formErrors.firstName}
                     </p>
                     <input
                         type="text"
                         className="block border border-grey-light w-full p-3 rounded-full mb-1 text-black"
                         name="lastName"
-                        placeholder="Last Name"
-                        value={registerFormValues.lastName}
+                        placeholder={user.lastName}
+                        value={formValues.lastName}
                         onChange={handleChange}
                     />
                     <p className="text-sm text-red-600 mb-4">
-                        {isSubmit && registerFormErrors.lastName}
-                    </p>
+                        {isSubmit && formErrors.lastName}
+                    </p> */}
+                    <label className="text-white">User Name</label>
                     <input
                         type="text"
                         className="block border border-grey-light w-full p-3 rounded-full mb-1 text-black"
                         name="userName"
-                        placeholder="User Name"
-                        value={registerFormValues.userName}
+                        placeholder={user.userName}
+                        value={formValues.userName}
                         onChange={handleChange}
                     />
                     <p className="text-sm text-red-600 mb-4">
-                        {isSubmit && registerFormErrors.userName}
+                        {isSubmit && formErrors.userName}
                     </p>
+                    <label className="form-label inline-block mb-2 text-white">
+                        Your Status
+                    </label>
+                    <textarea
+                        className="
+                            px-8 mb-3 form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700
+                            bg-white bg-clip-padding border border-solid border-gray-300 rounded-full transition
+                            ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
+                        id="exampleFormControlTextarea1"
+                        rows="3"
+                        name="status"
+                        placeholder="Text"
+                        value={formValues.status}
+                        onChange={handleChange}
+                    ></textarea>
+                    <label className="text-white">Email</label>
                     <input
                         type="text"
                         className="block border border-grey-light w-full p-3 rounded-full mb-1 text-black"
                         name="email"
-                        placeholder="Email"
-                        value={registerFormValues.email}
+                        placeholder={user.email}
+                        value={formValues.email}
                         onChange={handleChange}
                     />
                     <p className="text-sm text-red-600 mb-4">
-                        {isSubmit && registerFormErrors.email}
+                        {isSubmit && formErrors.email}
                     </p>
                     <div className="relative">
                         <input
                             type={passwordInputType}
                             className="block border border-grey-light w-full p-3 rounded-full mb-1 text-black"
                             name="password"
-                            placeholder="Password"
-                            value={registerFormValues.password}
+                            placeholder="New Password"
+                            value={formValues.password}
                             onChange={handleChange}
                             onPaste={(e) => {
                                 e.preventDefault();
@@ -233,14 +273,14 @@ export default function Register() {
                         </span>
                     </div>
                     <p className="text-sm text-red-600 mb-4">
-                        {isSubmit && registerFormErrors.password}
+                        {isSubmit && formErrors.password}
                     </p>
                     <input
                         type="password"
                         className="block border border-grey-light w-full p-3 rounded-full mb-1 text-black"
                         name="confirm_password"
-                        placeholder="Confirm Password"
-                        value={registerFormValues.confirm_password}
+                        placeholder="Confirm New Password"
+                        value={formValues.confirm_password}
                         onChange={handleChange}
                         onPaste={(e) => {
                             e.preventDefault();
@@ -252,64 +292,47 @@ export default function Register() {
                         }}
                     />
                     <p className="text-sm text-red-600 mb-4">
-                        {isSubmit && registerFormErrors.confirm_password}
+                        {isSubmit && formErrors.confirm_password}
                     </p>
+                    <label className="text-white">City</label>
                     <input
                         type="text"
                         className="block border border-grey-light w-full p-3 rounded-full mb-1 text-black"
                         name="city"
-                        placeholder="City"
-                        value={registerFormValues.city}
+                        placeholder={user.city}
+                        value={formValues.city}
                         onChange={handleChange}
                     />
                     <p className="text-sm text-red-600 mb-4">
-                        {isSubmit && registerFormErrors.city}
+                        {isSubmit && formErrors.city}
                     </p>
+                    <label className="text-white">Country</label>
                     <input
                         type="text"
                         className="block border border-grey-light w-full p-3 rounded-full mb-1 text-black"
                         name="country"
-                        placeholder="Country"
-                        value={registerFormValues.country}
+                        placeholder={user.country}
+                        value={formValues.country}
                         onChange={handleChange}
                     />
                     <p className="text-sm text-red-600 mb-4">
-                        {isSubmit && registerFormErrors.country}
+                        {isSubmit && formErrors.country}
                     </p>
                     <button
                         type="submit"
                         className="w-full text-center py-3 rounded-full bg-[#90A5A9] text-white hover:bg-[#C4C4C4] focus:outline-none my-1"
                     >
-                        Create Account
+                        Update Account
                     </button>
-                    <div className="text-center text-sm text-grey-dark mt-4">
-                        By signing up, you agree to the
-                        <a
-                            className="no-underline border-b border-grey-dark text-grey-dark"
-                            href="#"
-                        >
-                            Terms of Service
-                        </a>{" "}
-                        and
-                        <a
-                            className="no-underline border-b border-grey-dark text-grey-dark"
-                            href="#"
-                        >
-                            Privacy Policy
-                        </a>
-                    </div>
+                    <button
+                    type="submit"
+                    onClick={()=> router.replace("/landingPageUser")}
+                    className="w-full text-center py-3 rounded-full bg-[#90A5A9] text-white hover:bg-[#C4C4C4] focus:outline-none my-1"
+                >
+                    Back
+                </button>
                 </form>
-
-                <div className="text-white mt-6">
-                    Already have an account?
-                    <a
-                        className="no-underline border-b border-blue text-blue"
-                        href="../login/"
-                    >
-                        Log in
-                    </a>
-                    .
-                </div>
+              
             </div>
         </div>
     );

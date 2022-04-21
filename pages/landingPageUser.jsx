@@ -1,15 +1,53 @@
+// import { useState } from "react/cjs/react.production.min";
 import Navbar from "../components/Navbar.jsx";
+import { useAppData } from "../Context/DataStorage.js";
+import React, { useState } from "react";
+import Link from "next/link";
+import { useRouter } from "next/router";
 
 export default function LandingPageUser() {
+    const router = useRouter();
+    const { user, userId } = useAppData();
+
+    const [showDropdown, setShowDropdown] = useState(false);
+
+    function handleDropdown() {
+        if (!showDropdown) {
+            setShowDropdown(true);
+        } else {
+            setShowDropdown(false);
+        }
+    }
+
+    async function deleteAlert(e) {
+        if (confirm("Do you really want to delete your account?")) {
+            e.preventDefault();
+            const response = await fetch(
+                `${process.env.NEXT_PUBLIC_FETCH_URL_USER}/${userId}`,
+                {
+                    method: "DELETE",
+                    headers: {
+                        "Content-Type": "application/json",
+                        Accept: "application/json",
+                    },
+                }
+            );
+            router.replace("/register");
+        } else {
+            router.replace("/landingPageUser");
+        }
+    }
+
     return (
         <div>
-            <div className="max-w-sm bg-white rounded-lg border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700">
+            <div className="m-3 w-full bg-[#C4C4C4] rounded-lg  border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700">
                 <div className="flex justify-end px-4 pt-4">
                     <button
                         id="dropdownButton"
                         data-dropdown-toggle="dropdown"
-                        className="hidden sm:inline-block text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none focus:ring-4 focus:outline-none focus:ring-gray-200 dark:focus:ring-gray-700 rounded-lg text-sm p-1.5"
+                        className="hidden sm:inline-block text-white dark:text-gray-400 hover:bg-[#942928] dark:hover:bg-gray-700 focus:outline-none focus:ring-4 focus:outline-none focus:ring-gray-200 dark:focus:ring-gray-700 rounded-lg text-sm p-1.5"
                         type="button"
+                        onClick={handleDropdown}
                     >
                         <svg
                             className="w-6 h-6"
@@ -23,35 +61,37 @@ export default function LandingPageUser() {
 
                     <div
                         id="dropdown"
-                        className="hidden z-10 w-44 text-base list-none bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700"
+                        className={
+                            (showDropdown === true ? "visible" : "hidden") +
+                            " z-10 w-44 text-base list-none bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700"
+                        }
                         data-popper-reference-hidden=""
                         data-popper-escaped=""
                         data-popper-placement="top"
                     >
                         <ul className="py-1" aria-labelledby="dropdownButton">
                             <li>
-                                <a
-                                    href="#"
-                                    className="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
-                                >
-                                    Edit
-                                </a>
+                                <Link href="/editProfile">
+                                    <a className="block py-2 px-4 text-sm text-[#90A5A9] hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">
+                                        Edit Profile
+                                    </a>
+                                </Link>
                             </li>
                             <li>
                                 <a
                                     href="#"
-                                    className="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
+                                    className="block py-2 px-4 text-sm text-[#90A5A9] hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
                                 >
                                     Export Data
                                 </a>
                             </li>
                             <li>
-                                <a
-                                    href="#"
-                                    className="block py-2 px-4 text-sm text-red-600 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
+                                <p
+                                    onClick={deleteAlert}
+                                    className="block py-2 px-4 text-sm text-[#942928] hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
                                 >
-                                    Delete
-                                </a>
+                                    Delete Account
+                                </p>
                             </li>
                         </ul>
                     </div>
@@ -62,28 +102,29 @@ export default function LandingPageUser() {
                         src="https://flowbite.com/docs/images/people/profile-picture-3.jpg"
                         alt="Bonnie image"
                     />
-                    <h5 className="mb-1 text-xl font-medium text-gray-900 dark:text-white">
-                        Bonnie Green
+                    <h5 className="mb-1 text-xl font-medium text-[white] dark:text-white">
+                        {user.firstName} {user.lastName}
                     </h5>
-                    <span className="text-sm text-gray-500 dark:text-gray-400">
-                        Visual Designer
+                    <span className="text-sm text-[#90A5A9] dark:text-gray-400">
+                        {user.status}
                     </span>
                     <div className="flex mt-4 space-x-3 lg:mt-6">
                         <a
                             href="#"
-                            className="inline-flex items-center py-2 px-4 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                            className="inline-flex items-center py-2 px-4 text-sm font-medium text-center text-white bg-[#90A5A9] rounded-lg hover:bg-[#942928] focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
                         >
                             Add friend
                         </a>
                         <a
                             href="#"
-                            className="inline-flex items-center py-2 px-4 text-sm font-medium text-center text-gray-900 bg-white rounded-lg border border-gray-300 hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-200 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-700 dark:focus:ring-gray-700"
+                            className="inline-flex items-center py-2 px-4 text-sm font-medium text-center text-white bg-[#90A5A9] rounded-lg hover:bg-[#942928] focus:ring-4 focus:outline-none focus:ring-gray-200 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-700 dark:focus:ring-gray-700"
                         >
                             Message
                         </a>
                     </div>
                 </div>
             </div>
+            <div className="m-3 my-9 w-full rounded-lg bg-[#C4C4C4] text-white text-xl text-center">{`Hello ${user.userName}`}</div>
             <Navbar />
         </div>
     );
