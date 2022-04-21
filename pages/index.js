@@ -47,7 +47,7 @@ export default function Home() {
                 <div className={styles.landingpageContainerButtonLogin}>
                     <button
                         onClick={switchToLogin}
-                        class="bg-[#90A5A9] hover:bg-[#C4C4C4] text-white font-bold py-2 px-4 rounded-full"
+                        className="bg-[#90A5A9] hover:bg-[#C4C4C4] text-white font-bold py-2 px-4 rounded-full"
                     >
                         LOGIN
                     </button>

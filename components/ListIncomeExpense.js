@@ -4,9 +4,11 @@ import { useState } from "react";
 import { GrDocumentPdf, GrDocumentCsv } from "react-icons/gr";
 import { jsPDF } from "jspdf";
 import html2canvas from "html2canvas";
-import { CSVLink } from "react-csv";
+import { CSVLink, CSVDownload } from "react-csv";
+import { useAppData } from "../Context/DataStorage.js";
 
 function ListIncomeExpense({ budgetItems }) {
+    const { userId } = useAppData();
     const router = useRouter();
     const [showDropdown, setShowDropdown] = useState(false);
 
@@ -21,6 +23,20 @@ function ListIncomeExpense({ budgetItems }) {
         }
     }
 
+    async function exportToPDF() {
+        try {
+            const fetchPDFFromServer = await fetch(
+                process.env.NEXT_PUBLIC_FETCH_URL_PDF + `/${userId}`
+            );
+            if (fetchPDFFromServer.status === 200) {
+                const pdf = await fetchPDFFromServer.blob();
+                const fileURL = URL.createObjectURL(pdf);
+                window.open(fileURL);
+            }
+        } catch (error) {
+            console.log(error);
+        }
+    }
     const data = budgetItems.map((item) => {
         return {
             date: item.date,
@@ -58,30 +74,6 @@ function ListIncomeExpense({ budgetItems }) {
         headers: headers,
         data: data,
     };
-
-    /*   function exportPDF() {
-        const input = document.getElementById("content-pdf");
-        const options = {
-            dpi: 150,
-        };
-        html2canvas(input, options).then((canvas) => {
-            const imgData = canvas.toDataURL("image/png");
-            const imgWidth = 208;
-            const imgHeight = (canvas.height * imgWidth) / canvas.width;
-            const pdf = new jsPDF("p", "mm", "a4", true);
-            pdf.addImage(imgData, "PNG", 0, 0, imgWidth, imgHeight);
-            pdf.save("ListIncomeExpense.pdf");
-        });
-    }
-
-    function exportPDF2() {
-        const doc = new jsPDF("p", "pt", "a4");
-        doc.html(document.getElementById("content-pdf"), {
-            callback: function (doc) {
-                doc.save("ListIncomeExpense.pdf");
-            },
-        });
-    } */
 
     // Alle Daten (Datum) aus dem BudgetItem Array werden in ein neues Array gespeichert
     const listDates = budgetItems.map((item) => item.date);
@@ -168,12 +160,12 @@ function ListIncomeExpense({ budgetItems }) {
                     data-popper-placement="top"
                 >
                     <ul className="py-1" aria-labelledby="dropdownButton">
-                        {/*  <li title="Download as PDF">
+                        <li title="Download as PDF">
                             <GrDocumentPdf
-                                className="text-[2rem] mt-2"
-                                onClick={exportPDF2}
+                                className="text-[2rem] mt-2 cursor-pointer"
+                                onClick={exportToPDF}
                             />
-                        </li> */}
+                        </li>
                         <li title="Download as CSV">
                             <CSVLink {...csvLink}>
                                 <GrDocumentCsv className="text-[2rem] mt-2" />
