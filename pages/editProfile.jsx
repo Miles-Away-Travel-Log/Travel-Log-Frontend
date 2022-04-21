@@ -1,4 +1,3 @@
-
 import { useRouter } from "next/router";
 import Image from "next/image";
 import avatar from "../public/images/images-register/avatar.svg";
@@ -7,6 +6,9 @@ import { useEffect, useState } from "react";
 import { ImEyeBlocked, ImEye } from "react-icons/im";
 
 export default function EditProfile() {
+    const router = useRouter();
+    const { userId, user } = useAppData();
+
     const userInitialValues = {
         firstName: "",
         lastName: "",
@@ -16,10 +18,11 @@ export default function EditProfile() {
         confirm_password: "",
         city: "",
         country: "",
+        status: "",
     };
-    const router = useRouter();
+    
     const [isSubmit, setIsSubmit] = useState(false);
-    const [formValues, setFormValues] = useState(userInitialValues)
+    const [formValues, setFormValues] = useState(userInitialValues);
     const [formErrors, setFormErrors] = useState({});
 
     // Show Passwort and hide it
@@ -108,13 +111,24 @@ export default function EditProfile() {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [formValues]);
 
+    useEffect(() => {
+        if (!user) {
+            return;
+        }
+        setFormValues({
+            ...user,
+            password: "",
+            confirm_password: "",
+        });
+    }, [user]);
+
     async function updateUser(e) {
         e.preventDefault();
         setIsSubmit(true);
         if (Object.keys(formErrors).length === 0) {
             // user erstellen
             const rawResponse = await fetch(
-                `${process.env.NEXT_PUBLIC_FETCH_URL_USER}/${id}`,
+                `${process.env.NEXT_PUBLIC_FETCH_URL_USER}/${userId}`,
                 {
                     method: "PUT",
                     headers: {
@@ -129,12 +143,13 @@ export default function EditProfile() {
                         password: formValues.password,
                         city: formValues.city,
                         country: formValues.country,
+                        status: formValues.status,
                     }),
                 }
             );
 
-            if (rawResponse.status === 201) {
-                // falls erfolgreich, dann login
+            if (rawResponse.status === 200) {
+                // falls erfolgreich, dann:
                 router.replace("/landingPageUser");
             } else {
                 const err = await rawResponse.json();
@@ -156,21 +171,23 @@ export default function EditProfile() {
                     className=" px-6 py-8 text-black w-full"
                     onSubmit={updateUser}
                 >
-
                     <div className="flex justify-center w-full mb-8">
-                   <Image
-                    src={avatar} alt="Avatar" width={100} height={100}
-                   />
-                      </div>
+                        <Image
+                            src={avatar}
+                            alt="Avatar"
+                            width={100}
+                            height={100}
+                        />
+                    </div>
 
                     <h1 className="mb-8 text-3xl text-center text-white">
                         EDIT YOUR PROFILE
                     </h1>
-                    <input
+                    {/* <input
                         type="text"
                         className="block border border-grey-light w-full p-3 rounded-full mb-1 text-black"
                         name="firstName"
-                        placeholder="First Name"
+                        placeholder={user.firstName}
                         value={formValues.firstName}
                         onChange={handleChange}
                     />
@@ -181,29 +198,46 @@ export default function EditProfile() {
                         type="text"
                         className="block border border-grey-light w-full p-3 rounded-full mb-1 text-black"
                         name="lastName"
-                        placeholder="Last Name"
+                        placeholder={user.lastName}
                         value={formValues.lastName}
                         onChange={handleChange}
                     />
                     <p className="text-sm text-red-600 mb-4">
                         {isSubmit && formErrors.lastName}
-                    </p>
+                    </p> */}
+                    <label className="text-white">User Name</label>
                     <input
                         type="text"
                         className="block border border-grey-light w-full p-3 rounded-full mb-1 text-black"
                         name="userName"
-                        placeholder="User Name"
+                        placeholder={user.userName}
                         value={formValues.userName}
                         onChange={handleChange}
                     />
                     <p className="text-sm text-red-600 mb-4">
                         {isSubmit && formErrors.userName}
                     </p>
+                    <label className="form-label inline-block mb-2 text-white">
+                        Your Status
+                    </label>
+                    <textarea
+                        className="
+                            px-8 mb-3 form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700
+                            bg-white bg-clip-padding border border-solid border-gray-300 rounded-full transition
+                            ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
+                        id="exampleFormControlTextarea1"
+                        rows="3"
+                        name="status"
+                        placeholder="Text"
+                        value={formValues.status}
+                        onChange={handleChange}
+                    ></textarea>
+                    <label className="text-white">Email</label>
                     <input
                         type="text"
                         className="block border border-grey-light w-full p-3 rounded-full mb-1 text-black"
                         name="email"
-                        placeholder="Email"
+                        placeholder={user.email}
                         value={formValues.email}
                         onChange={handleChange}
                     />
@@ -228,7 +262,7 @@ export default function EditProfile() {
                             }}
                         />
                         <span
-                            className="absolute right-[5px] top-[15px] text-[20px] text-black"
+                            className="absolute right-[15px] top-[15px] text-[20px] text-black"
                             onClick={handleShowPasswordButton}
                         >
                             {passwordInputType === "password" ? (
@@ -260,22 +294,24 @@ export default function EditProfile() {
                     <p className="text-sm text-red-600 mb-4">
                         {isSubmit && formErrors.confirm_password}
                     </p>
+                    <label className="text-white">City</label>
                     <input
                         type="text"
                         className="block border border-grey-light w-full p-3 rounded-full mb-1 text-black"
                         name="city"
-                        placeholder="City"
+                        placeholder={user.city}
                         value={formValues.city}
                         onChange={handleChange}
                     />
                     <p className="text-sm text-red-600 mb-4">
                         {isSubmit && formErrors.city}
                     </p>
+                    <label className="text-white">Country</label>
                     <input
                         type="text"
                         className="block border border-grey-light w-full p-3 rounded-full mb-1 text-black"
                         name="country"
-                        placeholder="Country"
+                        placeholder={user.country}
                         value={formValues.country}
                         onChange={handleChange}
                     />
@@ -288,8 +324,15 @@ export default function EditProfile() {
                     >
                         Update Account
                     </button>
-                    
+                    <button
+                    type="submit"
+                    onClick={()=> router.replace("/landingPageUser")}
+                    className="w-full text-center py-3 rounded-full bg-[#90A5A9] text-white hover:bg-[#C4C4C4] focus:outline-none my-1"
+                >
+                    Back
+                </button>
                 </form>
+              
             </div>
         </div>
     );

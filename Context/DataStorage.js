@@ -16,6 +16,7 @@ function AppState(props) {
         confirm_password: "",
         city: "",
         country: "",
+        status:"",
     };
 
     const markerTest = [

@@ -222,7 +222,7 @@ export default function Register() {
                             }}
                         />
                         <span
-                            className="absolute right-[5px] top-[15px] text-[20px] text-black"
+                            className="absolute right-[15px] top-[15px] text-[20px] text-black"
                             onClick={handleShowPasswordButton}
                         >
                             {passwordInputType === "password" ? (
