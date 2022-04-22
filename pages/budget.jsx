@@ -60,7 +60,9 @@ export default function Budget() {
                 setLocalCurrencyValueInHomeCurrency("");
             }
             const fetchAndConvertLocalCurrencyToEUR = await fetch(
-                "https://v6.exchangerate-api.com/v6/07bfc9d4a76f4fca05c5b19d/pair" +
+                "https://v6.exchangerate-api.com/v6/" +
+                    process.env.NEXT_PUBLIC_EXCHANGE_KEY +
+                    "/pair" +
                     `/${localCurrency}` +
                     `/${homeCurrency}` +
                     `/${localCurrencyValue}`
