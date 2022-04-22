@@ -22,7 +22,7 @@ function AppState(props) {
         confirm_password: "",
         city: "",
         country: "",
-        status:"",
+        status: "",
     };
 
     const markerTest = [
@@ -80,7 +80,6 @@ function AppState(props) {
     const [outIn, setOutIn] = useState("expense");
     const [category, setCategory] = useState("");
     const [seedMoney, setSeedMoney] = useState("");
-    
 
     function handleGetUser() {
         fetch(
@@ -203,6 +202,7 @@ function AppState(props) {
                 handlePostBudgetItem,
                 budgetItems,
                 user,
+                setUser,
                 setOutIn,
                 outIn,
                 category,
