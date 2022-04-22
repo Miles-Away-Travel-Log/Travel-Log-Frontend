@@ -80,6 +80,7 @@ function AppState(props) {
     const [outIn, setOutIn] = useState("expense");
     const [category, setCategory] = useState("");
     const [seedMoney, setSeedMoney] = useState("");
+    const [homeCurrency, setHomeCurrency] = useState("EUR");
 
     function handleGetUser() {
         fetch(
@@ -91,6 +92,11 @@ function AppState(props) {
                 setBudgetItems(data.user.budget);
                 setUserId(data.user.id);
                 setSeedMoney(data.user.seedMoney);
+                setHomeCurrency(
+                    data.user.seedMoney[0]
+                        ? data.user.seedMoney[0].currency
+                        : "EUR"
+                );
             });
     }
 
@@ -131,6 +137,7 @@ function AppState(props) {
 
         const budgetItem = {
             total: e.target.seedmoney.value,
+            currency: homeCurrency,
             user: Cookies.get("user"),
         };
 
@@ -169,12 +176,14 @@ function AppState(props) {
                 }
             );
             if (response.status === 200) {
+                setHomeCurrency("EUR");
                 handleGetUser();
             }
         } catch (error) {
             console.log(error);
         }
     }
+
     useEffect(() => {
         const user = Cookies.get("user");
         if (!user) {
@@ -211,6 +220,8 @@ function AppState(props) {
                 setSeedMoney,
                 handlePostSeedMoney,
                 handleDeleteSeedMoney,
+                homeCurrency,
+                setHomeCurrency,
             }}
         >
             {props.children}
