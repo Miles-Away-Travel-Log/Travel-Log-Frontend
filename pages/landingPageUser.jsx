@@ -4,6 +4,7 @@ import { useAppData } from "../Context/DataStorage.js";
 import React, { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
+import Cookies from "js-cookie";
 
 export default function LandingPageUser() {
     const router = useRouter();
@@ -32,6 +33,8 @@ export default function LandingPageUser() {
                     },
                 }
             );
+            Cookies.remove("token")
+            Cookies.remove("user")
             router.replace("/register");
         } else {
             router.replace("/landingPageUser");
