@@ -4,7 +4,7 @@ import { BsArrowDownCircle } from "react-icons/bs";
 import { BsArrowUpCircle } from "react-icons/bs";
 
 function BalanceSheet() {
-    const { budgetItems, seedMoney } = useAppData();
+    const { budgetItems, seedMoney, homeCurrency } = useAppData();
 
     const listIncome = budgetItems.filter((item) => item.type === "income");
     const listExpense = budgetItems.filter((item) => item.type === "expense");
@@ -38,7 +38,7 @@ function BalanceSheet() {
                             }
                         >
                             <span className="text-2xl font-semibold block">
-                                Total: {balance} €
+                                Total: {balance} {homeCurrency}
                             </span>
                         </div>
                     </div>
@@ -48,7 +48,7 @@ function BalanceSheet() {
                         <BsArrowUpCircle className="text-green-500 w-1/12" />
                         <div className="w-9/12 ml-2">
                             <span className="text-m font-semibold block">
-                                Income: {sumIncome.toFixed(2)} €
+                                Income: {sumIncome.toFixed(2)} {homeCurrency}
                             </span>
                         </div>
                     </div>
@@ -58,7 +58,7 @@ function BalanceSheet() {
                         <BsArrowDownCircle className="text-red-500 w-1/12" />
                         <div className="w-9/12 ml-2">
                             <span className="text-m font-semibold block">
-                                Expenxe: {sumExpense.toFixed(2)} €
+                                Expenxe: {sumExpense.toFixed(2)} {homeCurrency}
                             </span>
                         </div>
                     </div>
