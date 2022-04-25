@@ -1,6 +1,6 @@
 // import { useState } from "react/cjs/react.production.min";
-import Navbar from "../components/Navbar.jsx";
-import { useAppData } from "../Context/DataStorage.js";
+import Navbar from "../../components/Navbar.jsx";
+import { useAppData } from "../../Context/DataStorage.js";
 import React, { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
@@ -8,7 +8,7 @@ import Cookies from "js-cookie";
 
 export default function LandingPageUser() {
     const router = useRouter();
-    const { user, userId } = useAppData();
+    const { user, userId, logout } = useAppData();
 
     const [showDropdown, setShowDropdown] = useState(false);
 
@@ -19,7 +19,6 @@ export default function LandingPageUser() {
             setShowDropdown(false);
         }
     }
-
     async function deleteAlert(e) {
         if (confirm("Do you really want to delete your account?")) {
             e.preventDefault();
@@ -33,8 +32,8 @@ export default function LandingPageUser() {
                     },
                 }
             );
-            Cookies.remove("token")
-            Cookies.remove("user")
+            Cookies.remove("token");
+            Cookies.remove("user");
             router.replace("/register");
         } else {
             router.replace("/landingPageUser");
@@ -94,6 +93,14 @@ export default function LandingPageUser() {
                                     className="block py-2 px-4 text-sm text-[#942928] hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
                                 >
                                     Delete Account
+                                </p>
+                            </li>
+                            <li>
+                                <p
+                                    onClick={logout}
+                                    className="block py-2 px-4 text-sm text-[#942928] hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
+                                >
+                                    logout
                                 </p>
                             </li>
                         </ul>

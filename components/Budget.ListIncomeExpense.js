@@ -4,14 +4,15 @@ import { useState } from "react";
 import { GrDocumentPdf, GrDocumentCsv } from "react-icons/gr";
 import { CSVLink } from "react-csv";
 import { useAppData } from "../Context/DataStorage.js";
+import { RiDeleteBinLine } from "react-icons/ri";
 
 function ListIncomeExpense({ budgetItems }) {
-    const { userId } = useAppData();
+    const { userId, deleteOneItem } = useAppData();
     const router = useRouter();
     const [showDropdown, setShowDropdown] = useState(false);
 
     function backToBudget() {
-        router.replace("/budget");
+        router.replace("/user/budget");
     }
     function handleDropdown() {
         if (!showDropdown) {
@@ -84,6 +85,7 @@ function ListIncomeExpense({ budgetItems }) {
             .filter((item) => item.date === label)
             .map((item) => {
                 return {
+                    id: item._id,
                     date: item.date,
                     type: item.type,
                     category: item.category,
@@ -112,10 +114,20 @@ function ListIncomeExpense({ budgetItems }) {
                                         <span className="bg-red-400 h-2 w-2 rounded-full block mt-2"></span>
                                     )}
                                 </div>
+
                                 <div className="w-9/12">
-                                    <span className="text-sm font-semibold block">
-                                        {item.category}
-                                    </span>
+                                    <div className="flex justify-between">
+                                        <span className="text-sm font-semibold block">
+                                            {item.category}
+                                        </span>
+                                        <span>
+                                            <RiDeleteBinLine
+                                                onClick={() =>
+                                                    deleteOneItem(item.id)
+                                                }
+                                            />
+                                        </span>
+                                    </div>
                                     <span className="text-sm">
                                         {item.value} €
                                     </span>

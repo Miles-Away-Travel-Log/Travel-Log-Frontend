@@ -46,7 +46,7 @@ export default function Login() {
             console.log(data.user);
             setUserId(data.user.id);
             setSeedMoney(data.user.seedMoney);
-            router.replace("/landingPageUser");
+            router.replace("/user/landingPageUser");
         } else {
             alert("Invalid login credentials");
         }
