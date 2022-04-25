@@ -4,6 +4,7 @@ import avatar from "../public/images/images-register/avatar.svg";
 import { useAppData } from "../Context/DataStorage.js";
 import { useEffect, useState } from "react";
 import { ImEyeBlocked, ImEye } from "react-icons/im";
+import AddProfilePicture from "../components/AddProfilePicture.jsx";
 
 export default function EditProfile() {
     const router = useRouter();
@@ -20,7 +21,7 @@ export default function EditProfile() {
         country: "",
         status: "",
     };
-    
+
     const [isSubmit, setIsSubmit] = useState(false);
     const [formValues, setFormValues] = useState(userInitialValues);
     const [formErrors, setFormErrors] = useState({});
@@ -163,6 +164,15 @@ export default function EditProfile() {
             passwordInputType === "password" ? "text" : "password"
         );
     }
+    const [showUploader, setShowUploader] = useState(false);
+
+    function handlePictureUploader() {
+        if (!showUploader) {
+            setShowUploader(true);
+        } else {
+            setShowUploader(false);
+        }
+    }
 
     return (
         <div className="bg-[url('../public/images/images-register/willian-justen-de-vasconcellos-T_Qe4QlMIvQ-unsplash.jpg')] bg-cover min-h-screen flex flex-col">
@@ -171,13 +181,19 @@ export default function EditProfile() {
                     className=" px-6 py-8 text-black w-full"
                     onSubmit={updateUser}
                 >
-                    <div className="flex justify-center w-full mb-8">
+                    <div className="flex flex-col justify-center w-full mb-8 text-white text-center">
                         <Image
                             src={avatar}
                             alt="Avatar"
                             width={100}
                             height={100}
                         />
+                  
+                            <p className="hover:text-[#942928]" onClick={handlePictureUploader}>Add a Picture</p>
+                            <div className={(showUploader === true ? "visible" : "hidden")}>
+                            <AddProfilePicture />
+                            </div>
+                            
                     </div>
 
                     <h1 className="mb-8 text-3xl text-center text-white">
@@ -325,14 +341,13 @@ export default function EditProfile() {
                         Update Account
                     </button>
                     <button
-                    type="submit"
-                    onClick={()=> router.replace("/landingPageUser")}
-                    className="w-full text-center py-3 rounded-full bg-[#90A5A9] text-white hover:bg-[#C4C4C4] focus:outline-none my-1"
-                >
-                    Back
-                </button>
+                        type="submit"
+                        onClick={() => router.replace("/landingPageUser")}
+                        className="w-full text-center py-3 rounded-full bg-[#90A5A9] text-white hover:bg-[#C4C4C4] focus:outline-none my-1"
+                    >
+                        Back
+                    </button>
                 </form>
-              
             </div>
         </div>
     );
