@@ -1,7 +1,7 @@
 import React from "react";
 import { FaChartBar, FaChartPie } from "react-icons/fa";
-import BarChart from "../components/Chart.Bar.jsx";
-import PieChart from "../components/Chart.Pie.jsx";
+import BarChart from "../components/Budget.Chart.Bar.jsx";
+import PieChart from "../components/Budget.Chart.Pie.jsx";
 import { useState } from "react";
 import { MdKeyboardBackspace } from "react-icons/md";
 import { useRouter } from "next/router";
