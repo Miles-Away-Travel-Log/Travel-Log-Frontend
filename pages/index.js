@@ -12,6 +12,9 @@ export default function Home() {
     function switchToLogin() {
         router.replace("/login");
     }
+    function switchToMenu() {
+        router.replace("/menu");
+    }
 
     return (
         <div className={styles.landingpageContainer}>
@@ -45,7 +48,7 @@ export default function Home() {
                 <div className={styles.landingpageContainerButton}>
                     <button
                         onClick={switchToRegister}
-                        class="bg-[#90A5A9] hover:bg-[#C4C4C4] text-white font-bold py-2 px-4 rounded-full"
+                        className="bg-[#90A5A9] hover:bg-[#C4C4C4] text-white font-bold py-2 px-4 rounded-full"
                     >
                         REGISTER NOW
                     </button>
@@ -53,7 +56,7 @@ export default function Home() {
                 <div className={styles.landingpageContainerButtonLogin}>
                     <button
                         onClick={switchToLogin}
-                        class="bg-[#90A5A9] hover:bg-[#C4C4C4] text-white font-bold py-2 px-4 rounded-full"
+                        className="bg-[#90A5A9] hover:bg-[#C4C4C4] text-white font-bold py-2 px-4 rounded-full"
                     >
                         LOGIN
                     </button>
