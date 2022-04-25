@@ -132,6 +132,10 @@ function AppState(props) {
         } catch (error) {
             console.log(error);
         }
+
+        e.target.date.value = "";
+        e.target.description.value = "";
+        e.target.localcurrency.value = "";
     }
 
     async function handlePostSeedMoney(e) {

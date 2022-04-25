@@ -101,7 +101,7 @@ function BudgetIncomeExpense() {
                         <input
                             className="block border border-grey-light w-2/3 p-3 rounded-full mb-2 h-1/4 mt-2"
                             type="text"
-                            name="local-currency"
+                            name="localcurrency"
                             onChange={handleLocalCurrencyValue}
                             placeholder={
                                 outIn === "income"
