@@ -1,7 +1,7 @@
-import BalanceSheet from "../components/Budget.BalanceSheet.js";
+import BalanceSheet from "../../components/Budget.BalanceSheet.js";
 import { useRouter } from "next/router";
-import BudgetSeedMoney from "../components/Budget.SeedMoney.js";
-import BudgetIncomeExpense from "../components/Budget.IncomeExpense.js";
+import BudgetSeedMoney from "../../components/Budget.SeedMoney.js";
+import BudgetIncomeExpense from "../../components/Budget.IncomeExpense.js";
 
 export default function Budget() {
     const router = useRouter();
@@ -14,13 +14,13 @@ export default function Budget() {
             <div>
                 <button
                     className="w-full text-center py-3 rounded-full bg-fuchsia-500 text-white hover:bg-[#C4C4C4] focus:outline-none my-1"
-                    onClick={() => router.replace("/transactions")}
+                    onClick={() => router.replace("/user/transactions")}
                 >
                     Transactions
                 </button>
                 <button
                     className="w-full text-center py-3 rounded-full bg-rose-600 text-white hover:bg-[#C4C4C4] focus:outline-none my-1"
-                    onClick={() => router.replace("/charts")}
+                    onClick={() => router.replace("/user/charts")}
                 >
                     Chart
                 </button>

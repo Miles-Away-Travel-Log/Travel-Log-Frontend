@@ -1,10 +1,10 @@
 import { useRouter } from "next/router";
 import Image from "next/image";
 import avatar from "../public/images/images-register/avatar.svg";
-import { useAppData } from "../Context/DataStorage.js";
+import { useAppData } from "../../Context/DataStorage.js";
 import { useEffect, useState } from "react";
 import { ImEyeBlocked, ImEye } from "react-icons/im";
-import AddProfilePicture from "../components/AddProfilePicture.jsx";
+import AddProfilePicture from "../../components/AddProfilePicture.jsx";
 
 export default function EditProfile() {
     const router = useRouter();
@@ -188,12 +188,20 @@ export default function EditProfile() {
                             width={100}
                             height={100}
                         />
-                  
-                            <p className="hover:text-[#942928]" onClick={handlePictureUploader}>Add a Picture</p>
-                            <div className={(showUploader === true ? "visible" : "hidden")}>
+
+                        <p
+                            className="hover:text-[#942928]"
+                            onClick={handlePictureUploader}
+                        >
+                            Add a Picture
+                        </p>
+                        <div
+                            className={
+                                showUploader === true ? "visible" : "hidden"
+                            }
+                        >
                             <AddProfilePicture />
-                            </div>
-                            
+                        </div>
                     </div>
 
                     <h1 className="mb-8 text-3xl text-center text-white">

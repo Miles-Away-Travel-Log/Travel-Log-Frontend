@@ -1,6 +1,6 @@
 import React from "react";
-import ListIncomeExpense from "../components/ListIncomeExpense.js";
-import { useAppData } from "../Context/DataStorage.js";
+import ListIncomeExpense from "../../components/Budget.ListIncomeExpense.js";
+import { useAppData } from "../../Context/DataStorage.js";
 
 function Transactions() {
     const { budgetItems } = useAppData();
