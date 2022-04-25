@@ -302,7 +302,7 @@ export default function Register() {
                     </div>
                 </form>
 
-                <div className="text-white mt-6">
+                <div className="text-white mt-3">
                     Already have an account?
                     <a
                         className="no-underline border-b border-blue text-blue"
