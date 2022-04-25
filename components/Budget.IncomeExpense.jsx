@@ -1,8 +1,8 @@
 import React from "react";
 import { useAppData } from "../Context/DataStorage.js";
 import { useState, useEffect } from "react";
-import { createOptionsForUnits } from "../components/Budget.CreateOptionsForUnits.js";
-import { exchangeUnits } from "../components/Budget.ExchangeUnits.js";
+import { createOptionsForUnits } from "./Budget.CreateOptionsForUnits.js";
+import { exchangeUnits } from "./Budget.ExchangeUnits.js";
 
 function BudgetIncomeExpense() {
     const { handlePostBudgetItem, setOutIn, outIn, setCategory, homeCurrency } =

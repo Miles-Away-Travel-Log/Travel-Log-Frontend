@@ -29,8 +29,8 @@ export default function MapDummySelection() {
     }, [mapMarkerTest]);
 
     return (
-        <div className="h-auto w-full">
-            <section className="bg-gray-400 p-1 flex justify-around">
+        <div className="absolute top-0 left-0 right-0 w-auto">
+            <section className="bg-gray-400/[.75] p-1 flex justify-around font-bold">
                 <div>
                     <label htmlFor="option1" className="pr-2">
                         Standard-Layout
@@ -40,7 +40,6 @@ export default function MapDummySelection() {
                         type="radio"
                         name="test"
                         value="mapbox://styles/mapbox/streets-v9"
-                        checked={true}
                         onChange={handleChangeRadio}
                     />
                 </div>
@@ -93,7 +92,7 @@ export default function MapDummySelection() {
                     />
                 </div>
             </section>
-            <section className="bg-gray-400 p-1 flex justify-around">
+            <section className="bg-gray-400/[.75] p-1 flex justify-around font-bold">
                 <div>
                     <label htmlFor="option6" className="pr-2">
                         Andreas
