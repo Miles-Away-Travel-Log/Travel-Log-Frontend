@@ -176,7 +176,7 @@ export default function EditProfile() {
             setShowUploader(false);
         }
     }
-    console.log(user)
+    console.log("editProfile", user)
     return (
         <div className="bg-[url('../public/images/images-register/willian-justen-de-vasconcellos-T_Qe4QlMIvQ-unsplash.jpg')] bg-cover min-h-screen flex flex-col">
             <div className="container max-w-sm mx-auto flex-1 flex flex-col items-center justify-center px-2">

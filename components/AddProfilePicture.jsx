@@ -5,7 +5,7 @@ import { useAppData } from "../Context/DataStorage.js";
 export default function AddProfilePicture() {
     const router = useRouter();
     const [avatarUrl, setAvatarUrl] = useState("");
-    const { userId } = useAppData();
+    const {user, userId } = useAppData();
 
 
 
@@ -80,6 +80,8 @@ export default function AddProfilePicture() {
 //     useEffect(() => {
 //    updateUser()
 //     }, [handlePictureUpload]);
+
+console.log("addProfilePicture", user)
 
     return (
         <div className="flex justify-center mt-8">
