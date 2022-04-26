@@ -5,6 +5,8 @@ import React, { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import Cookies from "js-cookie";
+import Image from "next/image";
+import avatar from "../public/images/images-register/avatar.svg";
 
 export default function LandingPageUser() {
     const router = useRouter();
@@ -100,10 +102,10 @@ export default function LandingPageUser() {
                     </div>
                 </div>
                 <div className="flex flex-col items-center pb-10">
-                    <img
+                    <Image
                         className="mb-3 w-24 h-24 rounded-full shadow-lg"
-                        src="https://flowbite.com/docs/images/people/profile-picture-3.jpg"
-                        alt="Bonnie image"
+                        src={avatar}
+                        alt="User Image"
                     />
                     <h5 className="mb-1 text-xl font-medium text-[white] dark:text-white">
                         {user.firstName} {user.lastName}

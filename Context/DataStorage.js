@@ -23,6 +23,7 @@ function AppState(props) {
         city: "",
         country: "",
         status: "",
+        avatar:""
     };
 
     const markerTest = [
