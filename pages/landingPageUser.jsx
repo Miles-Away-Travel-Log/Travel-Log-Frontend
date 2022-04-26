@@ -7,12 +7,38 @@ import { useRouter } from "next/router";
 import Cookies from "js-cookie";
 import Image from "next/image";
 import avatar from "../public/images/images-register/avatar.svg";
+import { buildUrl } from 'cloudinary-build-url';
+
+
+
 
 export default function LandingPageUser() {
     const router = useRouter();
     const { user, userId } = useAppData();
 
     const [showDropdown, setShowDropdown] = useState(false);
+
+
+const getImageId = () => {
+    let arr = user.avatar.split("/");
+    let imageIdWithFormat = arr[arr.length - 1];
+    const imageId = imageIdWithFormat.split(".")[0];
+    return imageId;
+  };
+  
+  console.log(getImageId());
+  
+  const avatarUrl = buildUrl(getImageId(), {
+      cloud: {
+        cloudName: 'milesaway',
+      },
+      transformations: {
+        effect: {
+          name: 'pixelate',
+          value: 40
+        }
+      }
+  });
 
     function handleDropdown() {
         if (!showDropdown) {
@@ -35,13 +61,14 @@ export default function LandingPageUser() {
                     },
                 }
             );
-            Cookies.remove("token")
-            Cookies.remove("user")
+            Cookies.remove("token");
+            Cookies.remove("user");
             router.replace("/register");
         } else {
             router.replace("/landingPageUser");
         }
     }
+    console.log(user.avatar)
 
     return (
         <div>
@@ -104,8 +131,10 @@ export default function LandingPageUser() {
                 <div className="flex flex-col items-center pb-10">
                     <Image
                         className="mb-3 w-24 h-24 rounded-full shadow-lg"
-                        src={avatar}
+                        src={avatarUrl}
                         alt="User Image"
+                        // width={100}
+                        // height={100}
                     />
                     <h5 className="mb-1 text-xl font-medium text-[white] dark:text-white">
                         {user.firstName} {user.lastName}

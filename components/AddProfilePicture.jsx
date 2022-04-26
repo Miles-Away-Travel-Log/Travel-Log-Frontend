@@ -43,7 +43,8 @@ export default function AddProfilePicture() {
     }
    
 
-    async function updateUser() {
+    async function updateUser(e) {
+        e.preventDefault()
         console.log(avatarUrl)
           const rawResponse = await fetch(
             `${process.env.NEXT_PUBLIC_FETCH_URL_USER}/${userId}`,
