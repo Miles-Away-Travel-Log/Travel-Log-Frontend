@@ -1,13 +1,16 @@
 import { useRouter } from "next/router";
 import { useState, useEffect } from "react";
 import { useAppData } from "../Context/DataStorage.js";
+import Cookies from "js-cookie";
 
 export default function AddProfilePicture() {
     const router = useRouter();
     const [avatarUrl, setAvatarUrl] = useState("");
-    const {user, userId } = useAppData();
+    const { user, userId } = useAppData();
 
-
+    useEffect(() => {
+        console.log("state", avatarUrl);
+    }, [avatarUrl]);
 
     function handlePictureUpload() {
         const url =
@@ -39,20 +42,19 @@ export default function AddProfilePicture() {
                     });
             }
         });
-        console.log("test1")
+        console.log("test1");
     }
-   
 
-    async function updateUser(e) {
-        e.preventDefault()
-        console.log(avatarUrl)
-          const rawResponse = await fetch(
+    async function updateUser() {
+        console.log("avatarUrl", avatarUrl);
+        const rawResponse = await fetch(
             `${process.env.NEXT_PUBLIC_FETCH_URL_USER}/${userId}`,
             {
                 method: "PUT",
                 headers: {
                     Accept: "application/json",
                     "Content-Type": "application/json",
+                    Authorization: `Bearer ${Cookies.get("token")}`,
                 },
                 body: JSON.stringify({
                     // firstName: formValues.firstName,
@@ -70,18 +72,18 @@ export default function AddProfilePicture() {
 
         if (rawResponse.status === 200) {
             // falls erfolgreich, dann:
-            router.replace("/landingPageUser");
+            router.push("/user/landingPageUser");
         } else {
             const err = await rawResponse.json();
             console.log("backend error", err);
         }
-        console.log("test2")
+        console.log("test2");
     }
-//     useEffect(() => {
-//    updateUser()
-//     }, [handlePictureUpload]);
+    //     useEffect(() => {
+    //    updateUser()
+    //     }, [handlePictureUpload]);
 
-console.log("addProfilePicture", user)
+    console.log("addProfilePicture", user);
 
     return (
         <div className="flex justify-center mt-8">
@@ -117,7 +119,7 @@ console.log("addProfilePicture", user)
                 <div className="flex justify-center p-2 space-x-4">
                     <button
                         className="px-4 py-2 text-white bg-[#942928] rounded-full shadow-xl"
-                        onClick={() => router.replace("/landingPageUser")}
+                        onClick={() => router.replace("/user/landingPageUser")}
                     >
                         Cancel
                     </button>
@@ -125,7 +127,6 @@ console.log("addProfilePicture", user)
                         className="px-4 py-2 text-white bg-[#90A5A9] rounded-full shadow-xl"
                         onClick={() => {
                             handlePictureUpload();
-                           
                         }}
                         type="submit"
                     >
@@ -141,7 +142,6 @@ console.log("addProfilePicture", user)
                     >
                         test
                     </button>
-
                 </div>
             </div>
         </div>
