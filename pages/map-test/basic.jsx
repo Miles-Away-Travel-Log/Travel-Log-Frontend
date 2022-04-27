@@ -1,5 +1,5 @@
 import * as React from "react";
-import Map, { Marker, Popup } from "react-map-gl";
+import Map, { Marker, Source, Layer } from "react-map-gl";
 import { useAppData } from "../../Context/DataStorage.js";
 import "mapbox-gl/dist/mapbox-gl.css";
 import { useEffect } from "react";
@@ -14,6 +14,19 @@ export default function MapDummy() {
 
     // useEffect(() => {
     // }, [mapMarkerTest]);
+
+    const dataOne = {
+        type: "Feature",
+        properties: {},
+        geometry: {
+            type: "LineString",
+            coordinates: [
+                [12.372418865370589, 51.3233680719318],
+                [12.401449243834573, 51.33907051907917],
+                [12.370997422085791, 51.348486599994935],
+            ],
+        },
+    };
 
     return (
         <div className="h-screen w-screen">
@@ -44,6 +57,21 @@ export default function MapDummy() {
                         </div>
                     )
                 )}
+                <Source id="polylineLayer" type="geojson" data={dataOne}>
+                    <Layer
+                        id="lineLayer"
+                        type="line"
+                        source="my-data"
+                        layout={{
+                            "line-join": "round",
+                            "line-cap": "round",
+                        }}
+                        paint={{
+                            "line-color": "rgba(3, 170, 238, 0.5)",
+                            "line-width": 3,
+                        }}
+                    />
+                </Source>
                 <MapDummySelection />
             </Map>
         </div>

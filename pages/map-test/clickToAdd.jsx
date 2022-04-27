@@ -1,4 +1,3 @@
-import getCenterOfBounds from "geolib/es/getCenter";
 import Map, { Marker, Popup, NavigationControl } from "react-map-gl";
 import { useState, useEffect, useCallback } from "react";
 import "mapbox-gl/dist/mapbox-gl.css";
