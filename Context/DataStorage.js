@@ -81,6 +81,29 @@ function AppState(props) {
     const [category, setCategory] = useState("");
     const [seedMoney, setSeedMoney] = useState("");
     const [homeCurrency, setHomeCurrency] = useState("EUR");
+    const [friends, setFriends] = useState([]);
+
+    async function addToFriends(id) {
+        const rawResponse = await fetch(
+            process.env.NEXT_PUBLIC_FETCH_URL_FRIEND,
+            {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    sentRequest: user.id,
+                    receivedRequest: id,
+                    status: false,
+                }),
+            }
+        );
+        if (rawResponse.status === 200) {
+            handleGetUser();
+            setSearchStringFriends([]);
+            setWordEntered("");
+        }
+    }
 
     function handleGetUser() {
         fetch(
@@ -97,6 +120,7 @@ function AppState(props) {
                         ? data.user.seedMoney[0].currency
                         : "EUR"
                 );
+                setFriends(data.user.friends);
             });
     }
 
@@ -226,8 +250,6 @@ function AppState(props) {
         const user = Cookies.get("user");
         if (!user) {
             return;
-        } else {
-            console.log(seedMoney._id);
         }
         handleGetUser();
     }, []);
@@ -262,6 +284,9 @@ function AppState(props) {
                 setHomeCurrency,
                 logout,
                 deleteOneItem,
+                addToFriends,
+                friends,
+                setFriends,
             }}
         >
             {props.children}

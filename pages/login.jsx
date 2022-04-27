@@ -8,7 +8,8 @@ import { useAppData } from "../Context/DataStorage.js";
 export default function Login() {
     const router = useRouter();
 
-    const { setUserId, setSeedMoney, setUser, setHomeCurrency } = useAppData();
+    const { setUserId, setSeedMoney, setUser, setHomeCurrency, setFriends } =
+        useAppData();
 
     async function submit(e) {
         e.preventDefault();
@@ -43,9 +44,9 @@ export default function Login() {
                 { sameSite: "none" }
             );
             setUser(data.user);
-            console.log(data.user);
             setUserId(data.user.id);
             setSeedMoney(data.user.seedMoney);
+            setFriends(data.user.friends);
             router.replace("/user/landingPageUser");
         } else {
             alert("Invalid login credentials");

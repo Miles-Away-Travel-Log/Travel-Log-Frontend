@@ -8,7 +8,24 @@ import Cookies from "js-cookie";
 
 export default function LandingPageUser() {
     const router = useRouter();
-    const { user, userId, logout } = useAppData();
+    const { user, userId, logout, friends } = useAppData();
+
+    function friendRequest() {
+        const friendsFilteredForStatusOfRequest = friends.filter((item) => {
+            return item.status === false && item.receivedRequest === userId;
+        });
+        console.log(friendsFilteredForStatusOfRequest);
+        if (friendsFilteredForStatusOfRequest.length > 0) {
+            return (
+                <button
+                    className="bg-rose-600 py-2 px-4 text-sm font-medium text-center rounded-full"
+                    onClick={() => router.replace("/user/friends")}
+                >
+                    New friend request
+                </button>
+            );
+        }
+    }
 
     const [showDropdown, setShowDropdown] = useState(false);
 
@@ -73,11 +90,19 @@ export default function LandingPageUser() {
                     >
                         <ul className="py-1" aria-labelledby="dropdownButton">
                             <li>
-                                <Link href="/editProfile">
+                                <Link href="/user/editProfile">
                                     <a className="block py-2 px-4 text-sm text-[#90A5A9] hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">
                                         Edit Profile
                                     </a>
                                 </Link>
+                            </li>
+                            <li>
+                                <p
+                                    onClick={logout}
+                                    className="block py-2 px-4 text-sm text-[#942928] hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
+                                >
+                                    Friends
+                                </p>
                             </li>
                             <li>
                                 <a
@@ -119,18 +144,19 @@ export default function LandingPageUser() {
                         {user.status}
                     </span>
                     <div className="flex mt-4 space-x-3 lg:mt-6">
-                        <a
-                            href="#"
+                        <button
                             className="inline-flex items-center py-2 px-4 text-sm font-medium text-center text-white bg-[#90A5A9] rounded-lg hover:bg-[#942928] focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                            onClick={() => router.replace("/user/friends")}
                         >
                             Add friend
-                        </a>
-                        <a
+                        </button>
+                        <button
                             href="#"
                             className="inline-flex items-center py-2 px-4 text-sm font-medium text-center text-white bg-[#90A5A9] rounded-lg hover:bg-[#942928] focus:ring-4 focus:outline-none focus:ring-gray-200 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-700 dark:focus:ring-gray-700"
                         >
                             Message
-                        </a>
+                        </button>
+                        {friendRequest()}
                     </div>
                 </div>
             </div>
