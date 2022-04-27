@@ -129,7 +129,7 @@ export default function Register() {
 
             if (rawResponse.status === 201) {
                 // falls erfolgreich, dann login
-                router.replace("/login");
+                router.replace("/user/login");
             } else {
                 const err = await rawResponse.json();
                 console.log("backend error", err);
@@ -150,12 +150,14 @@ export default function Register() {
                     className=" px-6 py-8 text-black w-full"
                     onSubmit={registerUser}
                 >
-
                     <div className="flex justify-center w-full mb-8">
-                   <Image
-                    src={avatar} alt="Avatar" width={100} height={100}
-                   />
-                      </div>
+                        <Image
+                            src={avatar}
+                            alt="Avatar"
+                            width={100}
+                            height={100}
+                        />
+                    </div>
 
                     <h1 className="mb-8 text-3xl text-center">
                         CREATE ACCOUNT
@@ -300,7 +302,7 @@ export default function Register() {
                     </div>
                 </form>
 
-                <div className="text-white mt-6">
+                <div className="text-white mt-3">
                     Already have an account?
                     <a
                         className="no-underline border-b border-blue text-blue"

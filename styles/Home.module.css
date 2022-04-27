@@ -66,12 +66,7 @@
     margin: 0 auto;
 }
 
-.landingpageContainerButton {
-    margin: 1em;
-    display: flex;
-    justify-content: center;
-    margin-bottom: 1em;
-}
+.landingpageContainerButton,
 .landingpageContainerButtonLogin {
     margin: 1em;
     display: flex;

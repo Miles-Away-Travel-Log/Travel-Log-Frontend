@@ -120,6 +120,8 @@ function AppState(props) {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json",
+                        Accept: "application/json",
+                        Authorization: `Bearer ${Cookies.get("token")}`,
                     },
                     body: JSON.stringify(budgetItem),
                 }
@@ -131,6 +133,10 @@ function AppState(props) {
         } catch (error) {
             console.log(error);
         }
+
+        e.target.date.value = "";
+        e.target.description.value = "";
+        e.target.localcurrency.value = "";
     }
 
     async function handlePostSeedMoney(e) {
@@ -149,6 +155,8 @@ function AppState(props) {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json",
+                        Accept: "application/json",
+                        Authorization: `Bearer ${Cookies.get("token")}`,
                     },
                     body: JSON.stringify(budgetItem),
                 }
@@ -173,11 +181,41 @@ function AppState(props) {
                     headers: {
                         "Content-Type": "application/json",
                         Accept: "application/json",
+                        Authorization: `Bearer ${Cookies.get("token")}`,
                     },
                 }
             );
             if (response.status === 200) {
                 setHomeCurrency("EUR");
+                handleGetUser();
+            }
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    function logout() {
+        Cookies.remove("token");
+        Cookies.remove("user");
+        setUser("");
+        setUserId("");
+        router.replace("/");
+    }
+
+    async function deleteOneItem(id) {
+        try {
+            const response = await fetch(
+                process.env.NEXT_PUBLIC_FETCH_URL_BUDGET + `/${id}`,
+                {
+                    method: "DELETE",
+                    headers: {
+                        "Content-Type": "application/json",
+                        Accept: "application/json",
+                        Authorization: `Bearer ${Cookies.get("token")}`,
+                    },
+                }
+            );
+            if (response.status === 200) {
                 handleGetUser();
             }
         } catch (error) {
@@ -223,6 +261,8 @@ function AppState(props) {
                 handleDeleteSeedMoney,
                 homeCurrency,
                 setHomeCurrency,
+                logout,
+                deleteOneItem,
             }}
         >
             {props.children}

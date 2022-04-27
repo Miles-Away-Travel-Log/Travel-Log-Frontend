@@ -11,6 +11,9 @@ export default function Home() {
     function switchToLogin() {
         router.replace("/login");
     }
+    function switchToMenu() {
+        router.replace("/menu");
+    }
 
     return (
         <div className={styles.landingpageContainer}>
