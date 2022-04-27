@@ -5,12 +5,46 @@ import React, { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import Cookies from "js-cookie";
+import Image from "next/image";
+import avatar from "../public/images/images-register/avatar.svg";
+import { buildUrl } from "cloudinary-build-url";
+import { _adapters } from "chart.js";
 
 export default function LandingPageUser() {
     const router = useRouter();
     const { user, userId, logout } = useAppData();
 
     const [showDropdown, setShowDropdown] = useState(false);
+    // const [avatarUrl, setAvatarUrl] = useState("");
+
+    // useEffect(() => {
+        // if(user.avatar){
+        // const getImageId = async() => {
+        //     const _user = await user;
+        //     let arr = _user.avatar.split("/");
+        //     let imageIdWithFormat = arr[arr.length - 1];
+        //     const imageId = imageIdWithFormat.split(".")[0];
+        //     return imageId;
+        //   };
+
+        //   console.log(getImageId());
+
+        const avatarUrl = buildUrl("byixznp48se7n1ejeuac", {
+            cloud: {
+                cloudName: "milesaway",
+            },
+            transformations: {
+                effect: {
+                    name: "pixelate",
+                    value: 40,
+                },
+            },
+        });
+        console.log("avatarUrl", avatarUrl);
+    //     setAvatarUrl(_avatarUrl);
+    //     //  }
+    // }, []);
+    console.log("avatarUrl", avatarUrl);
 
     function handleDropdown() {
         if (!showDropdown) {
@@ -39,6 +73,7 @@ export default function LandingPageUser() {
             router.replace("/landingPageUser");
         }
     }
+    console.log("landigPageUser", user);
 
     return (
         <div>
@@ -107,11 +142,13 @@ export default function LandingPageUser() {
                     </div>
                 </div>
                 <div className="flex flex-col items-center pb-10">
-                    <img
+                {avatarUrl.length > 0  &&(<Image
                         className="mb-3 w-24 h-24 rounded-full shadow-lg"
-                        src="https://flowbite.com/docs/images/people/profile-picture-3.jpg"
-                        alt="Bonnie image"
-                    />
+                        src={avatarUrl}
+                        alt="User Image"
+                        width={100}
+                        height={100}
+                    />)}
                     <h5 className="mb-1 text-xl font-medium text-[white] dark:text-white">
                         {user.firstName} {user.lastName}
                     </h5>
