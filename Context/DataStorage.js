@@ -43,6 +43,14 @@ function AppState(props) {
                 longitude: 12.401449243834573,
             },
         },
+        {
+            name: "Zoo",
+            visible: false,
+            coordinates: {
+                latitude: 51.348486599994935,
+                longitude: 12.370997422085791,
+            },
+        },
         { name: "Connect", visible: false },
     ];
 

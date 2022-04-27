@@ -23,6 +23,7 @@ export default function MapDummySelection() {
 
     let check0 = mapMarkerTest[0].visible;
     let check1 = mapMarkerTest[1].visible;
+    let check2 = mapMarkerTest[2].visible;
 
     useEffect(() => {
         console.log(mapMarkerTest);
@@ -129,6 +130,25 @@ export default function MapDummySelection() {
                             })
                         }
                         checked={check1}
+                    />
+                </div>
+                <div>
+                    <label htmlFor="option8" className="pr-2">
+                        Zoo
+                    </label>
+                    <input
+                        id="option8"
+                        type="checkbox"
+                        name="test-4"
+                        value="Zoo"
+                        onChange={(event) =>
+                            dispatchMapMarkerTest({
+                                type: "toggle",
+                                name: event.target.value,
+                                visible: check2,
+                            })
+                        }
+                        checked={check2}
                     />
                 </div>
                 {/* {console.log(mapMarkerTest)} */}
