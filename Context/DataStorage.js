@@ -23,7 +23,7 @@ function AppState(props) {
         city: "",
         country: "",
         status: "",
-        avatar:""
+        avatar: "",
     };
 
     const markerTest = [
@@ -90,6 +90,7 @@ function AppState(props) {
     const [category, setCategory] = useState("");
     const [seedMoney, setSeedMoney] = useState("");
     const [homeCurrency, setHomeCurrency] = useState("EUR");
+    const [accountPhoto, setAccountPhoto] = useState("");
 
     function handleGetUser() {
         fetch(
@@ -101,6 +102,7 @@ function AppState(props) {
                 setBudgetItems(data.user.budget);
                 setUserId(data.user.id);
                 setSeedMoney(data.user.seedMoney);
+                setAccountPhoto(data.user.avatar);
                 setHomeCurrency(
                     data.user.seedMoney[0]
                         ? data.user.seedMoney[0].currency
@@ -235,8 +237,6 @@ function AppState(props) {
         const user = Cookies.get("user");
         if (!user) {
             return;
-        } else {
-            console.log(seedMoney._id);
         }
         handleGetUser();
     }, []);
@@ -271,6 +271,9 @@ function AppState(props) {
                 setHomeCurrency,
                 logout,
                 deleteOneItem,
+                handleGetUser,
+                accountPhoto,
+                setAccountPhoto,
             }}
         >
             {props.children}

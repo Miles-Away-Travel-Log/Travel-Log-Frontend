@@ -9,8 +9,8 @@ import Cookies from "js-cookie";
 
 export default function EditProfile() {
     const router = useRouter();
-    const { userId, user } = useAppData();
-    console.log(user);
+    const { userId, user, accountPhoto, handleGetUser } = useAppData();
+    //console.log(user);
     const userInitialValues = {
         firstName: "",
         lastName: "",
@@ -21,7 +21,7 @@ export default function EditProfile() {
         city: "",
         country: "",
         status: "",
-        // avatar: "",
+        avatar: "",
     };
 
     const [isSubmit, setIsSubmit] = useState(false);
@@ -148,17 +148,18 @@ export default function EditProfile() {
                         city: formValues.city,
                         country: formValues.country,
                         status: formValues.status,
-                        avatar: formValues.avatar,
+                        avatar: accountPhoto,
                     }),
                 }
             );
 
             if (rawResponse.status === 200) {
                 // falls erfolgreich, dann:
+                handleGetUser();
                 router.replace("/user/landingPageUser");
             } else {
                 const err = await rawResponse.json();
-                console.log("backend error", err);
+                //console.log("backend error", err);
             }
         }
     }
@@ -177,7 +178,7 @@ export default function EditProfile() {
             setShowUploader(false);
         }
     }
-    console.log("editProfile", user);
+    //console.log("editProfile", user);
     return (
         <div className="bg-[url('../public/images/images-register/willian-justen-de-vasconcellos-T_Qe4QlMIvQ-unsplash.jpg')] bg-cover min-h-screen flex flex-col">
             <div className="container max-w-sm mx-auto flex-1 flex flex-col items-center justify-center px-2">
@@ -186,14 +187,6 @@ export default function EditProfile() {
                     onSubmit={updateUser}
                 >
                     <div className="flex flex-col justify-center w-full mb-8 text-white text-center">
-                        {/* <Image
-                            src={user.avatar}
-                            alt="Avatar"
-                            width={100}
-                            height={100}
-                            name="avatar"
-                        /> */}
-
                         <p
                             className="hover:text-[#942928]"
                             onClick={handlePictureUploader}

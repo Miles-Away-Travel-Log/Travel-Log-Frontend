@@ -14,10 +14,6 @@ export default function LandingPageUser() {
     const { user, userId, logout } = useAppData();
 
     const [showDropdown, setShowDropdown] = useState(false);
-  
-
-   
-  
 
     function handleDropdown() {
         if (!showDropdown) {
@@ -46,7 +42,7 @@ export default function LandingPageUser() {
             router.replace("/user/landingPageUser");
         }
     }
-    console.log("landigPageUser", user);
+    //console.log("landigPageUser", user);
 
     return (
         <div>
