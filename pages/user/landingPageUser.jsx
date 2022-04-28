@@ -113,14 +113,14 @@ export default function LandingPageUser() {
                 <div className="flex flex-col items-center pb-10">
                     {user.avatar && (
                         <Image
-                            className="mb-3 w-24 h-24 rounded-full shadow-lg"
+                            className="w-24 h-24 rounded-full shadow-lg"
                             src={user.avatar}
                             alt="User Image"
                             width={100}
                             height={100}
                         />
                     )}
-                    <h5 className="mb-1 text-xl font-medium text-[white] dark:text-white">
+                    <h5 className="mb-1 pt-2 text-xl font-medium text-[white] dark:text-white">
                         {user.firstName} {user.lastName}
                     </h5>
                     <span className="text-sm text-[#90A5A9] dark:text-gray-400">
