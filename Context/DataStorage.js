@@ -90,7 +90,10 @@ function AppState(props) {
     const [category, setCategory] = useState("");
     const [seedMoney, setSeedMoney] = useState("");
     const [homeCurrency, setHomeCurrency] = useState("EUR");
+    const [list_Friends_FriendRequests, setList_Friends_FriendRequests] =
+        useState([]);
     const [accountPhoto, setAccountPhoto] = useState("");
+
 
     function handleGetUser() {
         fetch(
@@ -108,6 +111,7 @@ function AppState(props) {
                         ? data.user.seedMoney[0].currency
                         : "EUR"
                 );
+                setList_Friends_FriendRequests(data.user.friends);
             });
     }
 
@@ -271,6 +275,8 @@ function AppState(props) {
                 setHomeCurrency,
                 logout,
                 deleteOneItem,
+                list_Friends_FriendRequests,
+                setList_Friends_FriendRequests,
                 handleGetUser,
                 accountPhoto,
                 setAccountPhoto,

@@ -27,6 +27,7 @@ export default function EditProfile() {
     const [isSubmit, setIsSubmit] = useState(false);
     const [formValues, setFormValues] = useState(userInitialValues);
     const [formErrors, setFormErrors] = useState({});
+    const [isVisible, setIsVisible] = useState();
 
     // Show Passwort and hide it
     const [passwordInputType, setPasswordInputType] = useState("password");
@@ -131,7 +132,7 @@ export default function EditProfile() {
         if (Object.keys(formErrors).length === 0) {
             // user erstellen
             const rawResponse = await fetch(
-                `${process.env.NEXT_PUBLIC_FETCH_URL_USER}/${userId}`,
+                process.env.NEXT_PUBLIC_FETCH_URL_USER + `/${userId}`,
                 {
                     method: "PUT",
                     headers: {
@@ -148,7 +149,9 @@ export default function EditProfile() {
                         city: formValues.city,
                         country: formValues.country,
                         status: formValues.status,
+                        visible: isVisible,
                         avatar: accountPhoto,
+
                     }),
                 }
             );
@@ -178,7 +181,18 @@ export default function EditProfile() {
             setShowUploader(false);
         }
     }
-    //console.log("editProfile", user);
+
+
+    function handleChangeVisibility(event) {
+        const valueVisibility = event.target.value;
+
+        if (valueVisibility === "yes") {
+            setIsVisible(true);
+        } else if (valueVisibility === "no") {
+            setIsVisible(false);
+        }
+    }
+
     return (
         <div className="bg-[url('../public/images/images-register/willian-justen-de-vasconcellos-T_Qe4QlMIvQ-unsplash.jpg')] bg-cover min-h-screen flex flex-col">
             <div className="container max-w-sm mx-auto flex-1 flex flex-col items-center justify-center px-2">
@@ -340,6 +354,21 @@ export default function EditProfile() {
                     <p className="text-sm text-red-600 mb-4">
                         {isSubmit && formErrors.country}
                     </p>
+                    <div className="flex flex-col ">
+                        <label htmlFor="visibility" className="text-white">
+                            Visible for other users
+                        </label>
+                        <select
+                            name="visibility"
+                            id="visibility"
+                            className="border border-grey-light w-full rounded-full p-3 mb-4"
+                            onChange={handleChangeVisibility}
+                        >
+                            <option value="empty">-</option>
+                            <option value="yes">yes</option>
+                            <option value="no">no</option>
+                        </select>
+                    </div>
                     <button
                         type="submit"
                         className="w-full text-center py-3 rounded-full bg-[#90A5A9] text-white hover:bg-[#C4C4C4] focus:outline-none my-1"
