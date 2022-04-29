@@ -184,7 +184,7 @@ function FriendsList(props) {
                                     <div className="absolute top-2 left-6 h-16 w-16 rounded-full border-2 border-white shadow-md">
                                         {friend.user.avatar ? (
                                             <img
-                                                className="rounded-full object-cover object-center"
+                                                className="rounded-full object-cover w-16 h-16 object-center"
                                                 src={friend.user.avatar}
                                                 alt=""
                                             />
