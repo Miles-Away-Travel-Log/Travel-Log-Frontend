@@ -1,6 +1,6 @@
 import React from "react";
 import { useAppData } from "../Context/DataStorage.js";
-import { createOptionsForUnits } from "./Budget.CreateOptionsForUnits.js";
+import { createOptionsForUnits } from "./Budget.CreateOptionsForUnits.jsx";
 import { exchangeUnits } from "./Budget.ExchangeUnits.js";
 
 function BudgetSeedMoney() {

@@ -1,9 +1,12 @@
 import React from "react";
 import FriendsList from "./Friends.list.js";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useAppData } from "../Context/DataStorage.js";
 
 function FriendsMenu() {
     const [show, setShow] = useState("");
+    const { user, setList_Friends_FriendRequests } = useAppData();
+
     return (
         <div className="mt-6">
             <div className="flex justify-around mb-2">

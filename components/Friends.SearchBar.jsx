@@ -5,7 +5,7 @@ import { AiOutlineClose } from "react-icons/ai";
 import { useAppData } from "../Context/DataStorage.js";
 
 function SearchBar() {
-    const { addToFriends } = useAppData();
+    const { handleGetUser, userId } = useAppData();
 
     const [searchStringFriends, setSearchStringFriends] = useState([]);
     const [filteredDataUsers, setFilteredDataUsers] = useState([]);
@@ -18,6 +18,28 @@ function SearchBar() {
                 setFilteredDataUsers(data.users);
             });
     }, []);
+
+    async function sendFriendRequest(id) {
+        const rawResponse = await fetch(
+            process.env.NEXT_PUBLIC_FETCH_URL_FRIEND,
+            {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    sentRequest: userId,
+                    receivedRequest: id,
+                    status: false,
+                }),
+            }
+        );
+        if (rawResponse.status === 200) {
+            handleGetUser();
+            setSearchStringFriends([]);
+            setWordEntered("");
+        }
+    }
 
     function handleChangeSearchBar(event) {
         const searchWord = event.target.value;
@@ -67,14 +89,14 @@ function SearchBar() {
             </form>
 
             {searchStringFriends.length != 0 && (
-                <div className=" mt-1 w-full">
-                    <div className="border-2 rounded-lg text-sm w-[200px] ml-12">
+                <div className=" mt-1 w-full lg:flex lg:justify-center">
+                    <div className="scrollbarHidden border-2 rounded-lg text-sm w-[200px] ml-12 overflow-hidden lg:ml-[-80px]">
                         {searchStringFriends.slice(0, 10).map((user) => {
                             return (
                                 <p
                                     key={user.id}
                                     className="pl-2 cursor-pointer"
-                                    onClick={() => addToFriends(user.id)}
+                                    onClick={() => sendFriendRequest(user.id)}
                                 >
                                     {user.userName}
                                 </p>
@@ -83,7 +105,6 @@ function SearchBar() {
                     </div>
                 </div>
             )}
-            {/* ::webkit-scrollbar */}
         </div>
     );
 }

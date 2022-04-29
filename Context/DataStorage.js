@@ -81,29 +81,8 @@ function AppState(props) {
     const [category, setCategory] = useState("");
     const [seedMoney, setSeedMoney] = useState("");
     const [homeCurrency, setHomeCurrency] = useState("EUR");
-    const [friends, setFriends] = useState([]);
-
-    async function addToFriends(id) {
-        const rawResponse = await fetch(
-            process.env.NEXT_PUBLIC_FETCH_URL_FRIEND,
-            {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({
-                    sentRequest: user.id,
-                    receivedRequest: id,
-                    status: false,
-                }),
-            }
-        );
-        if (rawResponse.status === 200) {
-            handleGetUser();
-            setSearchStringFriends([]);
-            setWordEntered("");
-        }
-    }
+    const [list_Friends_FriendRequests, setList_Friends_FriendRequests] =
+        useState([]);
 
     function handleGetUser() {
         fetch(
@@ -120,7 +99,7 @@ function AppState(props) {
                         ? data.user.seedMoney[0].currency
                         : "EUR"
                 );
-                setFriends(data.user.friends);
+                setList_Friends_FriendRequests(data.user.friends);
             });
     }
 
@@ -284,9 +263,9 @@ function AppState(props) {
                 setHomeCurrency,
                 logout,
                 deleteOneItem,
-                addToFriends,
-                friends,
-                setFriends,
+                list_Friends_FriendRequests,
+                setList_Friends_FriendRequests,
+                handleGetUser,
             }}
         >
             {props.children}

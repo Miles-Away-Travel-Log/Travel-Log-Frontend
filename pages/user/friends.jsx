@@ -4,7 +4,7 @@ import SearchBar from "../../components/Friends.SearchBar.jsx";
 import Menu from "../../components/Friends.menu.jsx";
 function friends() {
     return (
-        <div className="w-[375px] flex flex-col justify-center">
+        <div className="w-[375px] lg:w-full flex flex-col justify-center">
             <SearchBar />
             <Menu />
         </div>

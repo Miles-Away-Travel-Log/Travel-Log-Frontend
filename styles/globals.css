@@ -15,6 +15,9 @@
     .date:after {
         margin-left: 15px;
     }
+    .scrollbarHidden::-webkit-scrollbar {
+        display: none;
+    }
 
     @media print {
         #content-pdf {

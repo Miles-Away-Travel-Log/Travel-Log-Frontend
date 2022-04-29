@@ -8,13 +8,13 @@ import Cookies from "js-cookie";
 
 export default function LandingPageUser() {
     const router = useRouter();
-    const { user, userId, logout, friends } = useAppData();
+    const { user, userId, logout, list_Friends_FriendRequests } = useAppData();
 
     function friendRequest() {
-        const friendsFilteredForStatusOfRequest = friends.filter((item) => {
-            return item.status === false && item.receivedRequest === userId;
-        });
-        console.log(friendsFilteredForStatusOfRequest);
+        const friendsFilteredForStatusOfRequest =
+            list_Friends_FriendRequests.filter((item) => {
+                return item.status === false && item.receivedRequest === userId;
+            });
         if (friendsFilteredForStatusOfRequest.length > 0) {
             return (
                 <button
@@ -98,7 +98,9 @@ export default function LandingPageUser() {
                             </li>
                             <li>
                                 <p
-                                    onClick={logout}
+                                    onClick={() =>
+                                        router.replace("/user/friends")
+                                    }
                                     className="block py-2 px-4 text-sm text-[#942928] hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
                                 >
                                     Friends

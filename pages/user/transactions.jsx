@@ -1,5 +1,5 @@
 import React from "react";
-import ListIncomeExpense from "../../components/Budget.ListIncomeExpense.js";
+import ListIncomeExpense from "../../components/Budget.ListIncomeExpense.jsx";
 import { useAppData } from "../../Context/DataStorage.js";
 
 function Transactions() {
