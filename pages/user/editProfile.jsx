@@ -9,8 +9,8 @@ import Cookies from "js-cookie";
 
 export default function EditProfile() {
     const router = useRouter();
-    const { userId, user } = useAppData();
-
+    const { userId, user, accountPhoto, handleGetUser } = useAppData();
+    //console.log(user);
     const userInitialValues = {
         firstName: "",
         lastName: "",
@@ -21,6 +21,7 @@ export default function EditProfile() {
         city: "",
         country: "",
         status: "",
+        avatar: "",
     };
 
     const [isSubmit, setIsSubmit] = useState(false);
@@ -149,16 +150,19 @@ export default function EditProfile() {
                         country: formValues.country,
                         status: formValues.status,
                         visible: isVisible,
+                        avatar: accountPhoto,
+
                     }),
                 }
             );
 
             if (rawResponse.status === 200) {
                 // falls erfolgreich, dann:
+                handleGetUser();
                 router.replace("/user/landingPageUser");
             } else {
                 const err = await rawResponse.json();
-                console.log("backend error", err);
+                //console.log("backend error", err);
             }
         }
     }
@@ -178,6 +182,7 @@ export default function EditProfile() {
         }
     }
 
+
     function handleChangeVisibility(event) {
         const valueVisibility = event.target.value;
 
@@ -196,13 +201,6 @@ export default function EditProfile() {
                     onSubmit={updateUser}
                 >
                     <div className="flex flex-col justify-center w-full mb-8 text-white text-center">
-                        <Image
-                            src={avatar}
-                            alt="Avatar"
-                            width={100}
-                            height={100}
-                        />
-
                         <p
                             className="hover:text-[#942928]"
                             onClick={handlePictureUploader}

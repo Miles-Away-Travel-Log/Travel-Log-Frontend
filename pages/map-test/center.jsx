@@ -1,6 +1,7 @@
-import getCenterOfBounds from "geolib/es/getCenter";
-import Map, { Marker, Popup, WebMercatorViewport } from "react-map-gl";
-import { useState, useEffect } from "react";
+import Map, { Marker, Popup } from "react-map-gl";
+import { WebMercatorViewport } from "@deck.gl/core";
+import { useWindowSize } from "@react-hook/window-size";
+import { useEffect, useState } from "react";
 import "mapbox-gl/dist/mapbox-gl.css";
 import { ImLocation2 } from "react-icons/im";
 
@@ -8,65 +9,58 @@ const testCoordinatesArray = [
     { longitude: 13.377722, latitude: 52.516272, name: "Berlin" },
     { longitude: -0.119722, latitude: 51.503333, name: "London" },
     { longitude: 2.352222, latitude: 48.856614, name: "Paris" },
-    // { longitude: -73.94, latitude: 40.7127,name: "New York" },
+    { longitude: -73.94, latitude: 40.7127, name: "New York" },
 ];
-
-const center = getCenterOfBounds(testCoordinatesArray);
 
 // useEffect(() => {console.log(selectedLocation)}, [selectedLocation]);
 
-// const applyToArray = (func, array) => func.apply(Math, array);
+const applyToArray = (func, array) => func.apply(Math, array);
 
-// const getBoundsForPoints = (points) => {
-//     // Calculate corner values of bounds
-//     const pointsLong = points.map((point) => point.longitude);
-//     const pointsLat = points.map((point) => point.latitude);
-//     const cornersLongLat = [
-//         [applyToArray(Math.min, pointsLong), applyToArray(Math.min, pointsLat)],
-//         [applyToArray(Math.max, pointsLong), applyToArray(Math.max, pointsLat)],
-//     ];
-//     // Use WebMercatorViewport to get center longitude/latitude and zoom
-//     const viewport = new WebMercatorViewport({
-//         width: 800,
-//         height: 600,
-//     }).fitBounds(cornersLongLat, { padding: 200 }); // Can also use option: offset: [0, -100]
-//     const { longitude, latitude, zoom } = viewport;
-//     return { longitude, latitude, zoom };
-// };
+const getBoundsForPoints = (points) => {
+    // Calculate corner values of bounds
+    const pointsLong = points.map((point) => point.longitude);
+    const pointsLat = points.map((point) => point.latitude);
+    const cornersLongLat = [
+        [applyToArray(Math.min, pointsLong), applyToArray(Math.min, pointsLat)],
+        [applyToArray(Math.max, pointsLong), applyToArray(Math.max, pointsLat)],
+    ];
+    const [width, height] = useWindowSize();
+
+    // Use WebMercatorViewport to get center longitude/latitude and zoom
+    const viewport = new WebMercatorViewport({
+        width: width || 800,
+        height: height || 600,
+    }).fitBounds(cornersLongLat, { padding: Math.round(width * 0.05) || 30 }); // Can also use option: offset: [0, -100]
+    const { longitude, latitude, zoom } = viewport;
+    return { longitude, latitude, zoom };
+};
 
 export default function MapTestCenter() {
-    // const bounds = getBoundsForPoints(testCoordinatesArray);
-
+    const bounds = getBoundsForPoints(testCoordinatesArray);
     const [selectedLocation, setSelectedLocation] = useState({});
-
-    // const [viewport, setViewport] = useState({
-    //     width: "100%",
-    //     height: "50vh",
-    //     ...bounds,
-    // });
+    const [viewport, setViewport] = useState({
+        width: "100%",
+        height: "100%",
+        ...bounds,
+    });
 
     return (
         <div className="h-screen w-screen">
             <Map
-                // {...viewport}
-                // onViewportChange={setViewport}
-                initialViewState={{
-                    longitude: center.longitude,
-                    latitude: center.latitude,
-                    zoom: 5,
-                }}
+                {...viewport}
+                onMove={(evt) => setViewport(evt.viewport)}
                 mapboxAccessToken={process.env.NEXT_PUBLIC_MAPBOX_API_KEY}
-                style={{ width: "100%", height: "100%" }}
                 mapStyle="mapbox://styles/mapbox/streets-v9"
             >
-                {/* {console.log(center)} */}
                 {testCoordinatesArray.map((result) => (
-                    <div key={result.longitude}>
+                    <div
+                        key={result.longitude
+                            .toString()
+                            .concat(result.latitude.toString())}
+                    >
                         <Marker
                             longitude={result.longitude}
                             latitude={result.latitude}
-                            // offsetLeft={-20}
-                            // offsetTop={-5}
                             anchor="bottom"
                         >
                             <p
@@ -100,7 +94,6 @@ export default function MapTestCenter() {
                                         Hier steht noch mehr Text... Bla bla
                                         bla!
                                     </div>
-
                                     <img
                                         src="https://e6.pngbyte.com/pngpicture/138188/png-Hiking-Backpack-Clip-Art-Clip-Art-Picture-Download-Huge-backpack-clipart_thumbnail.png"
                                         alt="picture"

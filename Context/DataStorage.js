@@ -23,6 +23,7 @@ function AppState(props) {
         city: "",
         country: "",
         status: "",
+        avatar: "",
     };
 
     const markerTest = [
@@ -40,6 +41,14 @@ function AppState(props) {
             coordinates: {
                 latitude: 51.33907051907917,
                 longitude: 12.401449243834573,
+            },
+        },
+        {
+            name: "Zoo",
+            visible: false,
+            coordinates: {
+                latitude: 51.348486599994935,
+                longitude: 12.370997422085791,
             },
         },
         { name: "Connect", visible: false },
@@ -83,6 +92,8 @@ function AppState(props) {
     const [homeCurrency, setHomeCurrency] = useState("EUR");
     const [list_Friends_FriendRequests, setList_Friends_FriendRequests] =
         useState([]);
+    const [accountPhoto, setAccountPhoto] = useState("");
+
 
     function handleGetUser() {
         fetch(
@@ -94,6 +105,7 @@ function AppState(props) {
                 setBudgetItems(data.user.budget);
                 setUserId(data.user.id);
                 setSeedMoney(data.user.seedMoney);
+                setAccountPhoto(data.user.avatar);
                 setHomeCurrency(
                     data.user.seedMoney[0]
                         ? data.user.seedMoney[0].currency
@@ -266,6 +278,8 @@ function AppState(props) {
                 list_Friends_FriendRequests,
                 setList_Friends_FriendRequests,
                 handleGetUser,
+                accountPhoto,
+                setAccountPhoto,
             }}
         >
             {props.children}

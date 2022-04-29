@@ -1,10 +1,13 @@
 // import { useState } from "react/cjs/react.production.min";
 import Navbar from "../../components/Navbar.jsx";
 import { useAppData } from "../../Context/DataStorage.js";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import Cookies from "js-cookie";
+import Image from "next/image";
+import avatar from "../../public/images/images-register/avatar.svg";
+import { _adapters } from "chart.js";
 
 export default function LandingPageUser() {
     const router = useRouter();
@@ -53,9 +56,10 @@ export default function LandingPageUser() {
             Cookies.remove("user");
             router.replace("/register");
         } else {
-            router.replace("/landingPageUser");
+            router.replace("/user/landingPageUser");
         }
     }
+    //console.log("landigPageUser", user);
 
     return (
         <div>
@@ -134,11 +138,15 @@ export default function LandingPageUser() {
                     </div>
                 </div>
                 <div className="flex flex-col items-center pb-10">
-                    <img
-                        className="mb-3 w-24 h-24 rounded-full shadow-lg"
-                        src="https://flowbite.com/docs/images/people/profile-picture-3.jpg"
-                        alt="Bonnie image"
-                    />
+                    {user.avatar && (
+                        <Image
+                            className="mb-3 w-24 h-24 rounded-full shadow-lg"
+                            src={user.avatar}
+                            alt="User Image"
+                            width={100}
+                            height={100}
+                        />
+                    )}
                     <h5 className="mb-1 text-xl font-medium text-[white] dark:text-white">
                         {user.firstName} {user.lastName}
                     </h5>

@@ -6,14 +6,42 @@ function ClickToAdd() {
     const [newLocation, setNewLocation] = useState(false);
     const [active, setActive] = useState(false);
     const [dragAndDrop, setDragAndDrop] = useState(false);
+    const [place, setPlace] = useState(false);
 
-    function handleClick(e) {
-        setNewLocation({
+    async function handleClick(e) {
+        await setNewLocation({
             longitude: e.lngLat.lng,
             latitude: e.lngLat.lat,
         });
         setActive(false);
         setDragAndDrop(false);
+        // https://api.mapbox.com/geocoding/v5/mapbox.places/26.493637806664424,63.89114500894675.json?types=place%2Cpostcode%2Caddress&limit=1&access_token=YOUR_MAPBOX_ACCESS_TOKEN
+        await fetch(
+            `https://api.mapbox.com/geocoding/v5/mapbox.places/${e.lngLat.lng},${e.lngLat.lat}.json?types=place&limit=1&access_token=${process.env.NEXT_PUBLIC_MAPBOX_API_KEY}`
+        )
+            .then((response) => response.json())
+            .then((data) => {
+                if (
+                    data.features[0] &&
+                    data.features[0].text &&
+                    data.features[0].place_name
+                ) {
+                    const city = data.features[0].text;
+                    const country = data.features[0].place_name
+                        .split(",")
+                        .pop();
+                    // const address = data.features[0].place_name;
+                    setPlace({
+                        city: city,
+                        country: country,
+                        // address: address
+                    });
+                    // console.log(data);
+                } else {
+                    setPlace(false);
+                    console.log(data);
+                }
+            });
     }
 
     const [events, logEvents] = useState({});
@@ -73,11 +101,14 @@ function ClickToAdd() {
                             Active: {active.toString()}
                         </span>
                         <span className="ml-4 my-auto">
-                            Longitude: {newLocation && newLocation.longitude}
+                            City: {place && place.city}
                         </span>
                         <span className="ml-4 my-auto">
-                            Latitude: {newLocation && newLocation.latitude}
+                            Country: {place && place.country}
                         </span>
+                        {/* <span className="ml-4 my-auto">
+                            Address: {place && place.address}
+                        </span> */}
                         <button
                             className="bg-blue-500 rounded-md py-1 px-3 ml-4 font-bold"
                             onClick={() => (
