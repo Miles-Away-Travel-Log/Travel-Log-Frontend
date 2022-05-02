@@ -3,6 +3,7 @@ html {
     --bgColorMenu: #C4C4C4;
     --duration: 0.7s;
     --bgColorItem: #942928;
+    /* --bgColorIcons: #90A5A9; */
   }
   
   html *,
@@ -45,6 +46,7 @@ html {
   }
   
   .menu__item {
+    /* background-color: var(--bgColorIcons); */
     all: unset;
     flex-grow: 1;
     z-index: 100;
@@ -52,12 +54,14 @@ html {
     cursor: pointer;
     position: relative;
     border-radius: 50%;
+    width: 2.6em;
+    height: 2.6em;
     align-items: center;
     will-change: transform;
     justify-content: center;
     padding: 0.55em 0 0.85em;
     margin: 1vh 0;
-    transition: transform var(--timeOut, var(--duration));
+    /* transition: transform var(--timeOut, var(--duration)); */
   }
   
   .menu__item::before {
@@ -68,11 +72,12 @@ html {
     border-radius: 50%;
     position: absolute;
     transform: scale(0);
-    /* transition: background-color var(--duration), transform var(--duration);*/
+    /* transition: background-color var(--duration), transform var(--duration); */
   }
   
   .menu__item.active {
     transform: translate3d(0, -0.8em, 0);
+    /* background-color: var(--bgColorIcons); */
   }
   
   .menu__item.active::before {
@@ -90,6 +95,11 @@ html {
     stroke-linecap: round;
     stroke-linejoin: round;
     stroke-dasharray: 400;
+  }
+
+  .navIcon{
+  align-items: center;
+  font-size: 1.5em;
   }
   
   .menu__item.active .icon {
