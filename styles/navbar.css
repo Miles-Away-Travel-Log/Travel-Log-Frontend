@@ -35,11 +35,11 @@ html {
     display: flex;
     /* Works well with 100% width  */
     width: 32.05em;
-    /* font-size: 1.5em; */
     font-size: clamp(.4em, 1em, 1.5em);
-    padding: 0 2.85em;
+    padding: 0 2em;
     position: relative;
-    align-items: center;
+
+    /* align-items: center; */
     justify-content: center;
     background-color: var(--bgColorMenu);
     margin: 0 auto;
@@ -47,6 +47,7 @@ html {
   
   .menu__item {
     /* background-color: var(--bgColorIcons); */
+
     all: unset;
     flex-grow: 1;
     z-index: 100;
@@ -59,8 +60,8 @@ html {
     align-items: center;
     will-change: transform;
     justify-content: center;
-    padding: 0.55em 0 0.85em;
-    margin: 1vh 0;
+    padding: 0.45em;
+   margin:  .5em 0
     /* transition: transform var(--timeOut, var(--duration)); */
   }
   
@@ -86,15 +87,16 @@ html {
   }
   
   .icon {
-    width: 2.6em;
+    /* width: 2.6em;
     height: 2.6em;
-    stroke: white;
+    border-radius: 50%; */
+    /* stroke: white;
     fill: transparent;
     stroke-width: 1pt;
     stroke-miterlimit: 10;
     stroke-linecap: round;
     stroke-linejoin: round;
-    stroke-dasharray: 400;
+    stroke-dasharray: 400; */
   }
 
   .navIcon{
@@ -113,11 +115,14 @@ html {
   }
   
   .menu__border {
-    left: 0;
+
     bottom: 99%;
     /* width: 10.9em;*/
     height: 2.4em;
     position: absolute;
+    /* left: -0.50em; */
+    /* display: flex;
+    justify-content: flex-start; */
     clip-path: url(#menu);
     will-change: transform;
     background-color: var(--bgColorMenu);
@@ -128,6 +133,18 @@ html {
     width: 0;
     height: 0;
   }
+
+  .menu__item:hover {
+   background-color: #942928;
+  }
+
+ .navIcon:hover {
+    color: #942928;
+   }
+ /* .button{
+    position: "absolute";
+    left: "3.5em";
+  } */
   
   /*@media screen and (max-width: 50em) {
     .menu {

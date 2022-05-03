@@ -11,16 +11,12 @@ function Navbar() {
     const buttonRef = useRef(null);
     const marginButtons = buttonWidth / 7;
     const buttonContainer = buttonWidth + marginButtons;
-    // const menuRef = useRef(null);
-    // console.log({ buttonWidth });
-    // console.log({ menuWidth });
 
     useEffect(() => {
-        setButtonWidth(buttonRef.current.offsetWidth);
+        setButtonWidth((buttonRef.current.offsetWidth) + marginButtons);
         // setMenuWidth(menuRef.current.offsetWidth);
     }, []);
-   
-    
+
     return (
         <div className="App">
             <menu className="menu">
@@ -33,14 +29,13 @@ function Navbar() {
                         backgroundColor: "#90A5A9",
                         marginRight: marginButtons,
                     }}
-                    onClick={(() => setButtonIndex(0), ()=> router.replace("/user/landingpageUser"))}
+                    onClick={() => {setButtonIndex(0); router.replace("/user/landingpageUser")}}
                 >
                     <div
                         className="icon navIcon text-white flex justify-center "
                         viewBox="0 0 24 24"
                     >
                         {clickables[4].icon}
-                        {/* {icons.FaUserAlt} */}
                     </div>
                 </button>
 
@@ -57,13 +52,14 @@ function Navbar() {
                     <div
                         className="icon navIcon text-white flex justify-center flex"
                         viewBox="0 0 24 24"
-                        onClick={(() => setButtonIndex(1), ()=> router.replace("/user/budget"))}
+                        onClick={() => {setButtonIndex(1); router.replace("/user/budget")}}
                     >
                         {clickables[0].icon}
                     </div>
-                        </button>
+                </button>
 
                 <button
+                    ref={buttonRef}
                     className={
                         buttonIndex === 2 ? "menu__item active" : "menu__item"
                     }
@@ -71,18 +67,19 @@ function Navbar() {
                         backgroundColor: "#90A5A9",
                         marginRight: marginButtons,
                     }}
-                    onClick={(() => setButtonIndex(2), ()=> router.replace("/user/friends"))}
+                    onClick={() => {setButtonIndex(2); router.replace("/user/friends")}}
                 >
-                          <div
+                    <div
                         className="icon navIcon text-white flex justify-center flex"
                         viewBox="0 0 24 24"
-                        onClick={(() => setButtonIndex(1))}
+                        onClick={() => setButtonIndex(1)}
                     >
                         {clickables[1].icon}
                     </div>
                 </button>
 
                 <button
+                    ref={buttonRef}
                     className={
                         buttonIndex === 3 ? "menu__item active" : "menu__item"
                     }
@@ -95,13 +92,14 @@ function Navbar() {
                     <div
                         className="icon navIcon text-white flex justify-center flex"
                         viewBox="0 0 24 24"
-                        onClick={(() => setButtonIndex(3))}
+                        onClick={() => setButtonIndex(3)}
                     >
                         {clickables[9].icon}
                     </div>
                 </button>
 
                 <button
+                    ref={buttonRef}
                     className={
                         buttonIndex === 4 ? "menu__item active" : "menu__item"
                     }
@@ -114,36 +112,60 @@ function Navbar() {
                     <div
                         className="icon navIcon text-white flex justify-center flex"
                         viewBox="0 0 24 24"
-                        onClick={(() => setButtonIndex(1))}
+                        onClick={() => setButtonIndex(1)}
                     >
                         {clickables[11].icon}
                     </div>
                 </button>
 
                 <button
+                    ref={buttonRef}
                     className={
                         buttonIndex === 5 ? "menu__item active" : "menu__item"
                     }
-                    style={{ backgroundColor: "#90A5A9" }}
+                    style={{
+                        backgroundColor: "#90A5A9",
+                        marginRight: marginButtons,
+                    }}
                     onClick={() => setButtonIndex(5)}
                 >
                     <div
                         className="icon navIcon text-white flex justify-center flex"
                         viewBox="0 0 24 24"
-                        onClick={(() => setButtonIndex(5),()=> router.replace("/user/diary"))}
+                        onClick={() => {setButtonIndex(5); router.replace("/user/diary")}}
                     >
                         {clickables[12].icon}
+                    </div>
+                </button>
+
+                <button
+                    ref={buttonRef}
+                    className={
+                        buttonIndex === 6 ? "menu__item active" : "menu__item"
+                    }
+                    style={{
+                        backgroundColor: "#90A5A9",
+                        marginRight: marginButtons,
+                    }}
+                    onClick={() => setButtonIndex(6)}
+                >
+                    <div
+                        className="icon navIcon text-white flex justify-center flex"
+                        viewBox="0 0 24 24"
+                        onClick={() => {setButtonIndex(6); router.replace("/dummy")}}
+                        
+                    >
+                        {clickables[13].icon}
                     </div>
                 </button>
 
                 <div
                     className="menu__border"
                     style={{
-                        left: buttonIndex * buttonWidth,
-                        width: buttonContainer * 2,
+                        left:  buttonIndex * buttonWidth ,
+                        width: (buttonContainer * 2) - (marginButtons * 3),
                     }}
-                    // style={{ left: buttonWidth * 3}}
-                    // style={{ left: "508px" }}
+            
                 ></div>
             </menu>
 
