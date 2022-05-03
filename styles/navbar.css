@@ -1,17 +1,17 @@
 html {
     box-sizing: border-box;
-    --bgColorMenu: #C4C4C4;
+    --bgColorMenu: #c4c4c4;
     --duration: 0.7s;
     --bgColorItem: #942928;
-  }
-  
-  html *,
-  html *::before,
-  html *::after {
+}
+
+html *,
+html *::before,
+html *::after {
     box-sizing: inherit;
-  }
-  
- /* body {
+}
+
+/* body {
     margin: 0;
     display: flex;
     height: 100vh;
@@ -23,11 +23,11 @@ html {
     transition: background-color var(--duration);
   }*/
 
-  .App{
-      width: 100vw;
-      background-color: #C4C4C4;
-  }
-  .menu {
+.App {
+    width: 100vw;
+    background-color: #c4c4c4;
+}
+.menu {
     position: sticky;
     bottom: 0;
     margin: 0;
@@ -35,16 +35,16 @@ html {
     /* Works well with 100% width  */
     width: 32.05em;
     /* font-size: 1.5em; */
-    font-size: clamp(.4em, 1em, 1.5em);
+    font-size: clamp(0.4em, 1em, 1.5em);
     padding: 0 2.85em;
     position: relative;
     align-items: center;
     justify-content: center;
     background-color: var(--bgColorMenu);
     margin: 0 auto;
-  }
-  
-  .menu__item {
+}
+
+.menu__item {
     all: unset;
     flex-grow: 1;
     z-index: 100;
@@ -58,9 +58,9 @@ html {
     padding: 0.55em 0 0.85em;
     margin: 1vh 0;
     transition: transform var(--timeOut, var(--duration));
-  }
-  
-  .menu__item::before {
+}
+
+.menu__item::before {
     content: "";
     z-index: -1;
     width: 4.2em;
@@ -69,18 +69,18 @@ html {
     position: absolute;
     transform: scale(0);
     /* transition: background-color var(--duration), transform var(--duration);*/
-  }
-  
-  .menu__item.active {
+}
+
+.menu__item.active {
     transform: translate3d(0, -0.8em, 0);
-  }
-  
-  .menu__item.active::before {
+}
+
+.menu__item.active::before {
     transform: scale(1);
     background-color: var(--bgColorItem);
-  }
-  
-  .icon {
+}
+
+.icon {
     width: 2.6em;
     height: 2.6em;
     stroke: white;
@@ -90,19 +90,19 @@ html {
     stroke-linecap: round;
     stroke-linejoin: round;
     stroke-dasharray: 400;
-  }
-  
-  .menu__item.active .icon {
+}
+
+.menu__item.active .icon {
     animation: strok 1.5s reverse;
-  }
-  
-  @keyframes strok {
+}
+
+@keyframes strok {
     100% {
-      stroke-dashoffset: 400;
+        stroke-dashoffset: 400;
     }
-  }
-  
-  .menu__border {
+}
+
+.menu__border {
     left: 0;
     bottom: 99%;
     /* width: 10.9em;*/
@@ -112,19 +112,19 @@ html {
     will-change: transform;
     background-color: var(--bgColorMenu);
     transition: transform var(--timeOut, var(--duration));
-  }
-  
-  .svg-container {
+}
+
+.svg-container {
     width: 0;
     height: 0;
-  }
-  
-  /*@media screen and (max-width: 50em) {
+}
+
+/*@media screen and (max-width: 50em) {
     .menu {
       font-size: 0.8em;
     }
   }*/
-  /* @media screen and (min-width: 360px) {
+/* @media screen and (min-width: 360px) {
     .menu {
       font-size: 0.4em;
     }

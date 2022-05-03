@@ -52,7 +52,7 @@ export default function Login() {
             setUserId(data.user.id);
             setSeedMoney(data.user.seedMoney);
             setList_Friends_FriendRequests(data.user.friends);
-            router.replace("/user/landingPageUser");
+            router.replace(`/user/${data.user.userName}`);
         } else {
             alert("Invalid login credentials");
         }

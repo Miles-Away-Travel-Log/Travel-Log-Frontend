@@ -94,25 +94,30 @@ function AppState(props) {
         useState([]);
     const [accountPhoto, setAccountPhoto] = useState("");
 
+    async function handleGetUser() {
+        const header = {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+            Authorization: `Bearer ${Cookies.get("token")}`,
+        };
 
-    function handleGetUser() {
-        fetch(
-            process.env.NEXT_PUBLIC_FETCH_URL_USER + `/${Cookies.get("user")}`
-        )
-            .then((response) => response.json())
-            .then((data) => {
-                setUser(data.user);
-                setBudgetItems(data.user.budget);
-                setUserId(data.user.id);
-                setSeedMoney(data.user.seedMoney);
-                setAccountPhoto(data.user.avatar);
-                setHomeCurrency(
-                    data.user.seedMoney[0]
-                        ? data.user.seedMoney[0].currency
-                        : "EUR"
-                );
-                setList_Friends_FriendRequests(data.user.friends);
-            });
+        const response = await fetch(
+            process.env.NEXT_PUBLIC_FETCH_URL_USER + `/${Cookies.get("user")}`,
+            {
+                method: "GET",
+                headers: header,
+            }
+        );
+        const data = await response.json();
+        setUser(data.user);
+        setBudgetItems(data.user.budget);
+        setUserId(data.user.id);
+        setSeedMoney(data.user.seedMoney);
+        setAccountPhoto(data.user.avatar);
+        setHomeCurrency(
+            data.user.seedMoney[0] ? data.user.seedMoney[0].currency : "EUR"
+        );
+        setList_Friends_FriendRequests(data.user.friends);
     }
 
     async function handlePostBudgetItem(e) {
@@ -237,6 +242,16 @@ function AppState(props) {
         }
     }
 
+    // fetch friends or friend requests
+    const [
+        dataOfFriends_or_dataOfRequest_to_Array,
+        setDataOfFriends_or_dataOfRequest_to_Array,
+    ] = useState([]);
+
+    const [dataOfOneFriend, setDataOfOneFriend] = useState([]);
+
+    //
+
     useEffect(() => {
         const user = Cookies.get("user");
         if (!user) {
@@ -280,6 +295,10 @@ function AppState(props) {
                 handleGetUser,
                 accountPhoto,
                 setAccountPhoto,
+                dataOfFriends_or_dataOfRequest_to_Array,
+                setDataOfFriends_or_dataOfRequest_to_Array,
+                dataOfOneFriend,
+                setDataOfOneFriend,
             }}
         >
             {props.children}

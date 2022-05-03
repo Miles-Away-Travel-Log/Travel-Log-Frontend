@@ -1,11 +1,11 @@
 import React from "react";
 import FriendsList from "./Friends.list.js";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useAppData } from "../Context/DataStorage.js";
 
 function FriendsMenu() {
     const [show, setShow] = useState("");
-    const { user, setList_Friends_FriendRequests } = useAppData();
+    const { logout } = useAppData();
 
     return (
         <div className="mt-6">
@@ -22,11 +22,17 @@ function FriendsMenu() {
                 >
                     Requests
                 </button>
+                <button
+                    className="bg-amber-700 rounded-full w-20 p-1"
+                    onClick={logout}
+                >
+                    logout
+                </button>
             </div>
             {show === "friends" ? (
-                <FriendsList myFriend={true} />
+                <FriendsList isFriend={true} />
             ) : show === "requests" ? (
-                <FriendsList myFriend={false} />
+                <FriendsList isFriend={false} />
             ) : null}
         </div>
     );
