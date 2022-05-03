@@ -58,7 +58,7 @@ function SetMapStyle() {
                 </div>
             </div>
             <h1 className="text-3xl ml-5 mt-5 mb-15 font-bold">
-                Chose your standard Map-Style:
+                Choose your standard Map-Style:
             </h1>
             <div className="m-5 grid grid-cols-3 gap-4">
                 {mapStyleList.map((mapStyle, index) => (
