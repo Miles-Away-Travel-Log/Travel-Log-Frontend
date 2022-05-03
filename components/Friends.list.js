@@ -8,28 +8,20 @@ function FriendsList(props) {
     const { isFriend } = props;
     const router = useRouter();
 
-    const {
-        list_Friends_FriendRequests,
-        handleGetUser,
-        userId,
-        user,
-        setDataOfOneFriend,
-    } = useAppData();
+    const { list_Friends_FriendRequests, handleGetUser, userId, user } =
+        useAppData();
+
     const [
         dataOfFriends_or_dataOfRequest_to_Array,
         setDataOfFriends_or_dataOfRequest_to_Array,
     ] = useState([]);
 
-    // This function will filter the friends list from user.
-    // If the status of a friend is false, then it is a request to be a friend. Output will be an Array of Objects.
-    // If the status of a friend is true, then it is a friend. Output will be an Array of Objects.
-    // Then it will check if the user is the sender or receiver of the request. Output will be an Array of all users who send or receive a request.
     async function friendsData() {
         const listOfFriendsOrRequests = list_Friends_FriendRequests.filter(
             (item) => item.status === isFriend
         );
 
-        const mappen = await Promise.all(
+        const fetchTheDataOfEachFriends = await Promise.all(
             listOfFriendsOrRequests.map(async (item) => {
                 let senderOrReceiver;
 
@@ -57,7 +49,7 @@ function FriendsList(props) {
             })
         );
 
-        setDataOfFriends_or_dataOfRequest_to_Array(mappen);
+        setDataOfFriends_or_dataOfRequest_to_Array(fetchTheDataOfEachFriends);
     }
 
     useMemo(() => {

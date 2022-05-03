@@ -5,8 +5,13 @@ import { createOptionsForUnits } from "./Budget.CreateOptionsForUnits.jsx";
 import { exchangeUnits } from "./Budget.ExchangeUnits.js";
 
 function BudgetIncomeExpense() {
-    const { handlePostBudgetItem, setOutIn, outIn, setCategory, homeCurrency } =
-        useAppData();
+    const {
+        handlePostBudgetItem,
+        setIncomeOrExpense,
+        incomeOrExpense,
+        setCategory,
+        homeCurrency,
+    } = useAppData();
 
     const [localCurrency, setLocalCurrency] = useState("EUR");
     const [localCurrencyValue, setLocalCurrencyValue] = useState(0);
@@ -16,7 +21,7 @@ function BudgetIncomeExpense() {
     ] = useState(undefined);
 
     function handleSelectIncomeExpense(e) {
-        setOutIn(e.target.value);
+        setIncomeOrExpense(e.target.value);
     }
     function handleLocalCurrency(e) {
         setLocalCurrency(e.target.value);
@@ -76,7 +81,7 @@ function BudgetIncomeExpense() {
             >
                 <fieldset
                     className={
-                        outIn === "income"
+                        incomeOrExpense === "income"
                             ? "flex flex-col border-solid border-2 border-green-700 justify-center items-center"
                             : "flex flex-col border-solid border-2 border-orange-700 justify-center items-center"
                     }
@@ -104,7 +109,7 @@ function BudgetIncomeExpense() {
                             name="localcurrency"
                             onChange={handleLocalCurrencyValue}
                             placeholder={
-                                outIn === "income"
+                                incomeOrExpense === "income"
                                     ? "Income in local currency"
                                     : "Expense in local currency"
                             }
@@ -123,7 +128,7 @@ function BudgetIncomeExpense() {
                             type="text"
                             name="amount"
                             placeholder={
-                                outIn === "income"
+                                incomeOrExpense === "income"
                                     ? "Income in EUR"
                                     : "Expense in EUR"
                             }
@@ -132,7 +137,7 @@ function BudgetIncomeExpense() {
                             className="w-2/3 h-1/4 bg-gray-300 rounded-full pl-2 mt-2 mb-2"
                         />
                     </div>
-                    {outIn === "income" ? (
+                    {incomeOrExpense === "income" ? (
                         <select
                             name="income"
                             id="income"

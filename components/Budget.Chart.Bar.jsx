@@ -23,7 +23,7 @@ ChartJS.register(
 );
 
 function BarChart() {
-    const { budgetItems, seedMoney } = useAppData();
+    const { budgetItems } = useAppData();
 
     const options = {
         responsive: true,
