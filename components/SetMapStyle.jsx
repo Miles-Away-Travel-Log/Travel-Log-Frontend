@@ -30,7 +30,7 @@ function SetMapStyle() {
 
     return (
         <div className="col-span-2 bg-green-200">
-            <h2 className="text-3xl ml-5 mt-5 mb-5 font-bold">
+            <h2 className="text-3xl ml-5 mt-4 mb-5 font-bold">
                 Home Location:
             </h2>
             <div className="m-5 grid grid-cols-2 gap-4">
@@ -57,7 +57,7 @@ function SetMapStyle() {
                         : ""}
                 </div>
             </div>
-            <h1 className="text-3xl ml-5 mt-5 mb-15 font-bold">
+            <h1 className="text-3xl ml-5 mt-10 mb-15 font-bold">
                 Choose your standard Map-Style:
             </h1>
             <div className="m-5 grid grid-cols-3 gap-4">
@@ -88,8 +88,8 @@ function SetMapStyle() {
                     </div>
                 ))}
             </div>
-            <div className="m-5 grid grid-cols-2 gap-4">
-                <div>
+            <div className="m-5 mt-10 grid grid-cols-2 gap-4">
+                <div className="flex justify-center">
                     <button
                         className="bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-full"
                         onClick={(e) => (
@@ -100,7 +100,7 @@ function SetMapStyle() {
                         Accept Changes
                     </button>
                 </div>
-                <div>
+                <div className="flex justify-center">
                     <button
                         className="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-full"
                         onClick={(e) => (
