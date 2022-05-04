@@ -20,10 +20,19 @@ function AppState(props) {
         email: "",
         password: "",
         confirm_password: "",
-        city: "",
-        country: "",
         status: "",
         avatar: "",
+        mapStyle: {
+            name: "Basic",
+            link: "mapbox://styles/mapbox/streets-v9",
+            iconColor: "text-black",
+        },
+        home: {
+            longitude: -0.091998,
+            latitude: 51.515618,
+            city: "London",
+            country: "United Kingdom",
+        },
     };
 
     const markerTest = [
@@ -51,7 +60,6 @@ function AppState(props) {
                 longitude: 12.370997422085791,
             },
         },
-        { name: "Connect", visible: false },
     ];
 
     const mapMarkerTestReducer = (originalArray, action) => {
@@ -99,6 +107,10 @@ function AppState(props) {
 
     //-------------------------------------- FETCH USER  ------------------------------------------------//
     //
+  
+    const [newHome, setNewHome] = useState(false);
+    const [defaultMapStyle, setDefaultMapStyle] = useState(false);
+  
     async function handleGetUser() {
         const header = {
             "Content-Type": "application/json",
@@ -113,6 +125,7 @@ function AppState(props) {
                 headers: header,
             }
         );
+      
         const data = await response.json();
         setUser(data.user);
         setBudgetItems(data.user.budget);
@@ -332,6 +345,10 @@ function AppState(props) {
                 setDataOfFriends_or_dataOfRequest_to_Array,
                 dataOfOneFriend,
                 setDataOfOneFriend,
+                newHome,
+                setNewHome,
+                defaultMapStyle,
+                setDefaultMapStyle,
             }}
         >
             {props.children}
