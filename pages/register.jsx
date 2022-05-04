@@ -78,22 +78,6 @@ export default function Register() {
         } else if (values.password !== values.confirm_password) {
             errors.confirm_password = "Passwords do not match";
         }
-        // City
-        if (!values.city) {
-            errors.city = "City is required";
-        } else if (values.city.length < 3 || values.city.length > 30) {
-            errors.city = "City must be between 3 and 30 characters";
-        } else if (!/^[a-zA-Z]+$/.test(values.city)) {
-            errors.city = "City must contain only letters";
-        }
-        // Country
-        if (!values.country) {
-            errors.country = "Country is required";
-        } else if (values.country.length < 3 || values.country.length > 30) {
-            errors.country = "Country must be between 3 and 30 characters";
-        } else if (!/^[a-zA-Z]+$/.test(values.country)) {
-            errors.country = "Country must contain only letters";
-        }
         return errors;
     }
 
@@ -121,8 +105,17 @@ export default function Register() {
                         userName: registerFormValues.userName,
                         email: registerFormValues.email,
                         password: registerFormValues.password,
-                        city: registerFormValues.city,
-                        country: registerFormValues.country,
+                        mapStyle: {
+                            name: "Basic",
+                            link: "mapbox://styles/mapbox/streets-v9",
+                            iconColor: "text-black",
+                        },
+                        home: {
+                            longitude: -0.091998,
+                            latitude: 51.515618,
+                            city: "London",
+                            country: "United Kingdom",
+                        },
                     }),
                 }
             );
@@ -255,28 +248,6 @@ export default function Register() {
                     />
                     <p className="text-sm text-red-600 mb-4">
                         {isSubmit && registerFormErrors.confirm_password}
-                    </p>
-                    <input
-                        type="text"
-                        className="block border border-grey-light w-full p-3 rounded-full mb-1 text-black"
-                        name="city"
-                        placeholder="City"
-                        value={registerFormValues.city}
-                        onChange={handleChange}
-                    />
-                    <p className="text-sm text-red-600 mb-4">
-                        {isSubmit && registerFormErrors.city}
-                    </p>
-                    <input
-                        type="text"
-                        className="block border border-grey-light w-full p-3 rounded-full mb-1 text-black"
-                        name="country"
-                        placeholder="Country"
-                        value={registerFormValues.country}
-                        onChange={handleChange}
-                    />
-                    <p className="text-sm text-red-600 mb-4">
-                        {isSubmit && registerFormErrors.country}
                     </p>
                     <button
                         type="submit"

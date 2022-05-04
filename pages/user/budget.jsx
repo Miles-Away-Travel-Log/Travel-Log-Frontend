@@ -1,7 +1,7 @@
-import BalanceSheet from "../../components/Budget.BalanceSheet.js";
+import BalanceSheet from "../../components/Budget.BalanceSheet.jsx";
 import { useRouter } from "next/router";
-import BudgetSeedMoney from "../../components/Budget.SeedMoney.js";
-import BudgetIncomeExpense from "../../components/Budget.IncomeExpense.js";
+import BudgetSeedMoney from "../../components/Budget.SeedMoney.jsx";
+import BudgetIncomeExpense from "../../components/Budget.IncomeExpense.jsx";
 
 export default function Budget() {
     const router = useRouter();

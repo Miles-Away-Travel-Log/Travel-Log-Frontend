@@ -20,10 +20,19 @@ function AppState(props) {
         email: "",
         password: "",
         confirm_password: "",
-        city: "",
-        country: "",
         status: "",
         avatar: "",
+        mapStyle: {
+            name: "Basic",
+            link: "mapbox://styles/mapbox/streets-v9",
+            iconColor: "text-black",
+        },
+        home: {
+            longitude: -0.091998,
+            latitude: 51.515618,
+            city: "London",
+            country: "United Kingdom",
+        },
     };
 
     const markerTest = [
@@ -51,7 +60,6 @@ function AppState(props) {
                 longitude: 12.370997422085791,
             },
         },
-        { name: "Connect", visible: false },
     ];
 
     const mapMarkerTestReducer = (originalArray, action) => {
@@ -79,38 +87,67 @@ function AppState(props) {
         mapMarkerTestReducer,
         markerTest
     );
+
+    //-------------------------------------- REGISTER  --------------------------------------------------//
+    //
     const [registerFormValues, setRegisterFormValues] = useState(
         registerInitialValues
     );
     const [registerFormErrors, setRegisterFormErrors] = useState({});
+
+    //-------------------------------------- LOGIN  -----------------------------------------------------//
+    //
     const [userId, setUserId] = useState(null);
     const [user, setUser] = useState("");
+
+    //-------------------------------------- PROFILE PICTURE  -------------------------------------------//
+    //
+
+    const [accountPhoto, setAccountPhoto] = useState("");
+
+    //-------------------------------------- FETCH USER  ------------------------------------------------//
+    //
+  
+    const [newHome, setNewHome] = useState(false);
+    const [defaultMapStyle, setDefaultMapStyle] = useState(false);
+  
+    async function handleGetUser() {
+        const header = {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+            Authorization: `Bearer ${Cookies.get("token")}`,
+        };
+
+        const response = await fetch(
+            process.env.NEXT_PUBLIC_FETCH_URL_USER + `/${Cookies.get("user")}`,
+            {
+                method: "GET",
+                headers: header,
+            }
+        );
+      
+        const data = await response.json();
+        setUser(data.user);
+        setBudgetItems(data.user.budget);
+        setUserId(data.user.id);
+        setSeedMoney(data.user.seedMoney);
+        setAccountPhoto(data.user.avatar);
+        setHomeCurrency(
+            data.user.seedMoney[0] ? data.user.seedMoney[0].currency : "EUR"
+        );
+        setList_Friends_FriendRequests(data.user.friends);
+    }
+
+    //-------------------------------------- BUDGET  ---------------------------------------------------//
+    //
+
     const [budgetItems, setBudgetItems] = useState([]);
-    const [outIn, setOutIn] = useState("expense");
+    const [incomeOrExpense, setIncomeOrExpense] = useState("expense");
     const [category, setCategory] = useState("");
     const [seedMoney, setSeedMoney] = useState("");
     const [homeCurrency, setHomeCurrency] = useState("EUR");
-    const [accountPhoto, setAccountPhoto] = useState("");
 
-    function handleGetUser() {
-        fetch(
-            process.env.NEXT_PUBLIC_FETCH_URL_USER + `/${Cookies.get("user")}`
-        )
-            .then((response) => response.json())
-            .then((data) => {
-                setUser(data.user);
-                setBudgetItems(data.user.budget);
-                setUserId(data.user.id);
-                setSeedMoney(data.user.seedMoney);
-                setAccountPhoto(data.user.avatar);
-                setHomeCurrency(
-                    data.user.seedMoney[0]
-                        ? data.user.seedMoney[0].currency
-                        : "EUR"
-                );
-            });
-    }
-
+    //--------------------------- POST ITEM ----------------------//
     async function handlePostBudgetItem(e) {
         e.preventDefault();
 
@@ -149,6 +186,8 @@ function AppState(props) {
         e.target.localcurrency.value = "";
     }
 
+    //--------------------------- POST SEED MONEY -----------------//
+
     async function handlePostSeedMoney(e) {
         e.preventDefault();
 
@@ -180,6 +219,8 @@ function AppState(props) {
         }
     }
 
+    //--------------------------- DELETE SEED MONEY ----------------//
+
     async function handleDeleteSeedMoney(e) {
         e.preventDefault();
         try {
@@ -204,13 +245,7 @@ function AppState(props) {
         }
     }
 
-    function logout() {
-        Cookies.remove("token");
-        Cookies.remove("user");
-        setUser("");
-        setUserId("");
-        router.replace("/");
-    }
+    //--------------------------- DELETE ITEM ----------------------//
 
     async function deleteOneItem(id) {
         try {
@@ -233,6 +268,33 @@ function AppState(props) {
         }
     }
 
+    //-------------------------------------- LOGOUT  ---------------------------------------------------//
+    //
+
+    function logout() {
+        Cookies.remove("token");
+        Cookies.remove("user");
+        setUser("");
+        setUserId("");
+        router.replace("/");
+    }
+
+    //-------------------------------------- FRIENDS  ---------------------------------------------------//
+    //
+
+    const [list_Friends_FriendRequests, setList_Friends_FriendRequests] =
+        useState([]);
+
+    const [
+        dataOfFriends_or_dataOfRequest_to_Array,
+        setDataOfFriends_or_dataOfRequest_to_Array,
+    ] = useState([]);
+
+    const [dataOfOneFriend, setDataOfOneFriend] = useState([]);
+
+    //-------------------------------------- UseEffect ---------------------------------------------------//
+    //
+
     useEffect(() => {
         const user = Cookies.get("user");
         if (!user) {
@@ -240,6 +302,9 @@ function AppState(props) {
         }
         handleGetUser();
     }, []);
+
+    //----------------------------------------------------------------------------------------------------//
+    //
 
     return (
         <DataStorage.Provider
@@ -259,8 +324,8 @@ function AppState(props) {
                 budgetItems,
                 user,
                 setUser,
-                setOutIn,
-                outIn,
+                setIncomeOrExpense,
+                incomeOrExpense,
                 category,
                 setCategory,
                 seedMoney,
@@ -271,9 +336,19 @@ function AppState(props) {
                 setHomeCurrency,
                 logout,
                 deleteOneItem,
+                list_Friends_FriendRequests,
+                setList_Friends_FriendRequests,
                 handleGetUser,
                 accountPhoto,
                 setAccountPhoto,
+                dataOfFriends_or_dataOfRequest_to_Array,
+                setDataOfFriends_or_dataOfRequest_to_Array,
+                dataOfOneFriend,
+                setDataOfOneFriend,
+                newHome,
+                setNewHome,
+                defaultMapStyle,
+                setDefaultMapStyle,
             }}
         >
             {props.children}

@@ -9,8 +9,17 @@ import Cookies from "js-cookie";
 
 export default function EditProfile() {
     const router = useRouter();
-    const { userId, user, accountPhoto, handleGetUser } = useAppData();
-    //console.log(user);
+    const {
+        userId,
+        user,
+        accountPhoto,
+        handleGetUser,
+        newHome,
+        setNewHome,
+        defaultMapStyle,
+        setDefaultMapStyle,
+    } = useAppData();
+    console.log(user);
     const userInitialValues = {
         firstName: "",
         lastName: "",
@@ -22,11 +31,23 @@ export default function EditProfile() {
         country: "",
         status: "",
         avatar: "",
+        mapStyle: {
+            name: "Basic",
+            link: "mapbox://styles/mapbox/streets-v9",
+            iconColor: "text-black",
+        },
+        home: {
+            longitude: -0.091998,
+            latitude: 51.515618,
+            city: "London",
+            country: "United Kingdom",
+        },
     };
 
     const [isSubmit, setIsSubmit] = useState(false);
     const [formValues, setFormValues] = useState(userInitialValues);
     const [formErrors, setFormErrors] = useState({});
+    const [isVisible, setIsVisible] = useState();
 
     // Show Passwort and hide it
     const [passwordInputType, setPasswordInputType] = useState("password");
@@ -90,22 +111,6 @@ export default function EditProfile() {
         } else if (values.password !== values.confirm_password) {
             errors.confirm_password = "Passwords do not match";
         }
-        // City
-        if (!values.city) {
-            errors.city = "City is required";
-        } else if (values.city.length < 3 || values.city.length > 30) {
-            errors.city = "City must be between 3 and 30 characters";
-        } else if (!/^[a-zA-Z]+$/.test(values.city)) {
-            errors.city = "City must contain only letters";
-        }
-        // Country
-        if (!values.country) {
-            errors.country = "Country is required";
-        } else if (values.country.length < 3 || values.country.length > 30) {
-            errors.country = "Country must be between 3 and 30 characters";
-        } else if (!/^[a-zA-Z]+$/.test(values.country)) {
-            errors.country = "Country must contain only letters";
-        }
         return errors;
     }
 
@@ -129,9 +134,11 @@ export default function EditProfile() {
         e.preventDefault();
         setIsSubmit(true);
         if (Object.keys(formErrors).length === 0) {
+            const home = newHome ? newHome : user.mapStyle;
+            const mapStyle = defaultMapStyle ? defaultMapStyle : user.mapStyle;
             // user erstellen
             const rawResponse = await fetch(
-                `${process.env.NEXT_PUBLIC_FETCH_URL_USER}/${userId}`,
+                process.env.NEXT_PUBLIC_FETCH_URL_USER + `/${userId}`,
                 {
                     method: "PUT",
                     headers: {
@@ -145,18 +152,30 @@ export default function EditProfile() {
                         userName: formValues.userName,
                         email: formValues.email,
                         password: formValues.password,
-                        city: formValues.city,
-                        country: formValues.country,
                         status: formValues.status,
+                        visible: isVisible,
                         avatar: accountPhoto,
+                        mapStyle: {
+                            name: mapStyle.name,
+                            link: mapStyle.link,
+                            iconColor: mapStyle.iconColor,
+                        },
+                        home: {
+                            longitude: home.longitude,
+                            latitude: home.latitude,
+                            city: home.city,
+                            country: home.country,
+                        },
                     }),
                 }
             );
 
             if (rawResponse.status === 200) {
                 // falls erfolgreich, dann:
+                setNewHome(false);
+                setDefaultMapStyle(false);
                 handleGetUser();
-                router.replace("/user/landingPageUser");
+                router.replace(`/user/${user.userName}`);
             } else {
                 const err = await rawResponse.json();
                 //console.log("backend error", err);
@@ -178,7 +197,24 @@ export default function EditProfile() {
             setShowUploader(false);
         }
     }
-    //console.log("editProfile", user);
+
+    function handleChangeVisibility(event) {
+        const valueVisibility = event.target.value;
+
+        if (valueVisibility === "yes") {
+            setIsVisible(true);
+        } else if (valueVisibility === "no") {
+            setIsVisible(false);
+        }
+    }
+
+    function handleMapStyleSubmit(event) {
+        event.preventDefault();
+        newHome ? newHome : setNewHome(user.home);
+        defaultMapStyle ? defaultMapStyle : setDefaultMapStyle(user.mapStyle);
+        router.replace("/user/setHome");
+    }
+
     return (
         <div className="bg-[url('../public/images/images-register/willian-justen-de-vasconcellos-T_Qe4QlMIvQ-unsplash.jpg')] bg-cover min-h-screen flex flex-col">
             <div className="container max-w-sm mx-auto flex-1 flex flex-col items-center justify-center px-2">
@@ -205,28 +241,6 @@ export default function EditProfile() {
                     <h1 className="mb-8 text-3xl text-center text-white">
                         EDIT YOUR PROFILE
                     </h1>
-                    {/* <input
-                        type="text"
-                        className="block border border-grey-light w-full p-3 rounded-full mb-1 text-black"
-                        name="firstName"
-                        placeholder={user.firstName}
-                        value={formValues.firstName}
-                        onChange={handleChange}
-                    />
-                    <p className="text-sm text-red-600 mb-4">
-                        {isSubmit && formErrors.firstName}
-                    </p>
-                    <input
-                        type="text"
-                        className="block border border-grey-light w-full p-3 rounded-full mb-1 text-black"
-                        name="lastName"
-                        placeholder={user.lastName}
-                        value={formValues.lastName}
-                        onChange={handleChange}
-                    />
-                    <p className="text-sm text-red-600 mb-4">
-                        {isSubmit && formErrors.lastName}
-                    </p> */}
                     <label className="text-white">User Name</label>
                     <input
                         type="text"
@@ -321,9 +335,9 @@ export default function EditProfile() {
                         type="text"
                         className="block border border-grey-light w-full p-3 rounded-full mb-1 text-black"
                         name="city"
-                        placeholder={user.city}
-                        value={formValues.city}
-                        onChange={handleChange}
+                        placeholder={newHome ? newHome.city : user.home.city}
+                        value={newHome ? newHome.city : user.home.city}
+                        disabled
                     />
                     <p className="text-sm text-red-600 mb-4">
                         {isSubmit && formErrors.city}
@@ -333,13 +347,53 @@ export default function EditProfile() {
                         type="text"
                         className="block border border-grey-light w-full p-3 rounded-full mb-1 text-black"
                         name="country"
-                        placeholder={user.country}
-                        value={formValues.country}
-                        onChange={handleChange}
+                        placeholder={
+                            newHome ? newHome.country : user.home.country
+                        }
+                        value={newHome ? newHome.country : user.home.country}
+                        disabled
                     />
                     <p className="text-sm text-red-600 mb-4">
                         {isSubmit && formErrors.country}
                     </p>
+                    <label className="text-white">Default Map-Style</label>
+                    <input
+                        type="text"
+                        className="block border border-grey-light w-full p-3 rounded-full mb-1 text-black"
+                        name="mapStyle"
+                        placeholder={
+                            defaultMapStyle
+                                ? defaultMapStyle.name
+                                : user.mapStyle.name
+                        }
+                        value={
+                            defaultMapStyle
+                                ? defaultMapStyle.name
+                                : user.mapStyle.name
+                        }
+                        disabled
+                    />
+                    <button
+                        onClick={handleMapStyleSubmit}
+                        className="w-full text-center py-3 rounded-full bg-[#90A5A9] text-white hover:bg-[#C4C4C4] focus:outline-none my-1"
+                    >
+                        Set Home-Location and Map-Style
+                    </button>
+                    <div className="flex flex-col ">
+                        <label htmlFor="visibility" className="text-white">
+                            Visible for other users
+                        </label>
+                        <select
+                            name="visibility"
+                            id="visibility"
+                            className="border border-grey-light w-full rounded-full p-3 mb-4"
+                            onChange={handleChangeVisibility}
+                        >
+                            <option value="empty">-</option>
+                            <option value="yes">yes</option>
+                            <option value="no">no</option>
+                        </select>
+                    </div>
                     <button
                         type="submit"
                         className="w-full text-center py-3 rounded-full bg-[#90A5A9] text-white hover:bg-[#C4C4C4] focus:outline-none my-1"
@@ -348,7 +402,7 @@ export default function EditProfile() {
                     </button>
                     <button
                         type="submit"
-                        onClick={() => router.replace("/user/landingPageUser")}
+                        onClick={() => router.replace(`/user/${user.userName}`)}
                         className="w-full text-center py-3 rounded-full bg-[#90A5A9] text-white hover:bg-[#C4C4C4] focus:outline-none my-1"
                     >
                         Back

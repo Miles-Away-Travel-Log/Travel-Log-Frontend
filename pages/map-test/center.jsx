@@ -1,7 +1,7 @@
 import Map, { Marker, Popup } from "react-map-gl";
 import { WebMercatorViewport } from "@deck.gl/core";
 import { useWindowSize } from "@react-hook/window-size";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "mapbox-gl/dist/mapbox-gl.css";
 import { ImLocation2 } from "react-icons/im";
 
@@ -9,7 +9,7 @@ const testCoordinatesArray = [
     { longitude: 13.377722, latitude: 52.516272, name: "Berlin" },
     { longitude: -0.119722, latitude: 51.503333, name: "London" },
     { longitude: 2.352222, latitude: 48.856614, name: "Paris" },
-    // { longitude: -73.94, latitude: 40.7127, name: "New York" },
+    { longitude: -73.94, latitude: 40.7127, name: "New York" },
 ];
 
 // useEffect(() => {console.log(selectedLocation)}, [selectedLocation]);
@@ -25,15 +25,12 @@ const getBoundsForPoints = (points) => {
         [applyToArray(Math.max, pointsLong), applyToArray(Math.max, pointsLat)],
     ];
     const [width, height] = useWindowSize();
-    console.log(width, height);
 
     // Use WebMercatorViewport to get center longitude/latitude and zoom
     const viewport = new WebMercatorViewport({
-        // width: width,
-        // height: height,
-        width: 1800,
-        height: 800,
-    }).fitBounds(cornersLongLat, { padding: 90 }); // Can also use option: offset: [0, -100]
+        width: width || 800,
+        height: height || 600,
+    }).fitBounds(cornersLongLat, { padding: Math.round(width * 0.05) || 30 }); // Can also use option: offset: [0, -100]
     const { longitude, latitude, zoom } = viewport;
     return { longitude, latitude, zoom };
 };
@@ -56,7 +53,11 @@ export default function MapTestCenter() {
                 mapStyle="mapbox://styles/mapbox/streets-v9"
             >
                 {testCoordinatesArray.map((result) => (
-                    <div key={result.longitude}>
+                    <div
+                        key={result.longitude
+                            .toString()
+                            .concat(result.latitude.toString())}
+                    >
                         <Marker
                             longitude={result.longitude}
                             latitude={result.latitude}
