@@ -19,7 +19,7 @@ export default function EditProfile() {
         defaultMapStyle,
         setDefaultMapStyle,
     } = useAppData();
-    console.log(user);
+  
     const userInitialValues = {
         firstName: "",
         lastName: "",
