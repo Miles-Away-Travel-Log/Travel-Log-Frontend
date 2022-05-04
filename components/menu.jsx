@@ -15,15 +15,19 @@ import { GrLinkedinOption, GrInstagram } from "react-icons/gr";
 import { FaXing } from "react-icons/fa";
 import { MdFoodBank } from "react-icons/md";
 import { TiWeatherStormy } from "react-icons/ti";
+import {GiNotebook} from "react-icons/gi";
+import {HiMenu} from "react-icons/hi";
 
-const icons = {
+
+export const icons = {
     IoIosArrowForward,
     IoIosArrowBack,
     GrLinkedinOption,
     GrInstagram,
     FaXing,
+    FaUserAlt:<FaUserAlt/>,
 };
-export default icons;
+
 
 export const clickables = [
     {
@@ -73,5 +77,13 @@ export const clickables = [
     {
         path: "/",
         icon: <TiWeatherStormy />,
+    },
+    {
+        path: "/",
+        icon:<GiNotebook/>,
+    },
+    {
+        path: "/",
+        icon:<HiMenu/>,
     },
 ];
