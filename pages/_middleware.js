@@ -15,8 +15,9 @@ export default function middleware(req) {
         if (jwt) {
             try {
                 verify(jwt, secret);
+                const userDataFromToken = verify(jwt, secret);
                 return NextResponse.redirect(
-                    new URL("/user/landingPageUser", url)
+                    new URL(`/user/${userDataFromToken.userName}`, url)
                 );
             } catch (error) {
                 return NextResponse.next();

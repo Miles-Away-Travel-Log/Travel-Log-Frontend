@@ -2,9 +2,13 @@ import BalanceSheet from "../../components/Budget.BalanceSheet.jsx";
 import { useRouter } from "next/router";
 import BudgetSeedMoney from "../../components/Budget.SeedMoney.jsx";
 import BudgetIncomeExpense from "../../components/Budget.IncomeExpense.jsx";
+import { useAppData } from "../../Context/DataStorage.js";
 
 export default function Budget() {
     const router = useRouter();
+    const { budgetItems, seedMoney, homeCurrency } = useAppData();
+
+    console.log({ budgetItems, seedMoney, homeCurrency });
 
     return (
         <div className="w-full flex flex-col justify-center items-center h-full">

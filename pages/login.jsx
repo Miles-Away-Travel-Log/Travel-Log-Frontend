@@ -14,6 +14,7 @@ export default function Login() {
         setUser,
         setHomeCurrency,
         setList_Friends_FriendRequests,
+        setBudgetItems,
     } = useAppData();
 
     async function submit(e) {
@@ -50,7 +51,8 @@ export default function Login() {
             );
             setUser(data.user);
             setUserId(data.user.id);
-            setSeedMoney(data.user.seedMoney);
+            setSeedMoney(data.user.seedMoney ? data.user.seedMoney : []);
+            setBudgetItems(data.user.budget ? data.user.budget : []);
             setList_Friends_FriendRequests(data.user.friends);
             router.replace(`/user/${data.user.userName}`);
         } else {

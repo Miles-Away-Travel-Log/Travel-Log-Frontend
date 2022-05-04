@@ -105,12 +105,21 @@ function AppState(props) {
 
     const [accountPhoto, setAccountPhoto] = useState("");
 
+    //-------------------------------------- BUDGET  ---------------------------------------------------//
+    //
+
+    const [budgetItems, setBudgetItems] = useState([]);
+    const [incomeOrExpense, setIncomeOrExpense] = useState("expense");
+    const [category, setCategory] = useState("");
+    const [seedMoney, setSeedMoney] = useState("");
+    const [homeCurrency, setHomeCurrency] = useState("EUR");
+
     //-------------------------------------- FETCH USER  ------------------------------------------------//
     //
-  
+
     const [newHome, setNewHome] = useState(false);
     const [defaultMapStyle, setDefaultMapStyle] = useState(false);
-  
+
     async function handleGetUser() {
         const header = {
             "Content-Type": "application/json",
@@ -125,12 +134,12 @@ function AppState(props) {
                 headers: header,
             }
         );
-      
+
         const data = await response.json();
         setUser(data.user);
-        setBudgetItems(data.user.budget);
+        setBudgetItems(data.user.budget ? data.user.budget : []);
         setUserId(data.user.id);
-        setSeedMoney(data.user.seedMoney);
+        setSeedMoney(data.user.seedMoney ? data.user.seedMoney : []);
         setAccountPhoto(data.user.avatar);
         setHomeCurrency(
             data.user.seedMoney[0] ? data.user.seedMoney[0].currency : "EUR"
@@ -140,12 +149,6 @@ function AppState(props) {
 
     //-------------------------------------- BUDGET  ---------------------------------------------------//
     //
-
-    const [budgetItems, setBudgetItems] = useState([]);
-    const [incomeOrExpense, setIncomeOrExpense] = useState("expense");
-    const [category, setCategory] = useState("");
-    const [seedMoney, setSeedMoney] = useState("");
-    const [homeCurrency, setHomeCurrency] = useState("EUR");
 
     //--------------------------- POST ITEM ----------------------//
     async function handlePostBudgetItem(e) {
@@ -349,6 +352,7 @@ function AppState(props) {
                 setNewHome,
                 defaultMapStyle,
                 setDefaultMapStyle,
+                setBudgetItems,
             }}
         >
             {props.children}

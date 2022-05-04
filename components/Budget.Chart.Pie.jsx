@@ -36,7 +36,10 @@ function PieChart() {
 
     // Hier wird das vorhandene Budget berechnet
     const availableMoney =
-        seedMoney[0].total - listValue.reduce((acc, item) => acc + item, 0);
+        seedMoney.length != 0
+            ? seedMoney[0].total -
+              listValue.reduce((acc, item) => acc + item, 0)
+            : 0;
 
     // Hier wird zufällig ein Farbwert erzeugt
     function colorGenerator() {
