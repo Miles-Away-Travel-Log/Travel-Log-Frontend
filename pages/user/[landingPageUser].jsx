@@ -184,7 +184,7 @@ export default function LandingPageUser() {
             <div className="mx-2 bg-[#C4C4C4] rounded-lg border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700 pt-6">
                 <div className="flex flex-col items-center pb-10">
                     <Image
-                        className="mb-3 w-24 h-24 rounded-full shadow-lg"
+                        className="w-24 h-24 rounded-full shadow-lg"
                         src={
                             dataOfOneFriend.avatar
                                 ? dataOfOneFriend.avatar
@@ -195,7 +195,7 @@ export default function LandingPageUser() {
                         height={100}
                     />
 
-                    <h5 className="mb-1 text-xl font-medium text-[white] dark:text-white">
+                    <h5 className=" pt-2 mb-1 text-xl font-medium text-[white] dark:text-white">
                         {dataOfOneFriend.firstName} {dataOfOneFriend.lastName}
                     </h5>
                     <span className="text-sm text-[#90A5A9] dark:text-gray-400">

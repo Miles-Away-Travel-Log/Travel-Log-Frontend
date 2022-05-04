@@ -34,10 +34,10 @@ export default function AddProfilePicture() {
                             <div className="flex flex-col items-center justify-center">
                                 {accountPhoto ? (
                                     <Image
-                                        className="p-4"
+                                        className="p-4 mb-3 rounded-full shadow-lg"
                                         src={accountPhoto}
                                         alt="User Image"
-                                        width={200}
+                                        width={100}
                                         height={100}
                                     />
                                 ) : (
@@ -52,11 +52,11 @@ export default function AddProfilePicture() {
                                             d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z"
                                             clipRule="evenodd"
                                         />
+                                        <p className="pt-1 mb-2 text-sm tracking-wider text-gray-400 group-hover:text-gray-600">
+                                            Select a photo
+                                        </p>
                                     </svg>
                                 )}
-                                <p className="pt-1 mb-2 text-sm tracking-wider text-gray-400 group-hover:text-gray-600">
-                                    Select a photo
-                                </p>
                             </div>
                             <input
                                 type="file"
