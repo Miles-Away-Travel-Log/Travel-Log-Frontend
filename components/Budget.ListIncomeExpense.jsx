@@ -7,8 +7,10 @@ import { useAppData } from "../Context/DataStorage.js";
 import { RiDeleteBinLine } from "react-icons/ri";
 
 function ListIncomeExpense({ budgetItems }) {
-    const { userId, deleteOneItem } = useAppData();
     const router = useRouter();
+
+    const { userId, deleteOneItem } = useAppData();
+
     const [showDropdown, setShowDropdown] = useState(false);
 
     function backToBudget() {

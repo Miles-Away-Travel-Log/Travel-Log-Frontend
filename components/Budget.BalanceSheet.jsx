@@ -13,15 +13,17 @@ function BalanceSheet() {
         acc += item.value;
         return acc;
     }, 0);
+
     const sumExpense = listExpense.reduce((acc, item) => {
         acc += item.value;
         return acc;
     }, 0);
+
     const balance =
         (seedMoney.length !== 0 ? seedMoney[0].total : 0) +
         sumIncome -
         sumExpense;
-    //const balance = JSON.stringify(seedMoney);
+
     return (
         <div className="flex justify-center bg-white w-full mt-6 p-2">
             <div className="bg-white rounded-lg w-3/4 lg:w-1/2 xl:w-1/3 p-4 shadow border border-gray-600">
@@ -58,7 +60,7 @@ function BalanceSheet() {
                         <BsArrowDownCircle className="text-red-500 w-1/12" />
                         <div className="w-9/12 ml-2">
                             <span className="text-m font-semibold block">
-                                Expenxe: {sumExpense.toFixed(2)} {homeCurrency}
+                                Expense: {sumExpense.toFixed(2)} {homeCurrency}
                             </span>
                         </div>
                     </div>

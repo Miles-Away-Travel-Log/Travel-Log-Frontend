@@ -175,7 +175,7 @@ export default function EditProfile() {
                 setNewHome(false);
                 setDefaultMapStyle(false);
                 handleGetUser();
-                router.replace("/user/landingPageUser");
+                router.replace(`/user/${user.userName}`);
             } else {
                 const err = await rawResponse.json();
                 //console.log("backend error", err);
@@ -402,7 +402,7 @@ export default function EditProfile() {
                     </button>
                     <button
                         type="submit"
-                        onClick={() => router.replace("/user/landingPageUser")}
+                        onClick={() => router.replace(`/user/${user.userName}`)}
                         className="w-full text-center py-3 rounded-full bg-[#90A5A9] text-white hover:bg-[#C4C4C4] focus:outline-none my-1"
                     >
                         Back
