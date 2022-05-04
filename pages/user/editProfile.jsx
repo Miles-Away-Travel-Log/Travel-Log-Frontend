@@ -19,7 +19,7 @@ export default function EditProfile() {
         defaultMapStyle,
         setDefaultMapStyle,
     } = useAppData();
-  
+  console.log(user);
     const userInitialValues = {
         firstName: "",
         lastName: "",
@@ -216,7 +216,7 @@ export default function EditProfile() {
     }
 
     return (
-        <div className="bg-[url('../public/images/images-register/willian-justen-de-vasconcellos-T_Qe4QlMIvQ-unsplash.jpg')] bg-cover min-h-screen flex flex-col">
+        <div className="bg-[url('../public/images/images-register/willian-justen-de-vasconcellos-T_Qe4QlMIvQ-unsplash.webp')] bg-cover min-h-screen flex flex-col">
             <div className="container max-w-sm mx-auto flex-1 flex flex-col items-center justify-center px-2">
                 <form
                     className=" px-6 py-8 text-black w-full"

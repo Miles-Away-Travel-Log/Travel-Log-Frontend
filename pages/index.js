@@ -17,7 +17,7 @@ export default function Home() {
 
     return (
         <div className={styles.landingpageContainer}>
-            <img src="./images/images-landingpage/dan-freeman-wAn4RfmXtxU-unsplash.jpg" />
+            <img src="./images/images-landingpage/dan-freeman-wAn4RfmXtxU-unsplash.webp" />
             <div className={styles.landingpageContainerLogo}>
                 <div className={styles.landingpageLogo}>
                     <img src="./images/images-landingpage/logo.svg" />

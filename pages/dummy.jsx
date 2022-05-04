@@ -4,7 +4,7 @@ import React from "react";
 
 function dummy() {
     return (
-        <div className="bg-[url('../public/images/images-dummy/quino-al-FVOkPmiCzAM-unsplash.jpg')] bg-cover min-h-screen">
+        <div className="bg-[url('../public/images/images-dummy/quino-al-FVOkPmiCzAM-unsplash.webp')] bg-cover min-h-screen">
             <div className="py-10 lg:px-4"></div>
 
             {/*          ----------------------         Test mit Grid:          ----------------------         */}
