@@ -40,13 +40,13 @@ export default function Login() {
             Cookies.set(
                 "token",
                 data.token,
-                { expires: 1 },
+                { expires: 1 / 24 },
                 { sameSite: "none" }
             );
             Cookies.set(
                 "user",
                 data.user.id,
-                { expires: 1 },
+                { expires: 1 / 24 },
                 { sameSite: "none" }
             );
             setUser(data.user);

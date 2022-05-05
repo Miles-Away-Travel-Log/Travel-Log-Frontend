@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from "react";
 import DatePicker from "../../components/DatePicker";
 import { useAppData } from "../../Context/DataStorage.js";
+import { format } from 'date-fns'
+
+
 
 export default function NewTrip() {
     const {
@@ -14,13 +17,15 @@ export default function NewTrip() {
         setCalendar(false);
     }, []);
 
+    format(new Date(2014, 1, 11), 'yyyy-MM-dd')
+
     return (
         <div className="h-screen w-screen">
             <div className="grid grid-cols-2 gap-4">
                 <div>Start Date:</div>
-                <div>{calendar ? calendar[0].startDate.toString() : ""}</div>
+                <div>{calendar ? format(new Date(calendar[0].startDate), 'dd.MMMM.yyyy') : ""}</div>
                 <div>End Date:</div>
-                <div>{calendar ? calendar[0].endDate.toString() : ""}</div>
+                <div>{calendar ? format(new Date(calendar[0].endDate), 'dd.MMMM.yyyy') : ""}</div>
                 <button
                     className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded z-0"
                     onClick={() => setDatePickerVisibility(true)}

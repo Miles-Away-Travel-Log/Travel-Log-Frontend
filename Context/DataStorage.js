@@ -105,6 +105,18 @@ function AppState(props) {
 
     const [accountPhoto, setAccountPhoto] = useState("");
 
+    //-------------------------------------- SET HOME AND MAPSTYLE  -------------------------------------//
+    //
+
+    const [newHome, setNewHome] = useState(false);
+    const [defaultMapStyle, setDefaultMapStyle] = useState(false);
+
+    //-------------------------------------- NEW TRIP  --------------------------------------------------//
+    //
+
+    const [datePickerVisibility, setDatePickerVisibility] = useState(false);
+    const [calendar, setCalendar] = useState(false);
+
     //-------------------------------------- BUDGET  ---------------------------------------------------//
     //
 
@@ -113,51 +125,6 @@ function AppState(props) {
     const [category, setCategory] = useState("");
     const [seedMoney, setSeedMoney] = useState("");
     const [homeCurrency, setHomeCurrency] = useState("EUR");
-
-    //-------------------------------------- FETCH USER  ------------------------------------------------//
-    //
-
-    async function handleGetUser() {
-        const header = {
-            "Content-Type": "application/json",
-            Accept: "application/json",
-            Authorization: `Bearer ${Cookies.get("token")}`,
-        };
-
-        const response = await fetch(
-            process.env.NEXT_PUBLIC_FETCH_URL_USER + `/${Cookies.get("user")}`,
-            {
-                method: "GET",
-                headers: header,
-            }
-        );
-
-        const data = await response.json();
-        setUser(data.user);
-        setBudgetItems(data.user.budget ? data.user.budget : []);
-        setUserId(data.user.id);
-        setSeedMoney(data.user.seedMoney ? data.user.seedMoney : []);
-        setAccountPhoto(data.user.avatar);
-        setHomeCurrency(
-            data.user.seedMoney[0] ? data.user.seedMoney[0].currency : "EUR"
-        );
-        setList_Friends_FriendRequests(data.user.friends);
-    }
-
-    //-------------------------------------- set Home and MapStyle  -------------------------------------//
-    //
-
-    const [newHome, setNewHome] = useState(false);
-    const [defaultMapStyle, setDefaultMapStyle] = useState(false);
-
-    //-------------------------------------- new Trip  --------------------------------------------------//
-    //
-
-    const [datePickerVisibility, setDatePickerVisibility] = useState(false);
-    const [calendar, setCalendar] = useState(false);
-
-    //-------------------------------------- BUDGET  ---------------------------------------------------//
-    //
 
     //--------------------------- POST ITEM ----------------------//
     async function handlePostBudgetItem(e) {
@@ -277,6 +244,40 @@ function AppState(props) {
             }
         } catch (error) {
             console.log(error);
+        }
+    }
+
+    //-------------------------------------- FETCH USER  ------------------------------------------------//
+    //
+
+    async function handleGetUser() {
+        const header = {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+            Authorization: `Bearer ${Cookies.get("token")}`,
+        };
+
+        const response = await fetch(
+            process.env.NEXT_PUBLIC_FETCH_URL_USER + `/${Cookies.get("user")}`,
+            {
+                method: "GET",
+                headers: header,
+            }
+        );
+
+        if (response.status === 200) {
+            const data = await response.json();
+            setUser(data.user);
+            setBudgetItems(data.user.budget ? data.user.budget : []);
+            setUserId(data.user.id);
+            setSeedMoney(data.user.seedMoney ? data.user.seedMoney : []);
+            setAccountPhoto(data.user.avatar);
+            setHomeCurrency(
+                data.user.seedMoney[0] ? data.user.seedMoney[0].currency : "EUR"
+            );
+            setList_Friends_FriendRequests(data.user.friends);
+        } else {
+            setUser(null);
         }
     }
 

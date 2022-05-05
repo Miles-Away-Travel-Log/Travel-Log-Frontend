@@ -29,7 +29,6 @@ export default function NewTrip() {
                 ranges={timeInterval}
                 direction="horizontal"
                 // direction="vertical"
-                scroll={{ enabled: true }}
             />
             <div className="grid grid-cols-2 gap-4">
                 <button
