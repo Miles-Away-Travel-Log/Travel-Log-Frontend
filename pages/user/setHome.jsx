@@ -139,67 +139,76 @@ function SetHome() {
     }
 
     return (
-        <div className="h-screen w-screen grid grid-cols-5">
-            <SetMapStyle />
-            <div className="col-span-3">
-                <div
-                    ref={geocoderContainerRef}
-                    style={{
-                        position: "absolute",
-                        top: 20,
-                        left: "41vw",
-                        zIndex: 1,
-                    }}
-                />
-                <Map
-                    ref={mapRef}
-                    {...viewport}
-                    reuseMaps
-                    styleDiffing={true}
-                    width="100%"
-                    height="100%"
-                    mapStyle={
-                        defaultMapStyle
-                            ? user.mapStyle.link
-                                ? defaultMapStyle.link
-                                : user.mapStyle.link
-                            : "mapbox://styles/mapbox/streets-v9"
-                    }
-                    mapboxAccessToken={TOKEN}
-                    onClick={(e) => handleClick(e)}
-                    onMove={(e) => setViewState(e.viewState)}
-                >
-                    <Geocoder
-                        mapRef={mapRef}
-                        containerRef={geocoderContainerRef}
-                        onViewportChange={handleGeocoderViewportChange}
-                        mapboxApiAccessToken={TOKEN}
-                        position="top-left"
-                    />
-                    <NavigationControl />
-                    {newLocation && (
-                        <div key={newLocation.longitude}>
-                            <Marker
-                                longitude={newLocation.longitude}
-                                latitude={newLocation.latitude}
-                                draggable
-                                onDragEnd={(e) => onMarkerDragEnd(e)}
-                            >
-                                <p
-                                    className={`cursor-pointer text-4xl ${
-                                        mapStyle
-                                            ? mapStyle.iconColor
-                                            : "text-black"
-                                    }`}
-                                >
-                                    <FaHome />
-                                </p>
-                            </Marker>
-                        </div>
-                    )}
-                </Map>
-            </div>
-            {/* <Navbar/> */}
+        <div className="h-screen w-screen">
+            {/*  solange user noch nicht geladen ist, wird der PreLoader angezeigt */}
+            {!user.userName && (
+                <div className="w-screen h-screen grid place-content-center content-center">
+                    <TailSpin color="#00BFFF" height={80} width={80} />
+                </div>
+            )}
+            {/* danach kommt dann die eigentliche Seite */}
+            {user.userName && (
+                <div className="h-screen w-screen grid grid-cols-5">
+                    <SetMapStyle />
+                    <div className="col-span-3">
+                        <div
+                            ref={geocoderContainerRef}
+                            style={{
+                                position: "absolute",
+                                top: 20,
+                                left: "41vw",
+                                zIndex: 1,
+                            }}
+                        />
+                        <Map
+                            ref={mapRef}
+                            {...viewport}
+                            reuseMaps
+                            styleDiffing={true}
+                            width="100%"
+                            height="100%"
+                            mapStyle={
+                                defaultMapStyle
+                                    ? defaultMapStyle.link
+                                    : user.mapStyle.link
+                            }
+                            mapboxAccessToken={TOKEN}
+                            onClick={(e) => handleClick(e)}
+                            onMove={(e) => setViewState(e.viewState)}
+                        >
+                            <Geocoder
+                                mapRef={mapRef}
+                                containerRef={geocoderContainerRef}
+                                onViewportChange={handleGeocoderViewportChange}
+                                mapboxApiAccessToken={TOKEN}
+                                position="top-left"
+                            />
+                            <NavigationControl />
+                            {newLocation && (
+                                <div key={newLocation.longitude}>
+                                    <Marker
+                                        longitude={newLocation.longitude}
+                                        latitude={newLocation.latitude}
+                                        draggable
+                                        onDragEnd={(e) => onMarkerDragEnd(e)}
+                                    >
+                                        <p
+                                            className={`cursor-pointer text-4xl ${
+                                                mapStyle
+                                                    ? mapStyle.iconColor
+                                                    : "text-black"
+                                            }`}
+                                        >
+                                            <FaHome />
+                                        </p>
+                                    </Marker>
+                                </div>
+                            )}
+                        </Map>
+                    </div>
+                    {/* <Navbar/> */}
+                </div>
+            )}
         </div>
     );
 }

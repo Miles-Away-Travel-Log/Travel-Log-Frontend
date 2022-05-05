@@ -37,23 +37,11 @@ function SetMapStyle() {
                 <div>
                     <div className="font-bold">City:</div>
                 </div>
-                <div>
-                    {newHome
-                        ? user.home.city
-                            ? newHome.city
-                            : user.home.city
-                        : ""}
-                </div>
+                <div>{newHome ? newHome.city : user.home.city}</div>
                 <div>
                     <div className="font-bold">Country:</div>
                 </div>
-                <div>
-                    {newHome
-                        ? user.home.country
-                            ? newHome.country
-                            : user.home.country
-                        : ""}
-                </div>
+                <div>{newHome ? newHome.country : user.home.country}</div>
             </div>
             <h1 className="text-3xl ml-5 mt-10 mb-15 font-bold flex flex-wrap">
                 Choose your standard Map-Style:
