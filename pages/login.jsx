@@ -1,6 +1,5 @@
 import Cookies from "js-cookie";
 import { useRouter } from "next/router";
-import Navbar from "../components/Navbar.jsx";
 import Image from "next/image";
 import avatar from "../public/images/images-register/avatar.svg";
 import { useAppData } from "../Context/DataStorage.js";
@@ -115,7 +114,6 @@ export default function Login() {
                     </button>
                 </div>
             </form>
-            <Navbar />
         </div>
     );
 }

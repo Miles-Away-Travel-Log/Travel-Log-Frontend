@@ -41,8 +41,8 @@ function BudgetSeedMoney() {
                     className="flex flex-col w-[375px] h-1/6 p-2"
                     onSubmit={handlePostSeedMoney}
                 >
-                    <fieldset className="flex flex-col border-solid border-2 border-blue-500 justify-center items-center">
-                        <legend>Budget</legend>
+                    <fieldset className="flex flex-col border-solid border-2 border-[#90A5A9] justify-center items-center rounded-full text-[#942928]">
+                        <legend>BUDGET</legend>
                         <input
                             type="text"
                             name="seedmoney"
@@ -60,7 +60,7 @@ function BudgetSeedMoney() {
                         </select>
 
                         <button
-                            className="w-1/2 text-center py-3 rounded-full bg-amber-500 text-white hover:bg-[#C4C4C4] focus:outline-none my-1"
+                            className="w-1/2 text-center py-3 rounded-full bg-[#90A5A9] text-white hover:bg-[#C4C4C4] focus:outline-none my-1"
                             type="submit"
                         >
                             Set current budget
