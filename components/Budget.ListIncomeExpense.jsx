@@ -146,16 +146,16 @@ function ListIncomeExpense({ budgetItems }) {
         });
     }
     return (
-        <div>
+        <div className="flex flex-col items-center">
             <button
-                className="bg-fuchsia-500 border border-solid shadow rounded-full w-[200px] h-[50px]"
+                className="m-7 bg-[#90A5A9] text-white  border border-solid shadow rounded-full w-[200px] h-[50px]"
                 onClick={backToBudget}
             >
                 Back to Budget
             </button>
             <div className="flex justify-center w-full pt-16">
                 <div
-                    className="bg-white rounded-lg w-3/4 lg:w-1/2 xl:w-1/3 p-4 border border-gray-600"
+                    className="bg-white rounded-full w-3/4 lg:w-1/2 xl:w-1/3 p-4 border border-[#C4C4C4]"
                     id="content-pdf"
                 >
                     {createItem()}

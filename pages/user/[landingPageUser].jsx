@@ -77,7 +77,7 @@ export default function LandingPageUser() {
                 <button
                     id="dropdownButton"
                     data-dropdown-toggle="dropdown"
-                    className="hidden sm:inline-block text-white dark:text-gray-400 hover:bg-[#942928] dark:hover:bg-gray-700 focus:outline-none focus:ring-4 focus:outline-none focus:ring-gray-200 dark:focus:ring-gray-700 rounded-lg text-sm p-1.5"
+                    className="sm:inline-block text-white dark:text-gray-400 hover:bg-[#942928] dark:hover:bg-gray-700 focus:outline-none focus:ring-4 focus:outline-none focus:ring-gray-200 dark:focus:ring-gray-700 rounded-lg text-sm p-1.5"
                     type="button"
                     onClick={handleDropdown}
                 >
@@ -203,7 +203,10 @@ export default function LandingPageUser() {
             {user.userName === userFromRouterPath ? (
                 <div className="m-3 my-9 rounded-lg bg-[#C4C4C4] text-white text-xl text-center">{`Hello ${dataOfOneFriend.userName}`}</div>
             ) : null}
-            <Navbar />
+            <div className="mt-9">
+            <Navbar/>
+            </div>
+           
         </div>
     );
 }

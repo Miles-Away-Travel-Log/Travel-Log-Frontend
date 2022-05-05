@@ -109,7 +109,7 @@ function FriendsList(props) {
     }
 
     return (
-        <div className="h-screen bg-slate-800">
+        <div className="h-screen bg-[#C4C4C4] text-white">
             <div className="container mx-auto max-w-5xl">
                 {/* <!-- title --> */}
                 <div className="pt-12 pb-6 mx-auto space-y-2 px-4">
