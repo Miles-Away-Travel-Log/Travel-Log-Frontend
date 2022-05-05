@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import { ImEyeBlocked, ImEye } from "react-icons/im";
 import AddProfilePicture from "../../components/AddProfilePicture.jsx";
 import Cookies from "js-cookie";
+import { TailSpin } from "react-loader-spinner";
 
 export default function EditProfile() {
     const router = useRouter();
@@ -217,76 +218,114 @@ export default function EditProfile() {
 
     return (
         <div className="bg-[url('../public/images/images-register/willian-justen-de-vasconcellos-T_Qe4QlMIvQ-unsplash.webp')] bg-cover min-h-screen flex flex-col">
-            <div className="container max-w-sm mx-auto flex-1 flex flex-col items-center justify-center px-2">
-                <form
-                    className=" px-6 py-8 text-black w-full"
-                    onSubmit={updateUser}
-                >
-                    <div className="flex flex-col justify-center w-full mb-8 text-white text-center">
-                        <p
-                            className="hover:text-[#942928]"
-                            onClick={handlePictureUploader}
-                        >
-                            Add a Picture
-                        </p>
-                        <div
-                            className={
-                                showUploader === true ? "visible" : "hidden"
-                            }
-                        >
-                            <AddProfilePicture />
+            {/*  solange user noch nicht geladen ist, wird der PreLoader angezeigt */}
+            {!user.userName && (
+                <div className="w-screen h-screen grid place-content-center content-center">
+                    <TailSpin color="#00BFFF" height={80} width={80} />
+                </div>
+            )}
+            {/* danach kommt dann die eigentliche Seite */}
+            {user.userName && (
+                <div className="container max-w-sm mx-auto flex-1 flex flex-col items-center justify-center px-2">
+                    <form
+                        className=" px-6 py-8 text-black w-full"
+                        onSubmit={updateUser}
+                    >
+                        <div className="flex flex-col justify-center w-full mb-8 text-white text-center">
+                            <p
+                                className="hover:text-[#942928]"
+                                onClick={handlePictureUploader}
+                            >
+                                Add a Picture
+                            </p>
+                            <div
+                                className={
+                                    showUploader === true ? "visible" : "hidden"
+                                }
+                            >
+                                <AddProfilePicture />
+                            </div>
                         </div>
-                    </div>
 
-                    <h1 className="mb-8 text-3xl text-center text-white">
-                        EDIT YOUR PROFILE
-                    </h1>
-                    <label className="text-white">User Name</label>
-                    <input
-                        type="text"
-                        className="block border border-grey-light w-full p-3 rounded-full mb-1 text-black"
-                        name="userName"
-                        placeholder={user.userName}
-                        value={formValues.userName}
-                        onChange={handleChange}
-                    />
-                    <p className="text-sm text-red-600 mb-4">
-                        {isSubmit && formErrors.userName}
-                    </p>
-                    <label className="form-label inline-block mb-2 text-white">
-                        Your Status
-                    </label>
-                    <textarea
-                        className="
+                        <h1 className="mb-8 text-3xl text-center text-white">
+                            EDIT YOUR PROFILE
+                        </h1>
+                        <label className="text-white">User Name</label>
+                        <input
+                            type="text"
+                            className="block border border-grey-light w-full p-3 rounded-full mb-1 text-black"
+                            name="userName"
+                            placeholder={user.userName}
+                            value={formValues.userName}
+                            onChange={handleChange}
+                        />
+                        <p className="text-sm text-red-600 mb-4">
+                            {isSubmit && formErrors.userName}
+                        </p>
+                        <label className="form-label inline-block mb-2 text-white">
+                            Your Status
+                        </label>
+                        <textarea
+                            className="
                             px-8 mb-3 form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700
                             bg-white bg-clip-padding border border-solid border-gray-300 rounded-full transition
                             ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
-                        id="exampleFormControlTextarea1"
-                        rows="3"
-                        name="status"
-                        placeholder="Text"
-                        value={formValues.status}
-                        onChange={handleChange}
-                    ></textarea>
-                    <label className="text-white">Email</label>
-                    <input
-                        type="text"
-                        className="block border border-grey-light w-full p-3 rounded-full mb-1 text-black"
-                        name="email"
-                        placeholder={user.email}
-                        value={formValues.email}
-                        onChange={handleChange}
-                    />
-                    <p className="text-sm text-red-600 mb-4">
-                        {isSubmit && formErrors.email}
-                    </p>
-                    <div className="relative">
+                            id="exampleFormControlTextarea1"
+                            rows="3"
+                            name="status"
+                            placeholder="Text"
+                            value={formValues.status}
+                            onChange={handleChange}
+                        ></textarea>
+                        <label className="text-white">Email</label>
                         <input
-                            type={passwordInputType}
+                            type="text"
                             className="block border border-grey-light w-full p-3 rounded-full mb-1 text-black"
-                            name="password"
-                            placeholder="New Password"
-                            value={formValues.password}
+                            name="email"
+                            placeholder={user.email}
+                            value={formValues.email}
+                            onChange={handleChange}
+                        />
+                        <p className="text-sm text-red-600 mb-4">
+                            {isSubmit && formErrors.email}
+                        </p>
+                        <div className="relative">
+                            <input
+                                type={passwordInputType}
+                                className="block border border-grey-light w-full p-3 rounded-full mb-1 text-black"
+                                name="password"
+                                placeholder="New Password"
+                                value={formValues.password}
+                                onChange={handleChange}
+                                onPaste={(e) => {
+                                    e.preventDefault();
+                                    return false;
+                                }}
+                                onCopy={(e) => {
+                                    e.preventDefault();
+                                    return false;
+                                }}
+                            />
+                            <span
+                                className="absolute right-[15px] top-[15px] text-[20px] text-black"
+                                onClick={handleShowPasswordButton}
+                            >
+                                {passwordInputType === "password" ? (
+                                    <ImEye />
+                                ) : (
+                                    <ImEyeBlocked />
+                                )}
+                            </span>
+                        </div>
+                        <p className="text-sm text-red-600 mb-4">
+                            {isSubmit && formErrors.password}
+                        </p>
+                        <input
+                            type="password"
+                            className="block border border-grey-light w-full p-3 rounded-full mb-1 text-black"
+                            name="confirm_password"
+                            placeholder="Confirm New Password"
+                            value={formValues.confirm_password}
                             onChange={handleChange}
                             onPaste={(e) => {
                                 e.preventDefault();
@@ -297,118 +336,95 @@ export default function EditProfile() {
                                 return false;
                             }}
                         />
-                        <span
-                            className="absolute right-[15px] top-[15px] text-[20px] text-black"
-                            onClick={handleShowPasswordButton}
+                        <p className="text-sm text-red-600 mb-4">
+                            {isSubmit && formErrors.confirm_password}
+                        </p>
+                        <label className="text-white">City</label>
+                        <input
+                            type="text"
+                            className="block border border-grey-light w-full p-3 rounded-full mb-1 text-black"
+                            name="city"
+                            placeholder={
+                                newHome ? newHome.city : user.home.city
+                            }
+                            value={newHome ? newHome.city : user.home.city}
+                            disabled
+                        />
+                        <p className="text-sm text-red-600 mb-4">
+                            {isSubmit && formErrors.city}
+                        </p>
+                        <label className="text-white">Country</label>
+                        <input
+                            type="text"
+                            className="block border border-grey-light w-full p-3 rounded-full mb-1 text-black"
+                            name="country"
+                            placeholder={
+                                newHome ? newHome.country : user.home.country
+                            }
+                            value={
+                                newHome ? newHome.country : user.home.country
+                            }
+                            disabled
+                        />
+                        <p className="text-sm text-red-600 mb-4">
+                            {isSubmit && formErrors.country}
+                        </p>
+                        <label className="text-white">Default Map-Style</label>
+                        <input
+                            type="text"
+                            className="block border border-grey-light w-full p-3 rounded-full mb-1 text-black"
+                            name="mapStyle"
+                            placeholder={
+                                defaultMapStyle
+                                    ? defaultMapStyle.name
+                                    : user.mapStyle.name
+                            }
+                            value={
+                                defaultMapStyle
+                                    ? defaultMapStyle.name
+                                    : user.mapStyle.name
+                            }
+                            disabled
+                        />
+                        <button
+                            onClick={handleMapStyleSubmit}
+                            className="w-full text-center py-3 rounded-full bg-[#90A5A9] text-white hover:bg-[#C4C4C4] focus:outline-none my-1"
                         >
-                            {passwordInputType === "password" ? (
-                                <ImEye />
-                            ) : (
-                                <ImEyeBlocked />
-                            )}
-                        </span>
-                    </div>
-                    <p className="text-sm text-red-600 mb-4">
-                        {isSubmit && formErrors.password}
-                    </p>
-                    <input
-                        type="password"
-                        className="block border border-grey-light w-full p-3 rounded-full mb-1 text-black"
-                        name="confirm_password"
-                        placeholder="Confirm New Password"
-                        value={formValues.confirm_password}
-                        onChange={handleChange}
-                        onPaste={(e) => {
-                            e.preventDefault();
-                            return false;
-                        }}
-                        onCopy={(e) => {
-                            e.preventDefault();
-                            return false;
-                        }}
-                    />
-                    <p className="text-sm text-red-600 mb-4">
-                        {isSubmit && formErrors.confirm_password}
-                    </p>
-                    <label className="text-white">City</label>
-                    <input
-                        type="text"
-                        className="block border border-grey-light w-full p-3 rounded-full mb-1 text-black"
-                        name="city"
-                        placeholder={newHome ? newHome.city : user.home.city}
-                        value={newHome ? newHome.city : user.home.city}
-                        disabled
-                    />
-                    <p className="text-sm text-red-600 mb-4">
-                        {isSubmit && formErrors.city}
-                    </p>
-                    <label className="text-white">Country</label>
-                    <input
-                        type="text"
-                        className="block border border-grey-light w-full p-3 rounded-full mb-1 text-black"
-                        name="country"
-                        placeholder={
-                            newHome ? newHome.country : user.home.country
-                        }
-                        value={newHome ? newHome.country : user.home.country}
-                        disabled
-                    />
-                    <p className="text-sm text-red-600 mb-4">
-                        {isSubmit && formErrors.country}
-                    </p>
-                    <label className="text-white">Default Map-Style</label>
-                    <input
-                        type="text"
-                        className="block border border-grey-light w-full p-3 rounded-full mb-1 text-black"
-                        name="mapStyle"
-                        placeholder={
-                            defaultMapStyle
-                                ? defaultMapStyle.name
-                                : user.mapStyle.name
-                        }
-                        value={
-                            defaultMapStyle
-                                ? defaultMapStyle.name
-                                : user.mapStyle.name
-                        }
-                        disabled
-                    />
-                    <button
-                        onClick={handleMapStyleSubmit}
-                        className="w-full text-center py-3 rounded-full bg-[#90A5A9] text-white hover:bg-[#C4C4C4] focus:outline-none my-1"
-                    >
-                        Set Home-Location and Map-Style
-                    </button>
-                    <div className="flex flex-col ">
-                        <label htmlFor="visibility" className="text-white">
-                            Visible for other users
-                        </label>
-                        <select
-                            name="visibility"
-                            id="visibility"
-                            className="border border-grey-light w-full rounded-full p-3 mb-4"
-                            onChange={handleChangeVisibility}
+                            Set Home-Location and Map-Style
+                        </button>
+                        <div className="flex flex-col ">
+                            <label htmlFor="visibility" className="text-white">
+                                Visible for other users
+                            </label>
+                            <select
+                                name="visibility"
+                                id="visibility"
+                                className="border border-grey-light w-full rounded-full p-3 mb-4"
+                                onChange={handleChangeVisibility}
+                            >
+                                <option value="empty">-</option>
+                                <option value="yes">yes</option>
+                                <option value="no">no</option>
+                            </select>
+                        </div>
+                        <button
+                            type="submit"
+                            className="w-full text-center py-3 rounded-full bg-[#90A5A9] text-white hover:bg-[#C4C4C4] focus:outline-none my-1"
                         >
-                            <option value="empty">-</option>
-                            <option value="yes">yes</option>
-                            <option value="no">no</option>
-                        </select>
-                    </div>
-                    <button
-                        type="submit"
-                        className="w-full text-center py-3 rounded-full bg-[#90A5A9] text-white hover:bg-[#C4C4C4] focus:outline-none my-1"
-                    >
-                        Update Account
-                    </button>
-                    <button
-                        type="submit"
-                        onClick={() => router.replace(`/user/${user.userName}`)}
-                        className="w-full text-center py-3 rounded-full bg-[#90A5A9] text-white hover:bg-[#C4C4C4] focus:outline-none my-1"
-                    >
-                        Back
-                    </button>
-                </form>
-            </div>
+                            Update Account
+                        </button>
+                        <button
+                            type="submit"
+                            onClick={() =>
+                                router.replace(`/user/${user.userName}`)
+                            }
+                            className="w-full text-center py-3 rounded-full bg-[#90A5A9] text-white hover:bg-[#C4C4C4] focus:outline-none my-1"
+                        >
+                            Back
+                        </button>
+                    </form>
+                </div>
+            )}
         </div>
     );
 }

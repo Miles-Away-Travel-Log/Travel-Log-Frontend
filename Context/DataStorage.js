@@ -117,9 +117,6 @@ function AppState(props) {
     //-------------------------------------- FETCH USER  ------------------------------------------------//
     //
 
-    const [newHome, setNewHome] = useState(false);
-    const [defaultMapStyle, setDefaultMapStyle] = useState(false);
-
     async function handleGetUser() {
         const header = {
             "Content-Type": "application/json",
@@ -146,6 +143,18 @@ function AppState(props) {
         );
         setList_Friends_FriendRequests(data.user.friends);
     }
+
+    //-------------------------------------- set Home and MapStyle  -------------------------------------//
+    //
+
+    const [newHome, setNewHome] = useState(false);
+    const [defaultMapStyle, setDefaultMapStyle] = useState(false);
+
+    //-------------------------------------- new Trip  --------------------------------------------------//
+    //
+
+    const [datePickerVisibility, setDatePickerVisibility] = useState(false);
+    const [calendar, setCalendar] = useState(false);
 
     //-------------------------------------- BUDGET  ---------------------------------------------------//
     //
@@ -353,6 +362,10 @@ function AppState(props) {
                 defaultMapStyle,
                 setDefaultMapStyle,
                 setBudgetItems,
+                datePickerVisibility,
+                setDatePickerVisibility,
+                calendar,
+                setCalendar,
             }}
         >
             {props.children}
