@@ -116,6 +116,9 @@ function AppState(props) {
 
     const [datePickerVisibility, setDatePickerVisibility] = useState(false);
     const [calendar, setCalendar] = useState(false);
+    //-------------------------------------- NAV BAR  -------------------------------------------//
+    //
+    const [buttonIndex, setButtonIndex] = useState(0);
 
     //-------------------------------------- BUDGET  ---------------------------------------------------//
     //
@@ -395,6 +398,8 @@ function AppState(props) {
                 setDatePickerVisibility,
                 calendar,
                 setCalendar,
+                buttonIndex, 
+                setButtonIndex,
                 deleteAccount,
             }}
         >

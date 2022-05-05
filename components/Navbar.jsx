@@ -1,13 +1,19 @@
 import { useRouter } from "next/router";
 import React, { useEffect, useState, useRef } from "react";
 import { icons, clickables } from "./menu.jsx";
+import { useAppData } from "../Context/DataStorage.js";
 
 function Navbar() {
     const router = useRouter();
+    const {
+        buttonIndex, 
+        setButtonIndex,
+        user
+   } = useAppData();
 
     const [buttonWidth, setButtonWidth] = useState(0);
     // const [menuWidth, setMenuWidth] = useState(0);
-    const [buttonIndex, setButtonIndex] = useState(0);
+    // const [buttonIndex, setButtonIndex] = useState(0);
     const buttonRef = useRef(null);
     const marginButtons = buttonWidth / 7;
     const buttonContainer = buttonWidth + marginButtons;
@@ -29,7 +35,7 @@ function Navbar() {
                         backgroundColor: "#90A5A9",
                         marginRight: marginButtons,
                     }}
-                    onClick={() => {setButtonIndex(0); router.replace("/user/landingpageUser")}}
+                    onClick={() => {setButtonIndex(0); router.replace(`/user/${user.userName}`)}}
                 >
                     <div
                         className="icon navIcon text-white flex justify-center "
