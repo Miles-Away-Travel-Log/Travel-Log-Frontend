@@ -82,25 +82,25 @@ function BudgetIncomeExpense() {
                 <fieldset
                     className={
                         incomeOrExpense === "income"
-                            ? "flex flex-col border-solid border-2 border-green-700 justify-center items-center"
-                            : "flex flex-col border-solid border-2 border-orange-700 justify-center items-center"
+                            ? "flex flex-col border-solid border-2 border-[#90A5A9] justify-center items-center rounded-3xl"
+                            : "flex flex-col border-solid border-2 border-[#942928] justify-center items-center rounded-3xl"
                     }
                 >
-                    <legend className="mb-2 bg-white">
+                    <legend className="mb-2 bg-white text-[#942928]">
                         <select
                             className="bg-white"
                             name="income-expense"
                             id="income-expense"
                             onChange={handleSelectIncomeExpense}
                         >
-                            <option value="expense">Expense</option>
-                            <option value="income">Income</option>
+                            <option value="expense">EXPENSE</option>
+                            <option value="income">INCOME</option>
                         </select>
                     </legend>
                     <input
                         type="date"
                         name="date"
-                        className="block border border-grey-light w-2/3 h-1/2 rounded-full pl-2"
+                        className="block border border-grey-light w-2/3 h-1/2 rounded-full pl-2 text-[#C4C4C4]"
                     />
                     <div className="flex flex-col justify-around mt-2 items-center">
                         <input
@@ -117,7 +117,7 @@ function BudgetIncomeExpense() {
                         <select
                             name="exchange"
                             id="exchange"
-                            className="h-1/4 w-2/3 rounded-full pl-2"
+                            className="h-1/4 w-2/3 rounded-full pl-2 text-[#942928]"
                             onChange={handleLocalCurrency}
                         >
                             <option value="currency">Local currency</option>
@@ -141,7 +141,7 @@ function BudgetIncomeExpense() {
                         <select
                             name="income"
                             id="income"
-                            className="w-1/2 h-1/2 rounded-full mb-2 pl-2"
+                            className="w-1/2 h-1/2 rounded-full mb-2 pl-2 text-[#942928]"
                             onChange={handleCategory}
                         >
                             <option value="salary">Salary</option>
@@ -152,7 +152,7 @@ function BudgetIncomeExpense() {
                         <select
                             name="expense"
                             id="expense"
-                            className="w-1/2 h-1/2 rounded-full mb-2 pl-2"
+                            className="w-1/2 h-1/2 rounded-full mb-2 pl-2 text-[#942928]"
                             onChange={handleCategory}
                         >
                             <option value="general">General</option>
@@ -179,7 +179,7 @@ function BudgetIncomeExpense() {
                     ></textarea>
                     <button
                         type="submit"
-                        className="w-1/2 text-center py-3 rounded-full bg-amber-500 text-white hover:bg-[#C4C4C4] focus:outline-none my-1"
+                        className="w-1/2 text-center py-3 rounded-full bg-[#90A5A9] text-white hover:bg-[#C4C4C4] focus:outline-none my-1"
                     >
                         Add
                     </button>

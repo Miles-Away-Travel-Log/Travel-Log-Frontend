@@ -29,7 +29,7 @@ function SetMapStyle() {
     };
 
     return (
-        <div className="col-span-2 bg-green-200">
+        <div className="col-span-2 bg-[#C4C4C4] text-white">
             <h2 className="text-3xl ml-5 mt-4 mb-5 font-bold">
                 Home Location:
             </h2>
@@ -57,23 +57,23 @@ function SetMapStyle() {
                         : ""}
                 </div>
             </div>
-            <h1 className="text-3xl ml-5 mt-10 mb-15 font-bold">
+            <h1 className="text-3xl ml-5 mt-10 mb-15 font-bold flex flex-wrap">
                 Choose your standard Map-Style:
             </h1>
-            <div className="m-5 grid grid-cols-3 gap-4">
+            <div className="m-5 flex flex-wrap">
                 {mapStyleList.map((mapStyle, index) => (
-                    <div className="flex content-center" key={index}>
+                    <div className="mt-2 mr-1 flex flex-wrap lg:w-1/4 md:w-1/3" key={index}>
                         <input
                             id={`option${index + 1}`}
                             type="radio"
                             name="map-style"
-                            className="mr-3"
+                            className="m-3"
                             value={mapStyle.link}
                             onChange={handleChangeRadio}
                             checked={defaultMapStyle.link === mapStyle.link}
                         />
                         <Image
-                            className="p-4"
+                            className="p-4 object-cover"
                             src={mapStyle.pic}
                             alt={mapStyle.name}
                             width={60}
@@ -81,17 +81,17 @@ function SetMapStyle() {
                         />
                         <label
                             htmlFor={`option${index + 1}`}
-                            className="pr-2 mt-auto mb-auto ml-5"
+                            className="pr-2 mt-auto mb-auto ml-9"
                         >
                             {mapStyle.name}
                         </label>
                     </div>
                 ))}
             </div>
-            <div className="m-5 mt-10 grid grid-cols-2 gap-4">
+            <div className="m-5 mt-10 flex flex-wrap">
                 <div className="flex justify-center">
                     <button
-                        className="bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-full"
+                        className="m-1 bg-[#90A5A9] hover:border-2 border-white border-white text-white font-bold py-2 px-4 rounded-full"
                         onClick={(e) => (
                             e.preventDefault(),
                             router.replace("/user/editProfile")
@@ -102,7 +102,7 @@ function SetMapStyle() {
                 </div>
                 <div className="flex justify-center">
                     <button
-                        className="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-full"
+                        className="m-1 bg-[#942928] hover:border-2 border-white text-white font-bold py-2 px-4 rounded-full"
                         onClick={(e) => (
                             e.preventDefault(),
                             setDefaultMapStyle(false),
