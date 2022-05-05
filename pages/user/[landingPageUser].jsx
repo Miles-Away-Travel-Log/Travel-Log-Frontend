@@ -17,6 +17,7 @@ export default function LandingPageUser() {
         list_Friends_FriendRequests,
         dataOfOneFriend,
         setDataOfOneFriend,
+        deleteAccount,
     } = useAppData();
 
     const userFromRouterPath = router.asPath.split("/")[2];
@@ -69,27 +70,6 @@ export default function LandingPageUser() {
             setShowDropdown(false);
         }
     }
-    async function deleteAlert(e) {
-        if (confirm("Do you really want to delete your account?")) {
-            e.preventDefault();
-            const response = await fetch(
-                `${process.env.NEXT_PUBLIC_FETCH_URL_USER}/${userId}`,
-                {
-                    method: "DELETE",
-                    headers: {
-                        "Content-Type": "application/json",
-                        Accept: "application/json",
-                    },
-                }
-            );
-            Cookies.remove("token");
-            Cookies.remove("user");
-            router.replace("/register");
-        } else {
-            router.replace("/user/landingPageUser");
-        }
-    }
-    //console.log("landigPageUser", user);
 
     return (
         <div className="relative">
@@ -162,7 +142,7 @@ export default function LandingPageUser() {
                                 </li>
                                 <li>
                                     <p
-                                        onClick={deleteAlert}
+                                        onClick={deleteAccount}
                                         className="block py-2 px-4 text-sm text-[#942928] hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
                                     >
                                         Delete Account
