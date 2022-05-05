@@ -5,11 +5,9 @@ import BudgetIncomeExpense from "../../components/Budget.IncomeExpense.jsx";
 import { useAppData } from "../../Context/DataStorage.js";
 import Navbar from "../../components/Navbar.jsx";
 
+
 export default function Budget() {
     const router = useRouter();
-    const { budgetItems, seedMoney, homeCurrency } = useAppData();
-
-    console.log({ budgetItems, seedMoney, homeCurrency });
 
     return (
         <div className="w-full flex flex-col justify-center items-center h-full">

@@ -7,7 +7,7 @@ export default function Custom404() {
     }
 
     return (
-        <div className="h-screen w-screen bg-[url('../public/images/images-404/404-cat.jpg')] bg-cover min-h-screen">
+        <div className="h-screen w-screen bg-[url('../public/images/images-404/404-cat.webp')] bg-cover min-h-screen">
             <h1
                 className="text-center text-6xl text-red-700 font-bold pt-[0.75em]"
                 style={{ textShadow: `2px 2px 3px black` }}

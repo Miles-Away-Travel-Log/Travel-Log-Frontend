@@ -114,42 +114,6 @@ function AppState(props) {
     const [seedMoney, setSeedMoney] = useState("");
     const [homeCurrency, setHomeCurrency] = useState("EUR");
 
-    //-------------------------------------- FETCH USER  ------------------------------------------------//
-    //
-
-    const [newHome, setNewHome] = useState(false);
-    const [defaultMapStyle, setDefaultMapStyle] = useState(false);
-
-    async function handleGetUser() {
-        const header = {
-            "Content-Type": "application/json",
-            Accept: "application/json",
-            Authorization: `Bearer ${Cookies.get("token")}`,
-        };
-
-        const response = await fetch(
-            process.env.NEXT_PUBLIC_FETCH_URL_USER + `/${Cookies.get("user")}`,
-            {
-                method: "GET",
-                headers: header,
-            }
-        );
-
-        const data = await response.json();
-        setUser(data.user);
-        setBudgetItems(data.user.budget ? data.user.budget : []);
-        setUserId(data.user.id);
-        setSeedMoney(data.user.seedMoney ? data.user.seedMoney : []);
-        setAccountPhoto(data.user.avatar);
-        setHomeCurrency(
-            data.user.seedMoney[0] ? data.user.seedMoney[0].currency : "EUR"
-        );
-        setList_Friends_FriendRequests(data.user.friends);
-    }
-
-    //-------------------------------------- BUDGET  ---------------------------------------------------//
-    //
-
     //--------------------------- POST ITEM ----------------------//
     async function handlePostBudgetItem(e) {
         e.preventDefault();
@@ -268,6 +232,43 @@ function AppState(props) {
             }
         } catch (error) {
             console.log(error);
+        }
+    }
+
+    //-------------------------------------- FETCH USER  ------------------------------------------------//
+    //
+
+    const [newHome, setNewHome] = useState(false);
+    const [defaultMapStyle, setDefaultMapStyle] = useState(false);
+
+    async function handleGetUser() {
+        const header = {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+            Authorization: `Bearer ${Cookies.get("token")}`,
+        };
+
+        const response = await fetch(
+            process.env.NEXT_PUBLIC_FETCH_URL_USER + `/${Cookies.get("user")}`,
+            {
+                method: "GET",
+                headers: header,
+            }
+        );
+
+        if (response.status === 200) {
+            const data = await response.json();
+            setUser(data.user);
+            setBudgetItems(data.user.budget ? data.user.budget : []);
+            setUserId(data.user.id);
+            setSeedMoney(data.user.seedMoney ? data.user.seedMoney : []);
+            setAccountPhoto(data.user.avatar);
+            setHomeCurrency(
+                data.user.seedMoney[0] ? data.user.seedMoney[0].currency : "EUR"
+            );
+            setList_Friends_FriendRequests(data.user.friends);
+        } else {
+            setUser(null);
         }
     }
 

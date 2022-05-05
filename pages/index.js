@@ -1,10 +1,12 @@
-import Head from "next/head";
-import Image from "next/image";
 import styles from "../styles/Home.module.css";
 import { useRouter } from "next/router";
+import { useAppData } from "../Context/DataStorage.js";
 
 export default function Home() {
     const router = useRouter();
+
+    const { user } = useAppData();
+
     function switchToRegister() {
         router.replace("/register");
     }
@@ -17,7 +19,7 @@ export default function Home() {
 
     return (
         <div className={styles.landingpageContainer}>
-            <img src="./images/images-landingpage/dan-freeman-wAn4RfmXtxU-unsplash.jpg" />
+            <img src="./images/images-landingpage/dan-freeman-wAn4RfmXtxU-unsplash.webp" />
             <div className={styles.landingpageContainerLogo}>
                 <div className={styles.landingpageLogo}>
                     <img src="./images/images-landingpage/logo.svg" />
@@ -39,22 +41,37 @@ export default function Home() {
                         <img src="./images/images-landingpage/logo.svg" />
                     </div>
                 </div>
-                <div className={styles.landingpageContainerButton}>
-                    <button
-                        onClick={switchToRegister}
-                        className="bg-[#90A5A9] hover:bg-[#C4C4C4] text-white font-bold py-2 px-4 rounded-full"
-                    >
-                        REGISTER NOW
-                    </button>
-                </div>
-                <div className={styles.landingpageContainerButtonLogin}>
-                    <button
-                        onClick={switchToLogin}
-                        className="bg-[#90A5A9] hover:bg-[#C4C4C4] text-white font-bold py-2 px-4 rounded-full"
-                    >
-                        LOGIN
-                    </button>
-                </div>
+                {!user ? (
+                    <div>
+                        <div className={styles.landingpageContainerButton}>
+                            <button
+                                onClick={switchToRegister}
+                                className="bg-[#90A5A9] hover:bg-[#C4C4C4] text-white font-bold py-2 px-4 rounded-full"
+                            >
+                                REGISTER NOW
+                            </button>
+                        </div>
+                        <div className={styles.landingpageContainerButtonLogin}>
+                            <button
+                                onClick={switchToLogin}
+                                className="bg-[#90A5A9] hover:bg-[#C4C4C4] text-white font-bold py-2 px-4 rounded-full"
+                            >
+                                LOGIN
+                            </button>
+                        </div>
+                    </div>
+                ) : (
+                    <div className={styles.landingpageContainerButtonLogin}>
+                        <button
+                            onClick={() =>
+                                router.replace(`/user/${user.userName}`)
+                            }
+                            className="bg-[#90A5A9] hover:bg-[#C4C4C4] text-white font-bold py-2 px-4 rounded-full"
+                        >
+                            My profile
+                        </button>
+                    </div>
+                )}
             </div>
         </div>
     );

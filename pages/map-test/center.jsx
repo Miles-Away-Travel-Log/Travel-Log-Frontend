@@ -16,7 +16,7 @@ const testCoordinatesArray = [
 
 const applyToArray = (func, array) => func.apply(Math, array);
 
-const getBoundsForPoints = (points) => {
+const GetBoundsForPoints = (points) => {
     // Calculate corner values of bounds
     const pointsLong = points.map((point) => point.longitude);
     const pointsLat = points.map((point) => point.latitude);
@@ -36,7 +36,7 @@ const getBoundsForPoints = (points) => {
 };
 
 export default function MapTestCenter() {
-    const bounds = getBoundsForPoints(testCoordinatesArray);
+    const bounds = GetBoundsForPoints(testCoordinatesArray);
     const [selectedLocation, setSelectedLocation] = useState({});
     const [viewport, setViewport] = useState({
         width: "100%",

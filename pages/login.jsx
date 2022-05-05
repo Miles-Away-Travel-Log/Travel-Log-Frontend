@@ -39,13 +39,13 @@ export default function Login() {
             Cookies.set(
                 "token",
                 data.token,
-                { expires: 1 },
+                { expires: 1 / 24 },
                 { sameSite: "none" }
             );
             Cookies.set(
                 "user",
                 data.user.id,
-                { expires: 1 },
+                { expires: 1 / 24 },
                 { sameSite: "none" }
             );
             setUser(data.user);
@@ -60,7 +60,7 @@ export default function Login() {
     }
 
     return (
-        <div className="bg-[url('../public/images/images-login/pawel-czerwinski-6lQDFGOB1iw-unsplash.jpg')] bg-cover min-h-screen">
+        <div className="bg-[url('../public/images/images-login/pawel-czerwinski-6lQDFGOB1iw-unsplash.webp')] bg-cover min-h-screen">
             <form
                 className="r px-8 pt-6 pb-8 mb-4 flex flex-col text-[30px] max-w-sm mx-auto"
                 onSubmit={submit}
