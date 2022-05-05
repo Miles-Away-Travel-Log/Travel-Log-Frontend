@@ -105,6 +105,10 @@ function AppState(props) {
 
     const [accountPhoto, setAccountPhoto] = useState("");
 
+    //-------------------------------------- NAV BAR  -------------------------------------------//
+    //
+    const [buttonIndex, setButtonIndex] = useState(0);
+
     //-------------------------------------- BUDGET  ---------------------------------------------------//
     //
 
@@ -382,6 +386,8 @@ function AppState(props) {
                 defaultMapStyle,
                 setDefaultMapStyle,
                 setBudgetItems,
+                buttonIndex, 
+                setButtonIndex,
                 deleteAccount,
             }}
         >
