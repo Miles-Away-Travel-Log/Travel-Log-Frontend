@@ -7,6 +7,7 @@ import Geocoder from "../../components/Geocoder.jsx";
 import SetMapStyle from "../../components/SetMapStyle.jsx";
 import mapStyleList from "../../components/MapStyleList.jsx";
 import { FaHome } from "react-icons/fa";
+import Navbar from "../../components/Navbar.jsx";
 
 const TOKEN = process.env.NEXT_PUBLIC_MAPBOX_API_KEY;
 
@@ -197,6 +198,7 @@ function SetHome() {
                     )}
                 </Map>
             </div>
+            <Navbar/>
         </div>
     );
 }

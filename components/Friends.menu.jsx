@@ -9,24 +9,24 @@ function FriendsMenu() {
 
     return (
         <div className="mt-6">
-            <div className="flex justify-around mb-2">
+            <div className="flex justify-around mb-2 text-white">
                 <button
-                    className="bg-sky-300 rounded-full w-20 p-1"
+                    className="bg-[#90A5A9] rounded-full w-20 p-1"
                     onClick={() => setShow("friends")}
                 >
                     Friends
                 </button>
                 <button
-                    className="bg-fuchsia-600 rounded-full w-20 p-1"
+                    className="bg-[#90A5A9] rounded-full w-20 p-1"
                     onClick={() => setShow("requests")}
                 >
                     Requests
                 </button>
                 <button
-                    className="bg-amber-700 rounded-full w-20 p-1"
+                    className="bg-[#942928] rounded-full w-20 p-1"
                     onClick={logout}
                 >
-                    logout
+                    Logout
                 </button>
             </div>
             {show === "friends" ? (

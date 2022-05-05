@@ -63,7 +63,7 @@ function SearchBar() {
     }
 
     return (
-        <div className="flex flex-col justify-center items-center w-full">
+        <div className="flex flex-col justify-center items-center w-full mt-3">
             <form className="flex border-2 rounded-lg text-sm mr-[27px] mt-2">
                 <input
                     type="text"
