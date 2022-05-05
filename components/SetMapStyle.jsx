@@ -29,13 +29,13 @@ function SetMapStyle() {
     };
 
     return (
-        <div className="col-span-2 bg-[#C4C4C4] text-white">
+        <div className="col-span-2 bg-[#C4C4C4] text-white overflow-y-auto">
             <h2 className="text-3xl ml-5 mt-4 mb-5 font-bold">
                 Home Location:
             </h2>
             <div className="m-5 grid grid-cols-2 gap-4">
                 <div>
-                    <div>City:</div>
+                    <div className="font-bold">City:</div>
                 </div>
                 <div>
                     {newHome
@@ -44,10 +44,8 @@ function SetMapStyle() {
                             : user.home.city
                         : ""}
                 </div>
-            </div>
-            <div className="m-5 grid grid-cols-2 gap-4">
                 <div>
-                    <div>Country:</div>
+                    <div className="font-bold">Country:</div>
                 </div>
                 <div>
                     {newHome
@@ -62,7 +60,10 @@ function SetMapStyle() {
             </h1>
             <div className="m-5 flex flex-wrap">
                 {mapStyleList.map((mapStyle, index) => (
-                    <div className="mt-2 mr-1 flex flex-wrap lg:w-1/4 md:w-1/3" key={index}>
+                    <div
+                        className="mt-2 mr-1 flex flex-wrap lg:w-1/4 md:w-1/3"
+                        key={index}
+                    >
                         <input
                             id={`option${index + 1}`}
                             type="radio"

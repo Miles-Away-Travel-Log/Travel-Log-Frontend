@@ -131,7 +131,7 @@ function AppState(props) {
         e.preventDefault();
 
         const budgetItem = {
-            type: outIn,
+            type: incomeOrExpense,
             value: e.target.amount.value,
             date: e.target.date.value,
             category: category,
@@ -285,11 +285,39 @@ function AppState(props) {
     //
 
     function logout() {
+        router.replace("/");
         Cookies.remove("token");
         Cookies.remove("user");
         setUser("");
         setUserId("");
-        router.replace("/");
+    }
+
+    //-------------------------------------- DELETE USER  ----------------------------------------------//
+    //
+
+    async function deleteAccount() {
+        if (confirm("Do you really want to delete your account?")) {
+            const header = {
+                "Content-Type": "application/json",
+                Accept: "application/json",
+                Authorization: `Bearer ${Cookies.get("token")}`,
+            };
+
+            const response = await fetch(
+                process.env.NEXT_PUBLIC_FETCH_URL_USER +
+                    `/${Cookies.get("user")}`,
+                {
+                    method: "DELETE",
+                    headers: header,
+                }
+            );
+
+            if (response.status === 200) {
+                logout();
+            } else {
+                console.log("error");
+            }
+        }
     }
 
     //-------------------------------------- FRIENDS  ---------------------------------------------------//
@@ -367,6 +395,7 @@ function AppState(props) {
                 setDatePickerVisibility,
                 calendar,
                 setCalendar,
+                deleteAccount,
             }}
         >
             {props.children}

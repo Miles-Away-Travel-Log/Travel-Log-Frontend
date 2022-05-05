@@ -52,7 +52,7 @@ function FriendsList(props) {
         setDataOfFriends_or_dataOfRequest_to_Array(fetchTheDataOfEachFriends);
     }
 
-    useMemo(() => {
+    useEffect(() => {
         friendsData();
     }, [isFriend]);
 
