@@ -4,16 +4,17 @@ import { useAppData } from "../../Context/DataStorage.js";
 import "mapbox-gl/dist/mapbox-gl.css";
 import "react-map-gl-geocoder/dist/mapbox-gl-geocoder.css";
 import Geocoder from "../../components/Geocoder.jsx";
-import SetMapStyle from "../../components/SetDefaultMapStyle.jsx";
+import SetMapStyle from "../../components/SetTripMapStyle.jsx";
 import mapStyleList from "../../components/MapStyleList.jsx";
-import { FaHome } from "react-icons/fa";
+import { FaHome, FaWalking } from "react-icons/fa";
 import Navbar from "../../components/Navbar.jsx";
 import { TailSpin } from "react-loader-spinner";
 
 const TOKEN = process.env.NEXT_PUBLIC_MAPBOX_API_KEY;
 
 function SetHome() {
-    const { user, newHome, setNewHome, defaultMapStyle } = useAppData();
+    const { user, newHome, defaultMapStyle, startPoint, setStartPoint } =
+        useAppData();
     const [newLocation, setNewLocation] = useState(false);
     const [viewport, setViewState] = useState({
         latitude: 37.7577,
@@ -44,12 +45,6 @@ function SetHome() {
     );
     const [mapStyle, setMapStyle] = useState(false);
     const [place, setPlace] = useState(false);
-
-    useEffect(() => {
-        if (newHome) setNewLocation(newHome);
-        else if (user.home) setNewLocation(user.home);
-        else setNewLocation(false);
-    }, []);
 
     useEffect(() => {
         setMapStyle(
@@ -129,23 +124,24 @@ function SetHome() {
                     setPlace(false);
                 }
             });
-        const home = {
+        const target = {
             longitude: e.lngLat.lng,
             latitude: e.lngLat.lat,
             city: city,
             country: country,
         };
-        await setNewHome(home);
+        await setNewLocation(target);
+        await setStartPoint(target);
     }
 
     return (
         <div className="h-screen w-screen">
-            {!user.userName && (
+            {!user.userName && !defaultMapStyle.link && (
                 <div className="w-screen h-screen grid place-content-center content-center">
                     <TailSpin color="#00BFFF" height={80} width={80} />
                 </div>
             )}
-            {user.userName && (
+            {user.userName && defaultMapStyle.link && (
                 <div className="h-screen w-screen grid grid-cols-5">
                     <SetMapStyle />
                     <div className="col-span-3">
@@ -183,7 +179,13 @@ function SetHome() {
                             />
                             <NavigationControl />
                             {newLocation && (
-                                <div key={newLocation.longitude}>
+                                <div
+                                    key={newLocation.longitude
+                                        .toString()
+                                        .concat(
+                                            newLocation.latitude.toString()
+                                        )}
+                                >
                                     <Marker
                                         longitude={newLocation.longitude}
                                         latitude={newLocation.latitude}
@@ -192,6 +194,28 @@ function SetHome() {
                                     >
                                         <p
                                             className={`cursor-pointer text-4xl ${
+                                                mapStyle
+                                                    ? mapStyle.iconColor
+                                                    : "text-black"
+                                            }`}
+                                        >
+                                            <FaWalking />
+                                        </p>
+                                    </Marker>
+                                </div>
+                            )}
+                            {newHome && (
+                                <div
+                                    key={newHome.longitude
+                                        .toString()
+                                        .concat(newHome.latitude.toString())}
+                                >
+                                    <Marker
+                                        longitude={newHome.longitude}
+                                        latitude={newHome.latitude}
+                                    >
+                                        <p
+                                            className={`text-4xl ${
                                                 mapStyle
                                                     ? mapStyle.iconColor
                                                     : "text-black"
