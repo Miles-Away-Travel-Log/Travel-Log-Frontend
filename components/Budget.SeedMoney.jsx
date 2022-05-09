@@ -23,13 +23,13 @@ function BudgetSeedMoney() {
                     className="flex flex-col w-[375px] h-1/6 p-2"
                     onSubmit={handleDeleteSeedMoney}
                 >
-                    <fieldset className="flex flex-col border-solid border-2 border-blue-500 justify-center items-center">
+                    <fieldset className="flex flex-col border-solid border-2 border-[#942928] justify-center items-center">
                         <legend>Budget</legend>
                         <div className="bg-gray-400">
                             {seedMoney[0].total} {homeCurrency}
                         </div>
                         <button
-                            className="w-1/2 text-center py-3 rounded-full bg-amber-500 text-white hover:bg-[#C4C4C4] focus:outline-none my-1"
+                            className="w-1/2 text-center py-3 rounded-full bg-[#90A5A9] text-white hover:bg-[#C4C4C4] focus:outline-none my-1"
                             onClick={handleDeleteSeedMoney}
                         >
                             Delete Current Budget

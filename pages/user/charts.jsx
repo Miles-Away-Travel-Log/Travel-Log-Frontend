@@ -12,7 +12,7 @@ function Chart() {
     const router = useRouter();
 
     return (
-        <div className="m-3 w-full flex flex-col justify-center items-center h-screen">
+        <div className="m-3 w-full flex flex-col justify-center items-center">
             <div className="w-full flex flex-col items-center">
                 <div className="bg-[#C4C4C4] w-full rounded-lg text-white p-1 text-center mb-3">
                     <h2>CHARTS</h2>
