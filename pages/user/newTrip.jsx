@@ -4,57 +4,96 @@ import { useAppData } from "../../Context/DataStorage.js";
 import { format } from "date-fns";
 import { useRouter } from "next/router";
 import { TailSpin } from "react-loader-spinner";
+import Cookies from "js-cookie";
 
 export default function NewTrip() {
     const router = useRouter();
     const {
         datePickerVisibility,
         setDatePickerVisibility,
-        calendar,
-        setCalendar,
         defaultMapStyle,
         setDefaultMapStyle,
         user,
-        setNewHome,
+        newTripData,
+        setNewTripData,
         startPoint,
         setStartPoint,
+        handleGetUser,
     } = useAppData();
+
+    // Fehlt noch: Freunde adden? (Anfrage, nicht Zwang.) Privacy Settings? Validierung im Frontend? (Alert-Messages?) Nachricht wenn erfolgreich gepostet?
 
     const userInitialValues = {
         tripName: "",
         tripType: "",
-        tripDescription: "",
+        description: "",
         startDate: "",
         endDate: "",
         mapStyle: user.mapStyle,
         startPoint: user.home,
     };
 
-    const [formValues, setFormValues] = useState(userInitialValues);
-
     useEffect(() => {
-        setCalendar(false);
-        setNewHome(user.home);
+        newTripData
+            ? setNewTripData({ ...userInitialValues, ...newTripData })
+            : setNewTripData(userInitialValues);
     }, []);
+
+    useEffect(() => {}, [newTripData]);
 
     format(new Date(2014, 1, 11), "yyyy-MM-dd");
 
     function handleMapStyleSubmit(event) {
         event.preventDefault();
         defaultMapStyle ? defaultMapStyle : setDefaultMapStyle(user.mapStyle);
-        setNewHome(user.home);
+        setNewTripData({
+            ...newTripData,
+            mapStyle: defaultMapStyle,
+            startPoint: startPoint,
+        });
         router.replace("/user/setTripOptions");
-    };
+    }
 
     function handleChange(event) {
         const { name, value } = event.target;
-        setFormValues({ ...formValues, [name]: value });
-    };
+        setNewTripData({ ...newTripData, [name]: value });
+    }
 
-    function saveTrip(event) {
+    async function saveTrip(event) {
         event.preventDefault();
-        setFormValues({ ...formValues, mapStyle: defaultMapStyle, startPoint: startPoint, startDate: calendar.startDate, endDate: calendar.endDate });
-        console.log(formValues);
+        const start = startPoint ? startPoint : user.home;
+        const mapStyle = defaultMapStyle ? defaultMapStyle : user.mapStyle;
+
+        const rawResponse = await fetch(process.env.NEXT_PUBLIC_FETCH_TRIP, {
+            method: "POST",
+            headers: {
+                Accept: "application/json",
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${Cookies.get("token")}`,
+            },
+            body: JSON.stringify({
+                tripName: newTripData.tripName,
+                tripType: newTripData.tripType,
+                description: newTripData.description,
+                startDate: newTripData.startDate,
+                endDate: newTripData.endDate,
+                mapStyle: mapStyle,
+                startPoint: start,
+                participants: [user.id],
+            }),
+        });
+
+        if (rawResponse.status === 200) {
+            // falls erfolgreich, dann:
+            setStartPoint(false);
+            setDefaultMapStyle(false);
+            setNewTripData(userInitialValues);
+            handleGetUser();
+            router.replace(`/user/${user.userName}`);
+        } else {
+            const err = await rawResponse.json();
+            //console.log("backend error", err);
+        }
     }
 
     return (
@@ -71,12 +110,18 @@ export default function NewTrip() {
                     <input
                         type="text"
                         name="tripName"
-                        placeholder="Trip Name"
-                        value={formValues.tripName}
+                        placeholder={
+                            newTripData.tripName !== "" ? null : "Trip Name"
+                        }
+                        value={newTripData.tripName}
                         onChange={handleChange}
                     />
                     <label htmlFor="tripType">Type of trip</label>
-                    <select name="tripType" onChange={handleChange}>
+                    <select
+                        name="tripType"
+                        onChange={handleChange}
+                        value={newTripData.tripType}
+                    >
                         <option value="day trip">day trip</option>
                         <option value="weekend trip">weekend trip</option>
                         <option value="short trip">short trip</option>
@@ -85,35 +130,37 @@ export default function NewTrip() {
                         <option value="vacation">vacation</option>
                         <option value="honeymoon">honeymoon</option>
                         <option value="sabbatical">sabbatical</option>
-                        <option value="trip around the world">trip around the world</option>
+                        <option value="trip around the world">
+                            trip around the world
+                        </option>
                     </select>
-                    <label htmlFor="summary">Summary</label>
+                    <label htmlFor="description">description</label>
                     <textarea
                         rows="4"
                         type="text"
-                        name="summary"
-                        placeholder="Summary"
-                        value={formValues.summary}
+                        name="description"
+                        placeholder="description"
+                        value={newTripData.description}
                         onChange={handleChange}
                     />
                     <div className="grid grid-cols-2 gap-4">
                         <div>Start Date:</div>
                         <div>
-                            {calendar
+                            {newTripData.startDate !== ""
                                 ? format(
-                                      new Date(calendar[0].startDate),
+                                      new Date(newTripData.startDate),
                                       "dd.MMMM.yyyy"
                                   )
-                                : ""}
+                                : null}
                         </div>
                         <div>End Date:</div>
                         <div>
-                            {calendar
+                            {newTripData.endDate !== ""
                                 ? format(
-                                      new Date(calendar[0].endDate),
+                                      new Date(newTripData.endDate),
                                       "dd.MMMM.yyyy"
                                   )
-                                : ""}
+                                : null}
                         </div>
                     </div>
                     <button
@@ -150,16 +197,19 @@ export default function NewTrip() {
                         </div>
                     </div>
                     <button
-                        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded z-0"
-                        onClick={() => saveTrip()
-                            // ,router.replace("/user/setTripOptions"
-                            }
+                        className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded z-0"
+                        onClick={(e) => saveTrip(e)}
                     >
                         Save new Trip
                     </button>
                     <button
-                        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded z-0"
-                        onClick={() => router.replace(`/user/{user.userName}`)}
+                        className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded z-0"
+                        onClick={() => (
+                            setStartPoint(false),
+                            setDefaultMapStyle(false),
+                            setNewTripData(false),
+                            router.replace(`/user/{user.userName}`)
+                        )}
                     >
                         Cancel
                     </button>
