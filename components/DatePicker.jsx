@@ -8,9 +8,10 @@ export default function NewTrip() {
     const {
         datePickerVisibility,
         setDatePickerVisibility,
-        calendar,
-        setCalendar,
+        newTripData,
+        setNewTripData,
     } = useAppData();
+
     const [timeInterval, setTimeInterval] = useState([
         {
             startDate: new Date(),
@@ -28,13 +29,16 @@ export default function NewTrip() {
                 months={2}
                 ranges={timeInterval}
                 direction="horizontal"
-                // direction="vertical"
             />
             <div className="grid grid-cols-2 gap-4">
                 <button
                     className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 mb-2 ml-2 rounded z-0"
                     onClick={() => (
-                        setCalendar(timeInterval),
+                        setNewTripData({
+                            ...newTripData,
+                            startDate: timeInterval[0].startDate,
+                            endDate: timeInterval[0].endDate,
+                        }),
                         setDatePickerVisibility(false)
                     )}
                 >
@@ -42,9 +46,7 @@ export default function NewTrip() {
                 </button>
                 <button
                     className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 mb-2 mr-2 rounded z-0"
-                    onClick={() => (
-                        setCalendar(false), setDatePickerVisibility(false)
-                    )}
+                    onClick={() => setDatePickerVisibility(false)}
                 >
                     Cancel
                 </button>

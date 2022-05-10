@@ -7,8 +7,6 @@ import mapStyleList from "./MapStyleList.jsx";
 function SetMapStyle() {
     const {
         user,
-        newHome,
-        setNewHome,
         defaultMapStyle,
         setDefaultMapStyle,
         startPoint,
@@ -20,7 +18,7 @@ function SetMapStyle() {
 
     useEffect(() => {}, [defaultMapStyle]);
 
-    useEffect(() => {}, [newHome]);
+    useEffect(() => {}, [startPoint]);
 
     const handleChangeRadio = (event) => {
         const newMapStyle = mapStyleList.find(
@@ -101,7 +99,6 @@ function SetMapStyle() {
                         onClick={(e) => (
                             e.preventDefault(),
                             setDefaultMapStyle(false),
-                            setNewHome(false),
                             setStartPoint(false),
                             router.replace("/user/newTrip")
                         )}

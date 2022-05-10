@@ -13,9 +13,7 @@ import { TailSpin } from "react-loader-spinner";
 const TOKEN = process.env.NEXT_PUBLIC_MAPBOX_API_KEY;
 
 function SetHome() {
-    const { user, newHome, defaultMapStyle, startPoint, setStartPoint } =
-        useAppData();
-    const [newLocation, setNewLocation] = useState(false);
+    const { user, defaultMapStyle, startPoint, setStartPoint } = useAppData();
     const [viewport, setViewState] = useState({
         latitude: 37.7577,
         longitude: -122.4376,
@@ -23,13 +21,13 @@ function SetHome() {
     });
 
     useEffect(() => {
-        if (newHome)
+        if (startPoint) {
             setViewState({
                 ...viewport,
-                latitude: newHome.latitude,
-                longitude: newHome.longitude,
+                latitude: startPoint.latitude,
+                longitude: startPoint.longitude,
             });
-        else if (user.home && user.home.latitude !== NaN)
+        } else if (user.home && user.home.latitude !== NaN)
             setViewState({
                 ...viewport,
                 latitude: user.home.latitude,
@@ -61,7 +59,7 @@ function SetHome() {
     const handleGeocoderViewportChange = useCallback(
         (newViewport) => {
             const geocoderDefaultOverrides = { transitionDuration: 2000 };
-            setNewLocation({
+            setStartPoint({
                 longitude: newViewport.longitude,
                 latitude: newViewport.latitude,
             });
@@ -86,7 +84,7 @@ function SetHome() {
         logEvents((_events) => ({ ..._events, onDragEnd: event.lngLat }));
         if (event.lngLat.lng === NaN || event.lngLat.lat === NaN) return;
         else {
-            setNewLocation({
+            setStartPoint({
                 longitude: event.lngLat.lng,
                 latitude: event.lngLat.lat,
             });
@@ -95,7 +93,7 @@ function SetHome() {
     }, []);
 
     async function handleClick(e) {
-        await setNewLocation({
+        await setStartPoint({
             longitude: e.lngLat.lng,
             latitude: e.lngLat.lat,
         });
@@ -130,7 +128,6 @@ function SetHome() {
             city: city,
             country: country,
         };
-        await setNewLocation(target);
         await setStartPoint(target);
     }
 
@@ -178,17 +175,15 @@ function SetHome() {
                                 position="top-left"
                             />
                             <NavigationControl />
-                            {newLocation && (
+                            {startPoint && (
                                 <div
-                                    key={newLocation.longitude
+                                    key={startPoint.longitude
                                         .toString()
-                                        .concat(
-                                            newLocation.latitude.toString()
-                                        )}
+                                        .concat(startPoint.latitude.toString())}
                                 >
                                     <Marker
-                                        longitude={newLocation.longitude}
-                                        latitude={newLocation.latitude}
+                                        longitude={startPoint.longitude}
+                                        latitude={startPoint.latitude}
                                         draggable
                                         onDragEnd={(e) => onMarkerDragEnd(e)}
                                     >
@@ -204,15 +199,15 @@ function SetHome() {
                                     </Marker>
                                 </div>
                             )}
-                            {newHome && (
+                            {user.home && (
                                 <div
-                                    key={newHome.longitude
+                                    key={user.home.longitude
                                         .toString()
-                                        .concat(newHome.latitude.toString())}
+                                        .concat(user.home.latitude.toString())}
                                 >
                                     <Marker
-                                        longitude={newHome.longitude}
-                                        latitude={newHome.latitude}
+                                        longitude={user.home.longitude}
+                                        latitude={user.home.latitude}
                                     >
                                         <p
                                             className={`text-4xl ${
