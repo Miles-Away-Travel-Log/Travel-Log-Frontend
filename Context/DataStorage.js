@@ -402,8 +402,6 @@ function AppState(props) {
                 setBudgetItems,
                 datePickerVisibility,
                 setDatePickerVisibility,
-                calendar,
-                setCalendar,
                 buttonIndex,
                 setButtonIndex,
                 deleteAccount,
