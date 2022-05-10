@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "react-date-range/dist/styles.css";
 import "react-date-range/dist/theme/default.css";
 import { DateRangePicker } from "react-date-range";
@@ -20,8 +20,20 @@ export default function NewTrip() {
         },
     ]);
 
+    useEffect(() => {
+        if (newTripData.startDate !== "" && newTripData.endDate !== "") {
+            setTimeInterval([
+                {
+                    startDate: new Date(newTripData.startDate),
+                    endDate: new Date(newTripData.endDate),
+                    key: "selection",
+                },
+            ]);
+        }
+    }, []);
+
     return (
-        <div className="z-10 absolute top-0 left-0 border-2">
+        <div className="z-10 absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] border-2 bg-white">
             <DateRangePicker
                 onChange={(item) => setTimeInterval([item.selection])}
                 showSelectionPreview={true}

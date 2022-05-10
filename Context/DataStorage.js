@@ -117,6 +117,9 @@ function AppState(props) {
     const [datePickerVisibility, setDatePickerVisibility] = useState(false);
     const [startPoint, setStartPoint] = useState(false);
     const [newTripData, setNewTripData] = useState(false);
+    const [inviteFriends, setInviteFriends] = useState(false);
+    const [inviteFriendsVisibility, setInviteFriendsVisibility] =
+        useState(false);
 
     //-------------------------------------- NAV BAR  ---------------------------------------------------//
     //
@@ -411,6 +414,10 @@ function AppState(props) {
                 setStartPoint,
                 newTripData,
                 setNewTripData,
+                inviteFriends,
+                setInviteFriends,
+                inviteFriendsVisibility,
+                setInviteFriendsVisibility,
             }}
         >
             {props.children}
