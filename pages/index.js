@@ -1,6 +1,7 @@
 import styles from "../styles/Home.module.css";
 import { useRouter } from "next/router";
 import { useAppData } from "../Context/DataStorage.js";
+import Cookies from "js-cookie";
 
 export default function Home() {
     const router = useRouter();
@@ -41,7 +42,7 @@ export default function Home() {
                         <img src="./images/images-landingpage/logo.svg" />
                     </div>
                 </div>
-                {!user ? (
+                {!Cookies.get("token") ? (
                     <div>
                         <div className={styles.landingpageContainerButton}>
                             <button

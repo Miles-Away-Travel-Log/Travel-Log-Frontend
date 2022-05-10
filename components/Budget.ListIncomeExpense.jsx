@@ -27,7 +27,7 @@ function ListIncomeExpense({ budgetItems }) {
     async function exportToPDF() {
         try {
             const fetchPDFFromServer = await fetch(
-                process.env.NEXT_PUBLIC_FETCH_URL_PDF + `/${userId}`
+                process.env.NEXT_PUBLIC_FETCH_URL_PDF + `${userId}`
             );
             if (fetchPDFFromServer.status === 200) {
                 const pdf = await fetchPDFFromServer.blob();

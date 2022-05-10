@@ -37,7 +37,7 @@ function FriendsList(props) {
                 };
                 const fetchFriend = await fetch(
                     process.env.NEXT_PUBLIC_FETCH_URL_USER +
-                        `/${senderOrReceiver}`,
+                        `${senderOrReceiver}`,
                     {
                         method: "GET",
                         headers: header,
@@ -63,7 +63,7 @@ function FriendsList(props) {
     async function acceptRequest(id) {
         try {
             const response = await fetch(
-                process.env.NEXT_PUBLIC_FETCH_URL_FRIEND + `/${id}`,
+                process.env.NEXT_PUBLIC_FETCH_URL_FRIEND + `${id}`,
                 {
                     method: "PUT",
                     headers: {
@@ -85,7 +85,7 @@ function FriendsList(props) {
     async function rejectRequest(id) {
         try {
             const response = await fetch(
-                process.env.NEXT_PUBLIC_FETCH_URL_FRIEND + `/${id}`,
+                process.env.NEXT_PUBLIC_FETCH_URL_FRIEND + `${id}`,
                 {
                     method: "DELETE",
                     headers: {

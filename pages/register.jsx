@@ -92,7 +92,7 @@ export default function Register() {
         if (Object.keys(registerFormErrors).length === 0) {
             // user erstellen
             const rawResponse = await fetch(
-                process.env.NEXT_PUBLIC_FETCH_URL_USER + "/register",
+                process.env.NEXT_PUBLIC_FETCH_URL_USER + "register",
                 {
                     method: "POST",
                     headers: {

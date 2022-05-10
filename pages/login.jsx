@@ -19,7 +19,7 @@ export default function Login() {
     async function submit(e) {
         e.preventDefault();
         const rawResponse = await fetch(
-            process.env.NEXT_PUBLIC_FETCH_URL_USER + "/login",
+            process.env.NEXT_PUBLIC_FETCH_URL_USER + "login",
             {
                 method: "POST",
                 headers: {
