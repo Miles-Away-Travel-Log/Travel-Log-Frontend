@@ -119,7 +119,7 @@ function AppState(props) {
 
     //-------------------------------------- NAV BAR  ---------------------------------------------------//
     //
-    
+
     const [buttonIndex, setButtonIndex] = useState(0);
 
     //-------------------------------------- BUDGET  ---------------------------------------------------//
@@ -127,9 +127,13 @@ function AppState(props) {
 
     const [budgetItems, setBudgetItems] = useState([]);
     const [incomeOrExpense, setIncomeOrExpense] = useState("expense");
-    const [category, setCategory] = useState("");
+    const [category, setCategory] = useState("general");
     const [seedMoney, setSeedMoney] = useState("");
     const [homeCurrency, setHomeCurrency] = useState("EUR");
+    const [
+        localCurrencyValueInHomeCurrency,
+        setLocalCurrencyValueInHomeCurrency,
+    ] = useState(undefined);
 
     //--------------------------- POST ITEM ----------------------//
     async function handlePostBudgetItem(e) {
@@ -168,6 +172,7 @@ function AppState(props) {
         e.target.date.value = "";
         e.target.description.value = "";
         e.target.localcurrency.value = "";
+        setLocalCurrencyValueInHomeCurrency(undefined);
     }
 
     //--------------------------- POST SEED MONEY -----------------//
@@ -210,7 +215,7 @@ function AppState(props) {
         try {
             const response = await fetch(
                 process.env.NEXT_PUBLIC_FETCH_URL_SEEDMONEY +
-                    `/${seedMoney[0]._id}`,
+                    `${seedMoney[0]._id}`,
                 {
                     method: "DELETE",
                     headers: {
@@ -234,7 +239,7 @@ function AppState(props) {
     async function deleteOneItem(id) {
         try {
             const response = await fetch(
-                process.env.NEXT_PUBLIC_FETCH_URL_BUDGET + `/${id}`,
+                process.env.NEXT_PUBLIC_FETCH_URL_BUDGET + `${id}`,
                 {
                     method: "DELETE",
                     headers: {
@@ -263,7 +268,7 @@ function AppState(props) {
         };
 
         const response = await fetch(
-            process.env.NEXT_PUBLIC_FETCH_URL_USER + `/${Cookies.get("user")}`,
+            process.env.NEXT_PUBLIC_FETCH_URL_USER + `${Cookies.get("user")}`,
             {
                 method: "GET",
                 headers: header,
@@ -293,8 +298,6 @@ function AppState(props) {
         router.replace("/");
         Cookies.remove("token");
         Cookies.remove("user");
-        setUser("");
-        setUserId("");
     }
 
     //-------------------------------------- DELETE USER  ----------------------------------------------//
@@ -310,7 +313,7 @@ function AppState(props) {
 
             const response = await fetch(
                 process.env.NEXT_PUBLIC_FETCH_URL_USER +
-                    `/${Cookies.get("user")}`,
+                    `${Cookies.get("user")}`,
                 {
                     method: "DELETE",
                     headers: header,
@@ -400,9 +403,11 @@ function AppState(props) {
                 setDatePickerVisibility,
                 calendar,
                 setCalendar,
-                buttonIndex, 
+                buttonIndex,
                 setButtonIndex,
                 deleteAccount,
+                localCurrencyValueInHomeCurrency,
+                setLocalCurrencyValueInHomeCurrency,
             }}
         >
             {props.children}

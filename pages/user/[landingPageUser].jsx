@@ -31,7 +31,7 @@ export default function LandingPageUser() {
             };
             fetch(
                 process.env.NEXT_PUBLIC_FETCH_URL_USER +
-                    `/${userFromRouterPath}`,
+                    `${userFromRouterPath}`,
                 {
                     method: "GET",
                     headers: header,
@@ -204,9 +204,8 @@ export default function LandingPageUser() {
                 <div className="m-3 my-9 rounded-lg bg-[#C4C4C4] text-white text-xl text-center">{`Hello ${dataOfOneFriend.userName}`}</div>
             ) : null}
             <div className="mt-9">
-            <Navbar/>
+                <Navbar />
             </div>
-           
         </div>
     );
 }

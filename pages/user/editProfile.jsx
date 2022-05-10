@@ -139,7 +139,7 @@ export default function EditProfile() {
             const mapStyle = defaultMapStyle ? defaultMapStyle : user.mapStyle;
             // user erstellen
             const rawResponse = await fetch(
-                process.env.NEXT_PUBLIC_FETCH_URL_USER + `/${userId}`,
+                process.env.NEXT_PUBLIC_FETCH_URL_USER + `${userId}`,
                 {
                     method: "PUT",
                     headers: {

@@ -11,14 +11,13 @@ function BudgetIncomeExpense() {
         incomeOrExpense,
         setCategory,
         homeCurrency,
+        category,
+        localCurrencyValueInHomeCurrency,
+        setLocalCurrencyValueInHomeCurrency,
     } = useAppData();
 
     const [localCurrency, setLocalCurrency] = useState("EUR");
     const [localCurrencyValue, setLocalCurrencyValue] = useState(0);
-    const [
-        localCurrencyValueInHomeCurrency,
-        setLocalCurrencyValueInHomeCurrency,
-    ] = useState(undefined);
 
     function handleSelectIncomeExpense(e) {
         setIncomeOrExpense(e.target.value);
@@ -141,9 +140,11 @@ function BudgetIncomeExpense() {
                         <select
                             name="income"
                             id="income"
+                            value={category}
                             className="w-1/2 h-1/2 rounded-full mb-2 pl-2 text-[#942928]"
                             onChange={handleCategory}
                         >
+                            <option value="general">General</option>
                             <option value="salary">Salary</option>
                             <option value="present">Present</option>
                             <option value="other">Other</option>
@@ -151,6 +152,7 @@ function BudgetIncomeExpense() {
                     ) : (
                         <select
                             name="expense"
+                            value={category}
                             id="expense"
                             className="w-1/2 h-1/2 rounded-full mb-2 pl-2 text-[#942928]"
                             onChange={handleCategory}

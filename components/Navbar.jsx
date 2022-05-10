@@ -5,11 +5,7 @@ import { useAppData } from "../Context/DataStorage.js";
 
 function Navbar() {
     const router = useRouter();
-    const {
-        buttonIndex, 
-        setButtonIndex,
-        user
-   } = useAppData();
+    const { buttonIndex, setButtonIndex, user } = useAppData();
 
     const [buttonWidth, setButtonWidth] = useState(0);
     // const [menuWidth, setMenuWidth] = useState(0);
@@ -19,7 +15,7 @@ function Navbar() {
     const buttonContainer = buttonWidth + marginButtons;
 
     useEffect(() => {
-        setButtonWidth((buttonRef.current.offsetWidth) + marginButtons);
+        setButtonWidth(buttonRef.current.offsetWidth + marginButtons);
         // setMenuWidth(menuRef.current.offsetWidth);
     }, []);
 
@@ -28,6 +24,7 @@ function Navbar() {
             <menu className="menu">
                 <button
                     ref={buttonRef}
+                    title="user profile"
                     className={
                         buttonIndex === 0 ? "menu__item active" : "menu__item"
                     }
@@ -35,7 +32,10 @@ function Navbar() {
                         backgroundColor: "#90A5A9",
                         marginRight: marginButtons,
                     }}
-                    onClick={() => {setButtonIndex(0); router.replace(`/user/${user.userName}`)}}
+                    onClick={() => {
+                        setButtonIndex(0);
+                        router.replace(`/user/${user.userName}`);
+                    }}
                 >
                     <div
                         className="icon navIcon text-white flex justify-center "
@@ -47,6 +47,7 @@ function Navbar() {
 
                 <button
                     ref={buttonRef}
+                    title="budget"
                     className={
                         buttonIndex === 1 ? "menu__item active" : "menu__item"
                     }
@@ -58,7 +59,10 @@ function Navbar() {
                     <div
                         className="icon navIcon text-white flex justify-center flex"
                         viewBox="0 0 24 24"
-                        onClick={() => {setButtonIndex(1); router.replace("/user/budget")}}
+                        onClick={() => {
+                            setButtonIndex(1);
+                            router.replace("/user/budget");
+                        }}
                     >
                         {clickables[0].icon}
                     </div>
@@ -66,6 +70,7 @@ function Navbar() {
 
                 <button
                     ref={buttonRef}
+                    title="friends"
                     className={
                         buttonIndex === 2 ? "menu__item active" : "menu__item"
                     }
@@ -73,7 +78,10 @@ function Navbar() {
                         backgroundColor: "#90A5A9",
                         marginRight: marginButtons,
                     }}
-                    onClick={() => {setButtonIndex(2); router.replace("/user/friends")}}
+                    onClick={() => {
+                        setButtonIndex(2);
+                        router.replace("/user/friends");
+                    }}
                 >
                     <div
                         className="icon navIcon text-white flex justify-center flex"
@@ -138,7 +146,10 @@ function Navbar() {
                     <div
                         className="icon navIcon text-white flex justify-center flex"
                         viewBox="0 0 24 24"
-                        onClick={() => {setButtonIndex(5); router.replace("/user/diary")}}
+                        onClick={() => {
+                            setButtonIndex(5);
+                            router.replace("/user/diary");
+                        }}
                     >
                         {clickables[12].icon}
                     </div>
@@ -156,10 +167,12 @@ function Navbar() {
                     onClick={() => setButtonIndex(6)}
                 >
                     <div
-                        className="icon navIcon text-white flex justify-center flex"
+                        className="icon navIcon text-white flex justify-center"
                         viewBox="0 0 24 24"
-                        onClick={() => {setButtonIndex(6); router.replace("/dummy")}}
-                        
+                        onClick={() => {
+                            setButtonIndex(6);
+                            router.replace("/dummy");
+                        }}
                     >
                         {clickables[13].icon}
                     </div>
@@ -168,10 +181,9 @@ function Navbar() {
                 <div
                     className="menu__border"
                     style={{
-                        left:  buttonIndex * buttonWidth ,
-                        width: (buttonContainer * 2) - (marginButtons * 3),
+                        left: buttonIndex * buttonWidth,
+                        width: buttonContainer * 2 - marginButtons * 3,
                     }}
-            
                 ></div>
             </menu>
 
