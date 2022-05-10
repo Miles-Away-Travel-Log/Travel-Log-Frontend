@@ -155,7 +155,7 @@ function ListIncomeExpense({ budgetItems }) {
             </button>
             <div className="flex justify-center w-full pt-16">
                 <div
-                    className="bg-white rounded-full w-3/4 lg:w-1/2 xl:w-1/3 p-4 border border-[#C4C4C4]"
+                    className="bg-white mb-9 rounded-lg w-3/4 lg:w-1/2 xl:w-1/3 p-4 border border-[#C4C4C4]"
                     id="content-pdf"
                 >
                     {createItem()}
@@ -188,7 +188,7 @@ function ListIncomeExpense({ budgetItems }) {
                 <button
                     id="dropdownButton"
                     data-dropdown-toggle="dropdown"
-                    className="sm:inline-block text-white dark:text-gray-400 dark:hover:bg-gray-700 rounded-lg text-sm p-1.5 h-[50px]"
+                    className="sm:inline-block text-[#942928] dark:text-gray-400 dark:hover:bg-gray-700 rounded-lg text-sm p-1.5 h-[50px]"
                     type="button"
                     onClick={handleDropdown}
                 >
