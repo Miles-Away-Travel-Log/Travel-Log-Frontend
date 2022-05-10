@@ -18,8 +18,8 @@ export default function DiaryMask() {
     async function uploadDiaryEntry(e) {
         e.preventDefault();
         const formDataTitleImage = new FormData();
-        formData.append("file", titleImageUrl);
-        formData.append("upload_preset", "pvsqrbgk");
+        formDataTitleImage.append("file", titleImageUrl);
+        formDataTitleImage.append("upload_preset", "pvsqrbgk");
 
         Axios.post(
             "https://api.cloudinary.com/v1_1/milesaway/image/upload",
@@ -29,8 +29,8 @@ export default function DiaryMask() {
         });
 
         const formDataImages = new FormData();
-        formData.append("file", imagesUrl);
-        formData.append("upload_preset", "pvsqrbgk");
+        formDataImages.append("file", imagesUrl);
+        formDataImages.append("upload_preset", "pvsqrbgk");
 
         Axios.post(
             "https://api.cloudinary.com/v1_1/milesaway/image/upload",
@@ -40,8 +40,8 @@ export default function DiaryMask() {
             setImagesFromCloud(response.data.url);
         });
 
-        setIsSubmit(true);
-        if (Object.keys(registerFormErrors).length === 0) {
+        // setIsSubmit(true);
+        // if (Object.keys(registerFormErrors).length === 0) {
             // user erstellen
             const rawResponse = await fetch(
                 process.env.NEXT_PUBLIC_FETCH_URL_DIARY,
@@ -82,7 +82,7 @@ export default function DiaryMask() {
                 const err = await rawResponse.json();
                 console.log("backend error", err);
             }
-        }
+        // }
     }
 
     return (
@@ -158,7 +158,7 @@ export default function DiaryMask() {
                             <div className="flex items-center justify-center w-full">
                                 <label className="flex flex-col w-full h-32 border-4 border-dashed hover:bg-gray-100 hover:border-gray-300">
                                     <div className="flex flex-col items-center justify-center">
-                                        {titleImageUrl ? (
+                                        {/* {titleImageUrl ? (
                                             <Image
                                                 className="m-3 rounded-lg bg-cover"
                                                 src={titleImageUrl}
@@ -179,11 +179,21 @@ export default function DiaryMask() {
                                                     d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z"
                                                     clipRule="evenodd"
                                                 />
-                                                <p className="pt-1 mb-2 text-sm tracking-wider text-gray-400 group-hover:text-gray-600">
-                                                    Select a photo
-                                                </p>
                                             </svg>
-                                        )}
+                                        )} */}
+                                            <svg
+                                                xmlns="http://www.w3.org/2000/svg"
+                                                className="w-12 h-12 text-gray-400 group-hover:text-gray-600"
+                                                viewBox="0 0 20 20"
+                                                fill="currentColor"
+                                                // onClick={uploadImage()}
+                                            >
+                                                <path
+                                                    fillRule="evenodd"
+                                                    d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z"
+                                                    clipRule="evenodd"
+                                                />
+                                            </svg>
                                     </div>
                                     <input
                                         type="file"
