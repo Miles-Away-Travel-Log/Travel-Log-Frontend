@@ -5,6 +5,7 @@ import { format } from "date-fns";
 import { useRouter } from "next/router";
 import { TailSpin } from "react-loader-spinner";
 import Cookies from "js-cookie";
+import InviteFriendToTrip from "../../components/InviteFriendToTrip.jsx";
 
 export default function NewTrip() {
     const router = useRouter();
@@ -19,9 +20,15 @@ export default function NewTrip() {
         startPoint,
         setStartPoint,
         handleGetUser,
+        inviteFriends,
+        setInviteFriends,
+        inviteFriendsVisibility,
+        setInviteFriendsVisibility,
     } = useAppData();
 
-    // Fehlt noch: Freunde adden? (Anfrage, nicht Zwang.) Privacy Settings? Validierung im Frontend? (Alert-Messages?) Nachricht wenn erfolgreich gepostet?
+    // Fehlt noch:
+    // Freunde adden > Anfrage muss noch bestättigt werden, nicht als Zwang.
+    // Validierung im Frontend? (Text unter den Eingabe-Feldern oder Alert-Messages?) > für tripName, tripDescription, tripStartDate + tripEndDate (kann beides identisch sein)
 
     const userInitialValues = {
         tripName: "",
@@ -31,6 +38,7 @@ export default function NewTrip() {
         endDate: "",
         mapStyle: user.mapStyle,
         startPoint: user.home,
+        visible: "private",
     };
 
     useEffect(() => {
@@ -40,8 +48,6 @@ export default function NewTrip() {
     }, []);
 
     useEffect(() => {}, [newTripData]);
-
-    format(new Date(2014, 1, 11), "yyyy-MM-dd");
 
     function handleMapStyleSubmit(event) {
         event.preventDefault();
@@ -63,6 +69,14 @@ export default function NewTrip() {
         event.preventDefault();
         const start = startPoint ? startPoint : user.home;
         const mapStyle = defaultMapStyle ? defaultMapStyle : user.mapStyle;
+        const inviteFriendsArray = inviteFriends
+            ? inviteFriends
+                  .filter((item) => item.checked)
+                  .map((item) => item.id)
+            : false;
+        const participants = inviteFriendsArray
+            ? [user.id, ...inviteFriendsArray]
+            : [user.id];
 
         const rawResponse = await fetch(process.env.NEXT_PUBLIC_FETCH_TRIP, {
             method: "POST",
@@ -79,7 +93,8 @@ export default function NewTrip() {
                 endDate: newTripData.endDate,
                 mapStyle: mapStyle,
                 startPoint: start,
-                participants: [user.id],
+                participants: participants,
+                visible: newTripData.visible,
             }),
         });
 
@@ -88,7 +103,10 @@ export default function NewTrip() {
             setStartPoint(false);
             setDefaultMapStyle(false);
             setNewTripData(userInitialValues);
+            setInviteFriends(false);
+            setInviteFriendsVisibility(false);
             handleGetUser();
+            alert("Trip successfully created!");
             router.replace(`/user/${user.userName}`);
         } else {
             const err = await rawResponse.json();
@@ -105,7 +123,9 @@ export default function NewTrip() {
             )}
             {user.userName && (
                 <div className="h-screen w-screen container max-w-sm mx-auto flex-1 flex flex-col items-center justify-center px-2 bg-blue-300">
-                    <h1 className="">Create a new trip</h1>
+                    <h1 className="text-xl font-bold mb-3">
+                        Create a new trip
+                    </h1>
                     <label htmlFor="tripName">Name of the trip</label>
                     <input
                         type="text"
@@ -116,7 +136,9 @@ export default function NewTrip() {
                         value={newTripData.tripName}
                         onChange={handleChange}
                     />
-                    <label htmlFor="tripType">Type of trip</label>
+                    <label htmlFor="tripType" className="mt-3">
+                        Type of trip
+                    </label>
                     <select
                         name="tripType"
                         onChange={handleChange}
@@ -134,7 +156,9 @@ export default function NewTrip() {
                             trip around the world
                         </option>
                     </select>
-                    <label htmlFor="description">description</label>
+                    <label htmlFor="description" className="mt-3">
+                        Description
+                    </label>
                     <textarea
                         rows="4"
                         type="text"
@@ -143,7 +167,7 @@ export default function NewTrip() {
                         value={newTripData.description}
                         onChange={handleChange}
                     />
-                    <div className="grid grid-cols-2 gap-4">
+                    <div className="grid grid-cols-2 gap-4 mt-4">
                         <div>Start Date:</div>
                         <div>
                             {newTripData.startDate !== ""
@@ -170,13 +194,10 @@ export default function NewTrip() {
                         Set Date
                     </button>
                     {datePickerVisibility && <DatePicker />}
-                    <div>Set travel map style and starting location</div>
-                    <button
-                        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded z-0"
-                        onClick={handleMapStyleSubmit}
-                    >
-                        Set Map Style
-                    </button>
+                    <div className="mt-4 font-bold">
+                        Set travel map style and starting location
+                    </div>
+
                     <div className="grid grid-cols-2 gap-4">
                         <div>MapStyle:</div>
                         <div>
@@ -197,22 +218,91 @@ export default function NewTrip() {
                         </div>
                     </div>
                     <button
-                        className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded z-0"
-                        onClick={(e) => saveTrip(e)}
+                        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded z-0"
+                        onClick={handleMapStyleSubmit}
                     >
-                        Save new Trip
+                        Set Map Style
                     </button>
+                    <div className="mt-6">
+                        Privacy Settings - Trip visible for:
+                    </div>
+                    <div className="grid grid-cols-3 gap-4">
+                        <div>
+                            <input
+                                type="radio"
+                                name="visible"
+                                value="private"
+                                id="private"
+                                onChange={handleChange}
+                                checked={newTripData.visible === "private"}
+                            />
+                            <label htmlFor="private">Private</label>
+                        </div>
+                        <div>
+                            <input
+                                type="radio"
+                                name="visible"
+                                value="friends"
+                                id="friends"
+                                onChange={handleChange}
+                                checked={newTripData.visible === "friends"}
+                            />
+                            <label htmlFor="friends">Friends</label>
+                        </div>
+                        <div>
+                            <input
+                                type="radio"
+                                name="visible"
+                                value="public"
+                                id="public"
+                                onChange={handleChange}
+                                checked={newTripData.visible === "public"}
+                            />
+                            <label htmlFor="public">Public</label>
+                        </div>
+                    </div>
+                    <div className="mt-6">Invite friends to your trip</div>
+                    <div className="flex justify-around flex-wrap w-[80%]">
+                        {inviteFriends &&
+                            !inviteFriendsVisibility &&
+                            inviteFriends.map(
+                                (friend) =>
+                                    friend.checked === true && (
+                                        <div
+                                            key={friend.userName}
+                                            className="bg-slate-300 p-1 rounded-full"
+                                        >
+                                            <div>{friend.userName}</div>
+                                        </div>
+                                    )
+                            )}
+                    </div>
                     <button
-                        className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded z-0"
-                        onClick={() => (
-                            setStartPoint(false),
-                            setDefaultMapStyle(false),
-                            setNewTripData(false),
-                            router.replace(`/user/{user.userName}`)
-                        )}
+                        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded z-0"
+                        onClick={() => setInviteFriendsVisibility(true)}
                     >
-                        Cancel
+                        Invite Friends
                     </button>
+                    {inviteFriendsVisibility && <InviteFriendToTrip />}
+                    <div className="grid grid-cols-2 gap-4 mt-6">
+                        <button
+                            className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded z-0"
+                            onClick={(e) => saveTrip(e)}
+                        >
+                            Save new Trip
+                        </button>
+                        <button
+                            className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded z-0"
+                            onClick={() => (
+                                setStartPoint(false),
+                                setDefaultMapStyle(false),
+                                setNewTripData(false),
+                                router.replace(`/user/{user.userName}`)
+                            )}
+                        >
+                            Cancel
+                        </button>
+                    </div>
                 </div>
             )}
         </div>
