@@ -78,25 +78,28 @@ export default function NewTrip() {
             ? [user.id, ...inviteFriendsArray]
             : [user.id];
 
-        const rawResponse = await fetch(process.env.NEXT_PUBLIC_FETCH_TRIP, {
-            method: "POST",
-            headers: {
-                Accept: "application/json",
-                "Content-Type": "application/json",
-                Authorization: `Bearer ${Cookies.get("token")}`,
-            },
-            body: JSON.stringify({
-                tripName: newTripData.tripName,
-                tripType: newTripData.tripType,
-                description: newTripData.description,
-                startDate: newTripData.startDate,
-                endDate: newTripData.endDate,
-                mapStyle: mapStyle,
-                startPoint: start,
-                participants: participants,
-                visible: newTripData.visible,
-            }),
-        });
+        const rawResponse = await fetch(
+            process.env.NEXT_PUBLIC_FETCH_URL_TRIP,
+            {
+                method: "POST",
+                headers: {
+                    Accept: "application/json",
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${Cookies.get("token")}`,
+                },
+                body: JSON.stringify({
+                    tripName: newTripData.tripName,
+                    tripType: newTripData.tripType,
+                    description: newTripData.description,
+                    startDate: newTripData.startDate,
+                    endDate: newTripData.endDate,
+                    mapStyle: mapStyle,
+                    startPoint: start,
+                    participants: participants,
+                    visible: newTripData.visible,
+                }),
+            }
+        );
 
         if (rawResponse.status === 200) {
             // falls erfolgreich, dann:
