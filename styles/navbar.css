@@ -19,12 +19,12 @@ html *::after {
     position: sticky;
     bottom: 0;
     display: flex;
-    width: 32.05em;
-    /* width:100vw; */
-    font-size: clamp(.4em, 1em, 1.5em);
+    /* width: 32.05em; */
+    width:100vw;
+    /* font-size: clamp(.4em, 1em, 1.5em); */
     padding: 0 2em;
     /* font-size: 1.5em; */
-    font-size: clamp(0.4em, 1em, 1.5em);
+    /* font-size: clamp(0.4em, 1vw, 1.5em); */
     position: relative;
     justify-content: center;
     background-color: var(--bgColorMenu);
@@ -33,14 +33,14 @@ html *::after {
 
 .menu__item {
     all: unset;
-    flex-grow: 1;
+    /* flex-grow: 1; */
     z-index: 100;
     display: flex;
     cursor: pointer;
     position: relative;
     border-radius: 50%;
-    width: 2.6em;
-    height: 2.6em;
+    width: 7vw;
+    height: 7vw;
     align-items: center;
     will-change: transform;
     justify-content: center;
@@ -53,8 +53,8 @@ html *::after {
 .menu__item::before {
     content: "";
     z-index: -1;
-    width: 4.2em;
-    height: 4.2em;
+    width: 14vw;
+    height: 14vw;
     border-radius: 50%;
     position: absolute;
     transform: scale(0);
@@ -104,28 +104,44 @@ html *::after {
     color: #942928;
    }
 
-  /*@media screen and (max-width: 50em) {
+  @media screen and (min-width: 540px) {
+    .menu__item::before{
+      width: 70px;
+      height: 70px;
+      border-radius: 50%;
+    }
 }
 
-/*@media screen and (max-width: 50em) {
+ @media screen and (min-width: 820px) {
+  .menu__item{
+    width: 65px;
+    height: 65px;
+    border-radius: 50%;
+  }
 
-    .menu {
-      font-size: 0.8em;
-    }
-  }*/
-/* @media screen and (min-width: 360px) {
-    .menu {
-      font-size: 0.4em;
-    }
+  .menu__item::before{
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
   }
-  @media screen and (min-width: 1024px) {
-    .menu {
-      font-size: 0.6em;
+  .navIcon {
+    font-size: 35px;
+   }
+  } 
+
+  @media screen and (min-width: 1280px) {
+    /* .menu__item{
+      width: 85px;
+      height: 85px;
+      border-radius: 50%;
     }
-  }
-  @media screen and (min-width: 1025px) {
-    .menu{
-      font-size: 0.8em;
-     
-    }
-  } */
+    .menu__item::before{
+      width: 105px;
+      height: 105px;
+      border-radius: 50%;
+    } */
+    .navIcon {
+      font-size: 35px;
+     }
+    } 
+
