@@ -1,14 +1,12 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-    reactStrictMode: false,
+    reactStrictMode: true,
 };
 
 module.exports = {
     nextConfig,
     images: {
-        domains: [
-          'res.cloudinary.com'
-        ],
+        domains: ["res.cloudinary.com", "openweathermap.org"],
     },
     distDir: "build",
-  }
+};
