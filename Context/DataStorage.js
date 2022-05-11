@@ -273,13 +273,13 @@ function AppState(props) {
         if (response.status === 200) {
             const data = await response.json();
             setUser(data.user);
-            setBudgetItems(data.user.budget ? data.user.budget : []);
+            // setBudgetItems(data.user.budget ? data.user.budget : []);
             setUserId(data.user.id);
-            setSeedMoney(data.user.seedMoney ? data.user.seedMoney : []);
+            // setSeedMoney(data.user.seedMoney ? data.user.seedMoney : []);
             setAccountPhoto(data.user.avatar);
-            setHomeCurrency(
-                data.user.seedMoney[0] ? data.user.seedMoney[0].currency : "EUR"
-            );
+            // setHomeCurrency(
+            //     data.user.seedMoney[0] ? data.user.seedMoney[0].currency : "EUR"
+            // );
             setList_Friends_FriendRequests(data.user.friends);
         } else {
             setUser(null);

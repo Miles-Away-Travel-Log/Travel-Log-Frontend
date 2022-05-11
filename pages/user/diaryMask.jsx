@@ -6,19 +6,18 @@ import Cookies from "js-cookie";
 
 export default function DiaryMask() {
     const router = useRouter();
-    const [imagesUrl, setImagesUrl] = useState([]);
-    const [titleImageUrl, setTitleImageUrl] = useState("");
+
     const [textData, setTextData] = useState("");
     const [date, setDate] = useState("");
     const [diaryName, setDiaryName] = useState("");
     const [author, setAuthor] = useState("");
     const [titleImageFromCloud, setTitleImageFromCloud] = useState("");
-    const[imagesFromCloud, setImagesFromCloud] = useState([])
+    const [imagesFromCloud, setImagesFromCloud] = useState([]);
 
-    async function uploadDiaryEntry(e) {
-        e.preventDefault();
+    function getTitleImageFromCloud(e) {
+        const file = e.target.files[0];
         const formDataTitleImage = new FormData();
-        formDataTitleImage.append("file", titleImageUrl);
+        formDataTitleImage.append("file", file);
         formDataTitleImage.append("upload_preset", "pvsqrbgk");
 
         Axios.post(
@@ -27,71 +26,63 @@ export default function DiaryMask() {
         ).then((response) => {
             setTitleImageFromCloud(response.data.url);
         });
+    }
 
-        const formDataImages = new FormData();
-        formDataImages.append("file", imagesUrl);
-        formDataImages.append("upload_preset", "pvsqrbgk");
+    function getImagesFromCloud(e) {
+        const files = e.target.files;
+        for (let file of files) {
+            const formDataImages = new FormData();
+            formDataImages.append("file", file);
+            formDataImages.append("upload_preset", "pvsqrbgk");
 
-        Axios.post(
-            "https://api.cloudinary.com/v1_1/milesaway/image/upload",
-            formDataImages
-        )
-        .then((response) => {
-            setImagesFromCloud(response.data.url);
-        });
+            Axios.post(
+                "https://api.cloudinary.com/v1_1/milesaway/image/upload",
+                formDataImages
+            ).then((response) => {
+                setImagesFromCloud((imagesFromCloud) => [
+                    ...imagesFromCloud,
+                    response.data.url,
+                ]);
+            });
+        }
+    }
 
-        // setIsSubmit(true);
-        // if (Object.keys(registerFormErrors).length === 0) {
-            // user erstellen
-            const rawResponse = await fetch(
-                process.env.NEXT_PUBLIC_FETCH_URL_DIARY,
-                {
-                    method: "POST",
-                    headers: {
-                        Accept: "application/json",
-                        "Content-Type": "application/json",
-                        Authorization: `Bearer ${Cookies.get("token")}`,
+    async function uploadDiaryEntry(e) {
+        e.preventDefault();
+
+        const rawResponse = await fetch(
+            process.env.NEXT_PUBLIC_FETCH_URL_DIARY,
+            {
+                method: "POST",
+                headers: {
+                    Accept: "application/json",
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${Cookies.get("token")}`,
+                },
+                body: JSON.stringify({
+                    author: author,
+                    diaryName: diaryName,
+                    date: date,
+                    description: textData,
+                    visible: false,
+                    images: imagesFromCloud,
+                    titleImage: titleImageFromCloud,
+                    home: {
+                        longitude: -0.091998,
+                        latitude: 51.515618,
+                        city: "London",
+                        country: "United Kingdom",
                     },
-                    body: JSON.stringify({
-                        author: author,
-                        diaryName: diaryName,
-                        date: date,
-                        description: textData,
-                        visible: false,
-                        images: imagesFromCloud,
-                        titleImage: titleImageFromCloud,
-                        mapStyle: {
-                            name: "Basic",
-                            link: "mapbox://styles/mapbox/streets-v9",
-                            iconColor: "text-black",
-                        },
-                        home: {
-                            longitude: -0.091998,
-                            latitude: 51.515618,
-                            city: "London",
-                            country: "United Kingdom",
-                        },
-                    }),
-                }
-            );
-
-            if (rawResponse.status === 201) {
-                // falls erfolgreich, dann login
-                router.replace("/user/diary");
-            } else {
-                const err = await rawResponse.json();
-                console.log("backend error", err);
+                }),
             }
-        // }
+        );
     }
 
     return (
         <div className="bg-[url('../public/images/images-diary/dariusz-sankowski-3OiYMgDKJ6k-unsplash.jpg')] bg-cover min-h-screen flex flex-col">
-            <form>
+            <form onSubmit={uploadDiaryEntry}>
                 <div className="flex flex-col items-center">
-                    <h3 className="text-white mt-3">
-                        CREATE YOUR DIARY ENTRY
-                    </h3>
+                    <h3 className="text-white mt-3">CREATE YOUR DIARY ENTRY</h3>
 
                     <div className="flex w-1/2 mt-3">
                         <div className="flex w-2/3 flex-wrap">
@@ -181,28 +172,24 @@ export default function DiaryMask() {
                                                 />
                                             </svg>
                                         )} */}
-                                            <svg
-                                                xmlns="http://www.w3.org/2000/svg"
-                                                className="w-12 h-12 text-gray-400 group-hover:text-gray-600"
-                                                viewBox="0 0 20 20"
-                                                fill="currentColor"
-                                                // onClick={uploadImage()}
-                                            >
-                                                <path
-                                                    fillRule="evenodd"
-                                                    d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z"
-                                                    clipRule="evenodd"
-                                                />
-                                            </svg>
+                                        <svg
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            className="w-12 h-12 text-gray-400 group-hover:text-gray-600"
+                                            viewBox="0 0 20 20"
+                                            fill="currentColor"
+                                            // onClick={uploadImage()}
+                                        >
+                                            <path
+                                                fillRule="evenodd"
+                                                d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z"
+                                                clipRule="evenodd"
+                                            />
+                                        </svg>
                                     </div>
                                     <input
                                         type="file"
                                         className="opacity-0"
-                                        onChange={(event) => {
-                                            setTitleImageUrl(
-                                                event.target.files[0]
-                                            );
-                                        }}
+                                        onChange={getTitleImageFromCloud}
                                     />
                                 </label>
                             </div>
@@ -230,9 +217,7 @@ export default function DiaryMask() {
                                     name="file"
                                     type="file"
                                     multiple
-                                    onChange={(e) =>
-                                        setImagesUrl(e.target.files)
-                                    }
+                                    onChange={getImagesFromCloud}
                                 />
                             </div>
                             {/* <div className="dz-message" data-dz-message>
@@ -245,7 +230,6 @@ export default function DiaryMask() {
                             <button
                                 type="submit"
                                 className="p-3 text-center rounded-full bg-[#90A5A9] text-white hover:bg-[#C4C4C4] focus:outline-none my-1"
-                                onClick={uploadDiaryEntry}
                             >
                                 Create
                             </button>
