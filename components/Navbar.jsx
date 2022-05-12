@@ -5,7 +5,7 @@ import { useAppData } from "../Context/DataStorage.js";
 
 function Navbar() {
     const router = useRouter();
-    const { buttonIndex, setButtonIndex, user } = useAppData();
+    const { buttonIndex, setButtonIndex, user} = useAppData();
 
     const [buttonWidth, setButtonWidth] = useState(0);
     const [buttonRefState, setButtonRefState] = useState([]);
@@ -36,9 +36,30 @@ function Navbar() {
         const buttonRefArrayPositions = buttonRefArray.map(
             (buttonRef) => buttonRef.current.offsetLeft
         );
+        console.log("user:", user)
         setButtonRefState(buttonRefArrayPositions);
     }, []);
 
+    useEffect(() => {
+        switch (router.pathname) {
+            case `/user/${user.userName}`:
+                return  setButtonIndex(0);
+            case "/user/budget":
+                return setButtonIndex(1);
+            case "/user/friends":
+                return setButtonIndex(2);
+            case "/map":
+                return setButtonIndex(3);
+            case "/weather":
+                return setButtonIndex(4);
+            case "/user/diary":
+                return setButtonIndex(5);
+                case "/dummy":
+                return setButtonIndex(6);
+            default:
+                return setButtonIndex(0);
+        }
+    }, [router.pathname]);
 
     return (
         <div className="App">
@@ -204,9 +225,10 @@ function Navbar() {
                     style={{
                         // left: buttonIndex * (buttonWidth+(marginButtons*0.5))+(buttonIndex/100*75),
                         left:
+                            buttonRefState[buttonIndex] &&
                             buttonRefState[buttonIndex] -
-                            buttonContainer +
-                            buttonIndex * marginButtons,
+                                buttonContainer +
+                                buttonIndex * marginButtons,
                         width: buttonContainer * 2,
                     }}
                 ></div>

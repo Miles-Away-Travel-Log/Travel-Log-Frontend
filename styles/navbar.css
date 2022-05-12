@@ -19,12 +19,8 @@ html *::after {
     position: sticky;
     bottom: 0;
     display: flex;
-    /* width: 32.05em; */
     width:100vw;
-    /* font-size: clamp(.4em, 1em, 1.5em); */
     padding: 0 2em;
-    /* font-size: 1.5em; */
-    /* font-size: clamp(0.4em, 1vw, 1.5em); */
     position: relative;
     justify-content: center;
     background-color: var(--bgColorMenu);
@@ -33,7 +29,6 @@ html *::after {
 
 .menu__item {
     all: unset;
-    /* flex-grow: 1; */
     z-index: 100;
     display: flex;
     cursor: pointer;

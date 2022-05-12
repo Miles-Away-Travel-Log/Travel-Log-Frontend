@@ -1,11 +1,12 @@
 import { clickables } from "../components/menu";
 import { FcHeadset } from "react-icons/fc";
 import React from "react";
+import Navbar from "../components/Navbar.jsx";
 
 function dummy() {
     return (
         <div className="bg-[url('../public/images/images-dummy/quino-al-FVOkPmiCzAM-unsplash.webp')] bg-cover min-h-screen">
-            <div className="py-10 lg:px-4"></div>
+            <div className="py-10 lg:px-4 flex justify-center">
 
             {/*          ----------------------         Test mit Grid:          ----------------------         */}
 
@@ -88,7 +89,7 @@ function dummy() {
                     {clickables[10].icon}
                 </button>
                 {/*------------- test weather button with url -------------*/}
-                <button 
+                <button
                     className="bg-[#90A5A9] hover:bg-[#C4C4C4] w-12 h-12 text-white text-2xl font-bold px-3 mx-auto rounded-full"
                     type="submit"
                 >
@@ -101,6 +102,10 @@ function dummy() {
                 >
                     {clickables[11].icon}
     </button>*/}
+            </div>
+            <div className="mt-9  absolute bottom-0">
+                <Navbar />
+            </div>
             </div>
         </div>
     );
