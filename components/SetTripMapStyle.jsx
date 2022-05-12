@@ -51,7 +51,7 @@ function SetMapStyle() {
             <h1 className="text-3xl ml-5 mt-10 mb-15 font-bold flex flex-wrap">
                 Choose your standard Map-Style:
             </h1>
-            <div className="m-5 flex flex-wrap">
+            <div className="m-5 ml-auto flex flex-wrap">
                 {mapStyleList.map((mapStyle, index) => (
                     <div
                         className="mt-2 mr-1 flex flex-wrap lg:w-1/4 md:w-1/3"
@@ -66,16 +66,21 @@ function SetMapStyle() {
                             onChange={handleChangeRadio}
                             checked={defaultMapStyle.link === mapStyle.link}
                         />
-                        <Image
-                            className="p-4 object-cover"
-                            src={mapStyle.pic}
-                            alt={mapStyle.name}
-                            width={60}
-                            height={60}
-                        />
                         <label
                             htmlFor={`option${index + 1}`}
-                            className="pr-2 mt-auto mb-auto ml-9"
+                            className="flex flex-col"
+                        >
+                            <Image
+                                className="p-4 object-cover w-[60px] h-[60px]"
+                                src={mapStyle.pic}
+                                alt={mapStyle.name}
+                                width={60}
+                                height={60}
+                            />
+                        </label>
+                        <label
+                            htmlFor={`option${index + 1}`}
+                            className="pr-2 mb-2 ml-9"
                         >
                             {mapStyle.name}
                         </label>
