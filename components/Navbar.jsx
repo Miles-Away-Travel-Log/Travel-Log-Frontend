@@ -8,22 +8,43 @@ function Navbar() {
     const { buttonIndex, setButtonIndex, user } = useAppData();
 
     const [buttonWidth, setButtonWidth] = useState(0);
-    // const [menuWidth, setMenuWidth] = useState(0);
-    // const [buttonIndex, setButtonIndex] = useState(0);
-    const buttonRef = useRef(null);
+    const [buttonRefState, setButtonRefState] = useState([]);
+
+    const buttonRefUser = useRef(null);
+    const buttonRefBudget = useRef(null);
+    const buttonRefFriends = useRef(null);
+    const buttonRefMap = useRef(null);
+    const buttonRefWeather = useRef(null);
+    const buttonRefDiary = useRef(null);
+    const buttonRefMenu = useRef(null);
+
+    const buttonRefArray = [
+        buttonRefUser,
+        buttonRefBudget,
+        buttonRefFriends,
+        buttonRefMap,
+        buttonRefWeather,
+        buttonRefDiary,
+        buttonRefMenu,
+    ];
+
     const marginButtons = buttonWidth / 7;
     const buttonContainer = buttonWidth + marginButtons;
 
     useEffect(() => {
-        setButtonWidth(buttonRef.current.offsetWidth + marginButtons);
-        // setMenuWidth(menuRef.current.offsetWidth);
+        setButtonWidth(buttonRefUser.current.offsetWidth + marginButtons);
+        const buttonRefArrayPositions = buttonRefArray.map(
+            (buttonRef) => buttonRef.current.offsetLeft
+        );
+        setButtonRefState(buttonRefArrayPositions);
     }, []);
+
 
     return (
         <div className="App">
             <menu className="menu">
                 <button
-                    ref={buttonRef}
+                    ref={buttonRefUser}
                     title="user profile"
                     className={
                         buttonIndex === 0 ? "menu__item active" : "menu__item"
@@ -46,7 +67,7 @@ function Navbar() {
                 </button>
 
                 <button
-                    ref={buttonRef}
+                    ref={buttonRefBudget}
                     title="budget"
                     className={
                         buttonIndex === 1 ? "menu__item active" : "menu__item"
@@ -55,21 +76,21 @@ function Navbar() {
                         backgroundColor: "#90A5A9",
                         marginRight: marginButtons,
                     }}
+                    onClick={() => {
+                        setButtonIndex(1);
+                        router.replace("/user/budget");
+                    }}
                 >
                     <div
                         className="icon navIcon text-white flex justify-center flex"
                         viewBox="0 0 24 24"
-                        onClick={() => {
-                            setButtonIndex(1);
-                            router.replace("/user/budget");
-                        }}
                     >
                         {clickables[0].icon}
                     </div>
                 </button>
 
                 <button
-                    ref={buttonRef}
+                    ref={buttonRefFriends}
                     title="friends"
                     className={
                         buttonIndex === 2 ? "menu__item active" : "menu__item"
@@ -93,7 +114,7 @@ function Navbar() {
                 </button>
 
                 <button
-                    ref={buttonRef}
+                    ref={buttonRefMap}
                     className={
                         buttonIndex === 3 ? "menu__item active" : "menu__item"
                     }
@@ -113,7 +134,7 @@ function Navbar() {
                 </button>
 
                 <button
-                    ref={buttonRef}
+                    ref={buttonRefWeather}
                     className={
                         buttonIndex === 4 ? "menu__item active" : "menu__item"
                     }
@@ -133,7 +154,7 @@ function Navbar() {
                 </button>
 
                 <button
-                    ref={buttonRef}
+                    ref={buttonRefDiary}
                     className={
                         buttonIndex === 5 ? "menu__item active" : "menu__item"
                     }
@@ -156,7 +177,7 @@ function Navbar() {
                 </button>
 
                 <button
-                    ref={buttonRef}
+                    ref={buttonRefMenu}
                     className={
                         buttonIndex === 6 ? "menu__item active" : "menu__item"
                     }
@@ -181,8 +202,12 @@ function Navbar() {
                 <div
                     className="menu__border"
                     style={{
-                        left: buttonIndex * buttonWidth,
-                        width: buttonContainer * 2 - marginButtons * 3,
+                        // left: buttonIndex * (buttonWidth+(marginButtons*0.5))+(buttonIndex/100*75),
+                        left:
+                            buttonRefState[buttonIndex] -
+                            buttonContainer +
+                            buttonIndex * marginButtons,
+                        width: buttonContainer * 2,
                     }}
                 ></div>
             </menu>
