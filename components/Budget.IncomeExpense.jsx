@@ -75,7 +75,7 @@ function BudgetIncomeExpense() {
     return (
         <div>
             <form
-                className="flex flex-col w-[375px] p-2"
+                className="flex flex-col w-[375px] p-6"
                 onSubmit={handlePostBudgetItem}
             >
                 <fieldset

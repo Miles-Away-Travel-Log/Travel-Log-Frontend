@@ -1,5 +1,6 @@
 import Head from "next/head";
 import SearchBox from "../components/Weather.SearchBox.jsx";
+import Navbar from "../components/Navbar.jsx";
 
 export default function Home() {
     return (
@@ -12,6 +13,9 @@ export default function Home() {
                 <div className="container">
                     <SearchBox placeholder="Search for a city..." />
                 </div>
+            </div>
+            <div>
+                <Navbar/>
             </div>
         </div>
     );

@@ -25,8 +25,8 @@ function BalanceSheet() {
         sumExpense;
 
     return (
-        <div className="flex justify-center bg-white w-full mt-6 p-2">
-            <div className="bg-white rounded-full w-3/4 lg:w-1/2 xl:w-1/3 p-4 shadow border-double border-4 border-[#90A5A9]">
+        <div className="flex justify-center w-full mt-6 p-3">
+            <div className="bg-white rounded-lg sm:rounded-full w-3/4 lg:w-1/2 xl:w-1/3 p-4 shadow border-double border-4 border-[#90A5A9]">
                 <div>
                     <span className="ml-6 relative inline-block  uppercase font-medium tracking-widest text-[#C4C4C4]">
                         {new Date().toLocaleDateString()}
@@ -39,7 +39,7 @@ function BalanceSheet() {
                                     : "w-9/12 text-[#942928]"
                             }
                         >
-                            <span className=" ml-5 text-2xl font-semibold block ">
+                            <span className=" ml-5 text-xl sm:text-2xl font-semibold block ">
                                 TOTAL: {balance} {homeCurrency}
                             </span>
                         </div>

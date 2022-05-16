@@ -15,7 +15,7 @@ export default function Budget() {
     }
 
     return (
-        <div className="w-screen flex flex-col justify-center items-center h-full">
+        <div className="w-screen flex flex-col justify-center items-center bg-[url('../public/images/images-budget/christine-roy-ir5MHI6rPg0-unsplash.jpg')] bg-cover min-h-screen">
             {/*             <div className="absolute top-0 right-0 p-2">
                 <div className="flex justify-center w-full">
                     <div
