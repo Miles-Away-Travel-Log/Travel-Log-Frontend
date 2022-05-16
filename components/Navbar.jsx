@@ -4,7 +4,7 @@ import { icons, clickables } from "./menu.jsx";
 import { useAppData } from "../Context/DataStorage.js";
 
 function Navbar() {
-    const { cityWeather, setCityWeather } = useAppData();
+ 
     const router = useRouter();
     const { buttonIndex, setButtonIndex, user } = useAppData();
 
