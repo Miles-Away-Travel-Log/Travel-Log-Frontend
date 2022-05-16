@@ -22,7 +22,7 @@
 
 .landingpageLogo {
     position: absolute;
-    top: 33vh;
+    top: 37vh;
     object-fit: cover;
     background-repeat: no-repeat;
     background-size: cover;
@@ -30,12 +30,14 @@
 
 .landingpageContainerLogo {
     display: flex;
-    justify-content: center;
+    /* justify-content: center; */
+    flex-direction: column;
+    align-items: center;
 }
 
 .landingpageContainerLogo img {
-    width: 200px;
-    height: 200px;
+    width: 50vw;
+    height: 50vw;
     background-repeat: no-repeat;
     background-size: cover;
     object-fit: cover;
@@ -82,4 +84,49 @@
 }
 
 @media (min-width: 992px) {
+}
+@media screen and (min-width: 540px) {
+    .landingpageContainerLogo img{
+      width: 300px;
+      height: 300px;
+      border-radius: 50%;
+    }
+    .landingpageLogo {
+        top: 28vh;
+    }
+}
+
+@media screen and (min-width: 768px) {
+    .landingpageLogo {
+        top: 34vh;
+    }
+}
+
+@media screen and (min-width: 820px) {
+    .landingpageLogo {
+        top: 36vh;
+    }
+}
+
+@media screen and (min-width: 912px) {
+    .landingpageLogo {
+        top: 38vh;
+    }
+}
+
+@media screen and (min-width: 1024px) {
+    .landingpageLogo {
+        top: 27vh;
+    }
+}
+
+@media screen and (min-width: 1280px) {
+    .landingpageContainerLogo img{
+      width: 500px;
+      height: 500px;
+      border-radius: 50%;
+    }
+    .landingpageLogo {
+        top: 22vh;
+    }
 }

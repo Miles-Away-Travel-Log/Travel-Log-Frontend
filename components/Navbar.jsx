@@ -4,8 +4,9 @@ import { icons, clickables } from "./menu.jsx";
 import { useAppData } from "../Context/DataStorage.js";
 
 function Navbar() {
+    const { cityWeather, setCityWeather } = useAppData();
     const router = useRouter();
-    const { buttonIndex, setButtonIndex, user} = useAppData();
+    const { buttonIndex, setButtonIndex, user } = useAppData();
 
     const [buttonWidth, setButtonWidth] = useState(0);
     const [buttonRefState, setButtonRefState] = useState([]);
@@ -36,14 +37,13 @@ function Navbar() {
         const buttonRefArrayPositions = buttonRefArray.map(
             (buttonRef) => buttonRef.current.offsetLeft
         );
-        console.log("user:", user)
         setButtonRefState(buttonRefArrayPositions);
     }, []);
 
     useEffect(() => {
-        switch (router.pathname) {
+        switch ("routerPathnaem:",router.pathname) {
             case `/user/${user.userName}`:
-                return  setButtonIndex(0);
+                return setButtonIndex(0);
             case "/user/budget":
                 return setButtonIndex(1);
             case "/user/friends":
@@ -52,9 +52,11 @@ function Navbar() {
                 return setButtonIndex(3);
             case "/weather":
                 return setButtonIndex(4);
+            case "/location/[city]":
+                return setButtonIndex(4);
             case "/user/diary":
                 return setButtonIndex(5);
-                case "/dummy":
+            case "/dummy":
                 return setButtonIndex(6);
             default:
                 return setButtonIndex(0);
@@ -168,7 +170,10 @@ function Navbar() {
                     <div
                         className="icon navIcon text-white flex justify-center flex"
                         viewBox="0 0 24 24"
-                        onClick={() => setButtonIndex(1)}
+                        onClick={() => {
+                            setButtonIndex(4);
+                            router.replace("/weather");
+                        }}
                     >
                         {clickables[11].icon}
                     </div>
