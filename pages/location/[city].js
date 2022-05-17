@@ -6,6 +6,7 @@ import TodaysWeather from "../../components/Weather.TodaysWeather.jsx";
 import HourlyWeather from "../../components/Weather.HourlyWeather.jsx";
 import WeeklyWeather from "../../components/Weather.WeeklyWeather.jsx";
 import SearchBox from "../../components/Weather.SearchBox.jsx";
+import Navbar from "../../components/Navbar.jsx";
 
 export async function getServerSideProps(context) {
     const city = getCity(context.params.city);
@@ -100,6 +101,9 @@ export default function City({
                         timezone={timezone}
                     />
                 </div>
+            </div>
+            <div>
+                <Navbar/>
             </div>
         </div>
     );

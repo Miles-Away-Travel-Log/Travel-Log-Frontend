@@ -63,11 +63,13 @@ function BudgetSeedMoney({ tripID }) {
         <div>
             {tripSeedMoney.length !== 0 ? (
                 <form
-                    className="flex flex-col w-[375px] h-1/6 p-2"
+                    className="flex flex-col w-[375px] h-1/6 p-6"
                     onSubmit={handleDeleteSeedMoney}
                 >
                     <fieldset className="flex flex-col border-solid border-2 border-[#942928] justify-center items-center">
-                        <legend>Budget</legend>
+                        <legend className="mb-2 bg-white text-[#942928]">
+                            Budget
+                        </legend>
                         <div className="bg-gray-400">
                             {tripSeedMoney[0].total} {homeCurrency}
                         </div>
@@ -85,7 +87,9 @@ function BudgetSeedMoney({ tripID }) {
                     onSubmit={submitSeedMoney}
                 >
                     <fieldset className="flex flex-col border-solid border-2 border-[#90A5A9] justify-center items-center rounded-full text-[#942928]">
-                        <legend>BUDGET</legend>
+                        <legend className="mb-2 bg-white text-[#942928]">
+                            BUDGET
+                        </legend>
                         <input
                             type="text"
                             name="seedmoney"

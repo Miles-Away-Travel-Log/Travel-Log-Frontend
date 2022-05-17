@@ -125,6 +125,13 @@ function AppState(props) {
     const [tripPeople, setTripPeople] = useState([]);
     const [tripData, setTripData] = useState({});
 
+    //-------------------------------------- DIARY  -----------------------------------------------------//
+    //
+
+    const [diaryLocation, setDiaryLocation] = useState(false);
+    const [currentTripId, setCurrentTripId] = useState(null);
+    const [cancelDiaryCreation, setCancelDiaryCreation] = useState(false);
+
     //-------------------------------------- NAV BAR  ---------------------------------------------------//
     //
 
@@ -452,6 +459,12 @@ function AppState(props) {
                 tripData,
                 setTripData,
                 getTripData,
+                diaryLocation,
+                setDiaryLocation,
+                currentTripId,
+                setCurrentTripId,
+                cancelDiaryCreation,
+                setCancelDiaryCreation,
             }}
         >
             {props.children}

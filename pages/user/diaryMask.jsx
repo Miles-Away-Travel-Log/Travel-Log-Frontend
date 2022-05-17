@@ -3,9 +3,20 @@ import { useState } from "react";
 import Axios from "axios";
 import Image from "next/image";
 import Cookies from "js-cookie";
+import { useAppData } from "../../Context/DataStorage.js";
+import { TailSpin } from "react-loader-spinner";
 
 export default function DiaryMask() {
     const router = useRouter();
+    const {
+        user,
+        diaryLocation,
+        setDiaryLocation,
+        currentTripId,
+        setCurrentTripId,
+        cancelDiaryCreation,
+        setCancelDiaryCreation,
+    } = useAppData();
 
     const [textData, setTextData] = useState("");
     const [date, setDate] = useState("");
@@ -47,9 +58,16 @@ export default function DiaryMask() {
         }
     }
 
+    function cancelForm(e) {
+        e.preventDefault();
+        setCancelDiaryCreation({ id: diaryLocation.id });
+        setDiaryLocation(false);
+        setCurrentTripId(false);
+        router.replace(`/user/${user.userName}`);
+    }
+
     async function uploadDiaryEntry(e) {
         e.preventDefault();
-
         const rawResponse = await fetch(
             process.env.NEXT_PUBLIC_FETCH_URL_DIARY,
             {
@@ -60,96 +78,130 @@ export default function DiaryMask() {
                     Authorization: `Bearer ${Cookies.get("token")}`,
                 },
                 body: JSON.stringify({
-                    author: author,
+                    author: user.id,
+                    authorName: user.userName,
                     diaryName: diaryName,
                     date: date,
                     description: textData,
                     visible: false,
                     images: imagesFromCloud,
                     titleImage: titleImageFromCloud,
-                    home: {
-                        longitude: -0.091998,
-                        latitude: 51.515618,
-                        city: "London",
-                        country: "United Kingdom",
+                    location: {
+                        longitude: diaryLocation.longitude,
+                        latitude: diaryLocation.latitude,
+                        city: diaryLocation.city,
+                        country: diaryLocation.country,
                     },
+                    trip: currentTripId,
+                    pointId: diaryLocation.id,
                 }),
             }
         );
+        setCurrentTripId(false);
+        router.replace(`/user/setTripRoute`);
     }
 
     return (
         <div className="bg-[url('../public/images/images-diary/dariusz-sankowski-3OiYMgDKJ6k-unsplash.jpg')] bg-cover min-h-screen flex flex-col">
-            <form onSubmit={uploadDiaryEntry}>
-                <div className="flex flex-col items-center">
-                    <h3 className="text-white mt-3">CREATE YOUR DIARY ENTRY</h3>
+            {!user.userName && !diaryLocation && (
+                <div className="w-screen h-screen grid place-content-center content-center">
+                    <TailSpin color="#00BFFF" height={80} width={80} />
+                </div>
+            )}
+            {user.userName && diaryLocation && (
+                <form onSubmit={uploadDiaryEntry}>
+                    <div className="flex flex-col items-center">
+                        <h3 className="text-white mt-3">
+                            CREATE YOUR DIARY ENTRY
+                        </h3>
 
-                    <div className="flex w-1/2 mt-3">
-                        <div className="flex w-2/3 flex-wrap">
-                            <label className="text-white">
-                                AUTHOR
-                                <input
-                                    type="text"
-                                    className="block border border-grey-light w-1/2 rounded-lg mb-1 text-black"
-                                    name="userName"
-                                    placeholder="user"
-                                    onChange={(e) => setAuthor(e.target.value)}
-                                />
-                            </label>
-                            <label className="text-white">
-                                TITLE
-                                <input
-                                    type="text"
-                                    className="block border border-grey-light w-1/2 rounded-lg mb-1 text-black"
-                                    name="title"
-                                    placeholder="title"
-                                    onChange={(e) =>
-                                        setDiaryName(e.target.value)
-                                    }
-                                />
-                            </label>
-                            <label className="text-white">
-                                DATE
-                                <input
+                        <div className="flex w-1/2 mt-3">
+                            <div className="flex w-2/3 flex-wrap">
+                                <label className="text-white">
+                                    AUTHOR
+                                    <input
+                                        type="text"
+                                        className="block border border-grey-light w-1/2 rounded-lg mb-1 text-black"
+                                        name="author"
+                                        // placeholder="user"
+                                        // onChange={(e) =>
+                                        //     setAuthor(e.target.value)
+                                        // }
+                                        value={user.userName}
+                                        disabled
+                                    />
+                                </label>
+                                <label className="text-white">
+                                    TITLE
+                                    <input
+                                        type="text"
+                                        className="block border border-grey-light w-1/2 rounded-lg mb-1 text-black"
+                                        name="title"
+                                        placeholder="title"
+                                        onChange={(e) =>
+                                            setDiaryName(e.target.value)
+                                        }
+                                    />
+                                </label>
+                                <label className="text-white">
+                                    DATE
+                                    {/* <input
                                     type="text"
                                     className="block border border-grey-light w-1/2 rounded-lg mb-1 text-black"
                                     name="date"
                                     placeholder="day"
                                     value={date}
                                     onChange={(e) => setDate(e.target.value)}
-                                />
-                            </label>
+                                /> */}
+                                    <input
+                                        type="date"
+                                        name="date"
+                                        value={date}
+                                        onChange={(e) =>
+                                            setDate(e.target.value)
+                                        }
+                                        className="block border border-grey-light rounded-lg mb-1 text-black w-5/5"
+                                    />
+                                </label>
+                            </div>
+                            <div className="flex w-1/3 ">
+                                <label className="text-white flex flex-col items-end">
+                                    LOCATION
+                                    <input
+                                        type="text"
+                                        className="block border border-grey-light w-1/2 rounded-lg mb-1 text-black"
+                                        name="city"
+                                        disabled
+                                        value={
+                                            diaryLocation
+                                                ? diaryLocation.city
+                                                : "London"
+                                        }
+                                    />
+                                    <input
+                                        type="text"
+                                        className="block border border-grey-light w-1/2 rounded-lg mb-1 text-black"
+                                        name="country"
+                                        disabled
+                                        value={
+                                            diaryLocation
+                                                ? diaryLocation.country
+                                                : "United Kingdom"
+                                        }
+                                    />
+                                </label>
+                            </div>
                         </div>
-                        <div className="flex w-1/3 ">
-                            <label className="text-white flex flex-col items-end">
-                                LOCATION
-                                <input
-                                    type="text"
-                                    className="block border border-grey-light w-1/2 rounded-lg mb-1 text-black"
-                                    name="location"
-                                    placeholder="location"
-                                    // value=""
-                                />
-                                <input
-                                    type="text"
-                                    className="block border border-grey-light w-1/2 rounded-lg mb-1 text-black"
-                                    name="location"
-                                    placeholder="location"
-                                    // value=""
-                                />
-                            </label>
-                        </div>
-                    </div>
 
-                    <div className="rounded-xl shadow-xl bg-gray-50 w-1/2 mt-3 mb-3">
-                        <div className="m-4">
-                            <label className="inline-block mb-2 text-gray-500">
-                                UPLOAD TITLE-IMAGE(jpg,png,svg,jpeg)
-                            </label>
-                            <div className="flex items-center justify-center w-full">
-                                <label className="flex flex-col w-full h-32 border-4 border-dashed hover:bg-gray-100 hover:border-gray-300">
-                                    <div className="flex flex-col items-center justify-center">
-                                        {/* {titleImageUrl ? (
+                        <div className="rounded-xl shadow-xl bg-gray-50 w-1/2 mt-3 mb-3">
+                            <div className="m-4">
+                                <label className="inline-block mb-2 text-gray-500">
+                                    UPLOAD TITLE-IMAGE(jpg,png,svg,jpeg)
+                                </label>
+                                <div className="flex items-center justify-center w-full">
+                                    <label className="flex flex-col w-full h-32 border-4 border-dashed hover:bg-gray-100 hover:border-gray-300">
+                                        <div className="flex flex-col items-center justify-center">
+                                            {/* {titleImageUrl ? (
                                             <Image
                                                 className="m-3 rounded-lg bg-cover"
                                                 src={titleImageUrl}
@@ -172,80 +224,81 @@ export default function DiaryMask() {
                                                 />
                                             </svg>
                                         )} */}
-                                        <svg
-                                            xmlns="http://www.w3.org/2000/svg"
-                                            className="w-12 h-12 text-gray-400 group-hover:text-gray-600"
-                                            viewBox="0 0 20 20"
-                                            fill="currentColor"
-                                            // onClick={uploadImage()}
-                                        >
-                                            <path
-                                                fillRule="evenodd"
-                                                d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z"
-                                                clipRule="evenodd"
-                                            />
-                                        </svg>
-                                    </div>
-                                    <input
-                                        type="file"
-                                        className="opacity-0"
-                                        onChange={getTitleImageFromCloud}
-                                    />
-                                </label>
+                                            <svg
+                                                xmlns="http://www.w3.org/2000/svg"
+                                                className="w-12 h-12 text-gray-400 group-hover:text-gray-600"
+                                                viewBox="0 0 20 20"
+                                                fill="currentColor"
+                                                // onClick={uploadImage()}
+                                            >
+                                                <path
+                                                    fillRule="evenodd"
+                                                    d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z"
+                                                    clipRule="evenodd"
+                                                />
+                                            </svg>
+                                        </div>
+                                        <input
+                                            type="file"
+                                            className="opacity-0"
+                                            onChange={getTitleImageFromCloud}
+                                        />
+                                    </label>
+                                </div>
                             </div>
                         </div>
-                    </div>
 
-                    <label className="block text-left w-1/2 mb-3">
-                        <span className="text-white">TEXTAREA</span>
-                        <textarea
-                            className="form-textarea mt-1 block w-full rounded-lg p-2 text-black"
-                            rows="10"
-                            placeholder="Enter your story."
-                            // value={entryFormValues.description}
-                            onChange={(e) => setTextData(e.target.value)}
-                        ></textarea>
-                    </label>
-                    <div className="flex flex-wrap justify-center">
-                        <div
-                            action="/file-upload"
-                            className="dropzone border-white solid-2 text-white flex flex-col items-center"
-                        >
-                            <span className="text-white">IMAGES UPLOADER</span>
-                            <div className="fallback hover:bg-[#942928]">
-                                <input
-                                    name="file"
-                                    type="file"
-                                    multiple
-                                    onChange={getImagesFromCloud}
-                                />
-                            </div>
-                            {/* <div className="dz-message" data-dz-message>
+                        <label className="block text-left w-1/2 mb-3">
+                            <span className="text-white">TEXTAREA</span>
+                            <textarea
+                                className="form-textarea mt-1 block w-full rounded-lg p-2 text-black"
+                                rows="10"
+                                placeholder="Enter your story."
+                                // value={entryFormValues.description}
+                                onChange={(e) => setTextData(e.target.value)}
+                            ></textarea>
+                        </label>
+                        <div className="flex flex-wrap justify-center">
+                            <div
+                                action="/file-upload"
+                                className="dropzone border-white solid-2 text-white flex flex-col items-center"
+                            >
+                                <span className="text-white">
+                                    IMAGES UPLOADER
+                                </span>
+                                <div className="fallback hover:bg-[#942928]">
+                                    <input
+                                        name="file"
+                                        type="file"
+                                        multiple
+                                        onChange={getImagesFromCloud}
+                                    />
+                                </div>
+                                {/* <div className="dz-message" data-dz-message>
                         <div className="text-lg font-medium">
                             Drop files here or click to upload.
                         </div>
                     </div> */}
-                        </div>
-                        <div className="flex flex-wrap">
-                            <button
-                                type="submit"
-                                className="p-3 text-center rounded-full bg-[#90A5A9] text-white hover:bg-[#C4C4C4] focus:outline-none my-1"
-                            >
-                                Create
-                            </button>
-                            <button
-                                type="submit"
-                                onClick={() =>
-                                    router.replace(`/user/${user.userName}`)
-                                }
-                                className="pl-5 pr-5 ml-3 text-center rounded-full bg-[#90A5A9] text-white hover:bg-[#C4C4C4] focus:outline-none my-1"
-                            >
-                                Back
-                            </button>
+                            </div>
+                            <div className="flex flex-wrap">
+                                <button
+                                    type="submit"
+                                    className="p-3 text-center rounded-full bg-[#90A5A9] text-white hover:bg-[#C4C4C4] focus:outline-none my-1"
+                                >
+                                    Create
+                                </button>
+                                <button
+                                    type="submit"
+                                    onClick={(e) => cancelForm(e)}
+                                    className="pl-5 pr-5 ml-3 text-center rounded-full bg-[#90A5A9] text-white hover:bg-[#C4C4C4] focus:outline-none my-1"
+                                >
+                                    Cancel
+                                </button>
+                            </div>
                         </div>
                     </div>
-                </div>
-            </form>
+                </form>
+            )}
         </div>
     );
 }
