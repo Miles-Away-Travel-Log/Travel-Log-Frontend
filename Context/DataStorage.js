@@ -121,6 +121,13 @@ function AppState(props) {
     const [inviteFriendsVisibility, setInviteFriendsVisibility] =
         useState(false);
 
+    //-------------------------------------- DIARY  -----------------------------------------------------//
+    //
+
+    const [diaryLocation, setDiaryLocation] = useState(false);
+    const [currentTripId, setCurrentTripId] = useState(null);
+    const [cancelDiaryCreation, setCancelDiaryCreation] = useState(false);
+
     //-------------------------------------- NAV BAR  ---------------------------------------------------//
     //
 
@@ -418,6 +425,12 @@ function AppState(props) {
                 setInviteFriends,
                 inviteFriendsVisibility,
                 setInviteFriendsVisibility,
+                diaryLocation,
+                setDiaryLocation,
+                currentTripId,
+                setCurrentTripId,
+                cancelDiaryCreation,
+                setCancelDiaryCreation,
             }}
         >
             {props.children}

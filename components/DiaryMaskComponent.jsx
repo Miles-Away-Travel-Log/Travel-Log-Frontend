@@ -3,10 +3,10 @@ import { useState } from "react";
 import Axios from "axios";
 import Image from "next/image";
 import Cookies from "js-cookie";
-import { useAppData } from "../../Context/DataStorage.js";
+import { useAppData } from "../Context/DataStorage.js";
 import { TailSpin } from "react-loader-spinner";
 
-export default function DiaryMask() {
+export default function DiaryMaskComponent() {
     const router = useRouter();
     const {
         user,
@@ -101,7 +101,7 @@ export default function DiaryMask() {
     }
 
     return (
-        <div className="bg-[url('../public/images/images-diary/dariusz-sankowski-3OiYMgDKJ6k-unsplash.jpg')] bg-cover min-h-screen flex flex-col">
+        <div className="bg-[url('../public/images/images-diary/dariusz-sankowski-3OiYMgDKJ6k-unsplash.jpg')] bg-cover bg-center min-h-screen flex flex-col col-span-1">
             {!user.userName && !diaryLocation && (
                 <div className="w-screen h-screen grid place-content-center content-center">
                     <TailSpin color="#00BFFF" height={80} width={80} />
