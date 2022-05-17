@@ -79,6 +79,7 @@ export default function DiaryMask() {
                 },
                 body: JSON.stringify({
                     author: user.id,
+                    authorName: user.userName,
                     diaryName: diaryName,
                     date: date,
                     description: textData,
