@@ -19,6 +19,25 @@
         display: none;
     }
 
+    .trips-child-color:nth-child(6n + 1) {
+        background-color: rgb(190 18 60);
+    }
+    .trips-child-color:nth-child(6n + 2) {
+        background-color: rgb(101 163 13);
+    }
+    .trips-child-color:nth-child(6n + 3) {
+        background-color: rgb(190 24 93);
+    }
+    .trips-child-color:nth-child(6n + 4) {
+        background-color: rgb(192 38 211);
+    }
+    .trips-child-color:nth-child(6n + 5) {
+        background-color: rgb(37 99 235);
+    }
+    .trips-child-color:nth-child(6n + 6) {
+        background-color: rgb(180 83 9);
+    }
+
     @media print {
         #content-pdf {
             width: 50%;
