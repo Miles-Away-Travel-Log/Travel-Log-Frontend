@@ -6,10 +6,10 @@ import { CSVLink } from "react-csv";
 import { useAppData } from "../Context/DataStorage.js";
 import { RiDeleteBinLine } from "react-icons/ri";
 
-function ListIncomeExpense({ budgetItems }) {
+function ListIncomeExpense({ budgetItems, tripID }) {
     const router = useRouter();
 
-    const { userId, deleteOneItem } = useAppData();
+    const { userId, deleteOneItem, setIsActivePageBudget } = useAppData();
 
     const [showDropdown, setShowDropdown] = useState(false);
 
@@ -27,7 +27,7 @@ function ListIncomeExpense({ budgetItems }) {
     async function exportToPDF() {
         try {
             const fetchPDFFromServer = await fetch(
-                process.env.NEXT_PUBLIC_FETCH_URL_PDF + `${userId}`
+                process.env.NEXT_PUBLIC_FETCH_URL_PDF + tripID
             );
             if (fetchPDFFromServer.status === 200) {
                 const pdf = await fetchPDFFromServer.blob();
@@ -149,13 +149,13 @@ function ListIncomeExpense({ budgetItems }) {
         <div className="flex flex-col items-center">
             <button
                 className="m-7 bg-[#90A5A9] text-white  border border-solid shadow rounded-full w-[200px] h-[50px]"
-                onClick={backToBudget}
+                onClick={() => setIsActivePageBudget("budget")}
             >
                 Back to Budget
             </button>
             <div className="flex justify-center w-full pt-16">
                 <div
-                    className="bg-white mb-9 rounded-lg w-3/4 lg:w-1/2 xl:w-1/3 p-4 border border-[#C4C4C4]"
+                    className="mb-9 rounded-lg w-3/4 lg:w-1/2 xl:w-1/3 p-4 border border-[#C4C4C4]"
                     id="content-pdf"
                 >
                     {createItem()}

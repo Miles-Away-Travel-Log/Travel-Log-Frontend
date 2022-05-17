@@ -15,17 +15,17 @@ ChartJS.register(ArcElement, Tooltip, Legend, ChartDataLabels);
 defaults.plugins.tooltip.enabled = true;
 
 function PieChart() {
-    const { budgetItems, seedMoney } = useAppData();
+    const { tripBudget, tripSeedMoney } = useAppData();
 
     // Alle Kategorien aus dem BudgetItem Array werden in ein neues Array gespeichert
-    const listCategory = budgetItems.map((item) => item.category);
+    const listCategory = tripBudget.map((item) => item.category);
 
     // listCategory wird in ein neues Array gespeichert, welches nur die Kategorien enthält, die nicht doppelt vorkommen
     const labels = [...new Set(listCategory)];
 
     // Für jede Kategorie wird die Gesamtsumme berechnet und in ein neues Array gespeichert
     const sumIncomeExpensePerCategory = labels.map((label) => {
-        const filter_sum = budgetItems
+        const filter_sum = tripBudget
             .filter((item) => item.category === label)
             .reduce((acc, item) => acc + item.value, 0);
         return [label, filter_sum];
@@ -36,8 +36,8 @@ function PieChart() {
 
     // Hier wird das vorhandene Budget berechnet
     const availableMoney =
-        seedMoney.length != 0
-            ? seedMoney[0].total -
+        tripSeedMoney.length != 0
+            ? tripSeedMoney[0].total -
               listValue.reduce((acc, item) => acc + item, 0)
             : 0;
 

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
     Chart as ChartJS,
     CategoryScale,
@@ -23,8 +23,7 @@ ChartJS.register(
 );
 
 function BarChart() {
-    const { budgetItems } = useAppData();
-
+    const { tripBudget } = useAppData();
     const options = {
         responsive: true,
         plugins: {
@@ -52,14 +51,14 @@ function BarChart() {
     };
 
     // Alle Daten (Datum) aus dem BudgetItem Array werden in ein neues Array gespeichert
-    const listDates = budgetItems.map((item) => item.date);
+    const listDates = tripBudget.map((item) => item.date);
 
     // listDates wird in ein neues Array gespeichert, welches nur die Daten enthält, die nicht doppelt vorkommen
     const labels = [...new Set(listDates)];
 
     // Für jedes Datum wird die Summe des Einkommens und die Summe der Ausgaben berechnet und in ein neues Array gespeichert
     const totalIncomeExpensePerDate = labels.map((label) => {
-        const listIncomeExpenseForLabel = budgetItems.filter(
+        const listIncomeExpenseForLabel = tripBudget.filter(
             (item) => item.date === label
         );
         const sumIncome = listIncomeExpenseForLabel

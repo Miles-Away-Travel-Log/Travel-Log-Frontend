@@ -4,10 +4,10 @@ import { BsArrowDownCircle } from "react-icons/bs";
 import { BsArrowUpCircle } from "react-icons/bs";
 
 function BalanceSheet() {
-    const { budgetItems, seedMoney, homeCurrency } = useAppData();
+    const { tripSeedMoney, homeCurrency, tripBudget } = useAppData();
 
-    const listIncome = budgetItems.filter((item) => item.type === "income");
-    const listExpense = budgetItems.filter((item) => item.type === "expense");
+    const listIncome = tripBudget.filter((item) => item.type === "income");
+    const listExpense = tripBudget.filter((item) => item.type === "expense");
 
     const sumIncome = listIncome.reduce((acc, item) => {
         acc += item.value;
@@ -20,13 +20,13 @@ function BalanceSheet() {
     }, 0);
 
     const balance =
-        (seedMoney.length !== 0 ? seedMoney[0].total : 0) +
+        (tripSeedMoney.length !== 0 ? tripSeedMoney[0].total : 0) +
         sumIncome -
         sumExpense;
 
     return (
-        <div className="flex justify-center bg-white w-full mt-6 p-2">
-            <div className="bg-white rounded-full w-3/4 lg:w-1/2 xl:w-1/3 p-4 shadow border-double border-4 border-[#90A5A9]">
+        <div className="flex justify-center w-[375px] lg:w-full mt-6 p-2 ">
+            <div className="rounded-full w-5/6 lg:w-1/2 xl:w-1/3 p-4 shadow border-double border-4 border-[#90A5A9]">
                 <div>
                     <span className="ml-6 relative inline-block  uppercase font-medium tracking-widest text-[#C4C4C4]">
                         {new Date().toLocaleDateString()}
@@ -39,7 +39,7 @@ function BalanceSheet() {
                                     : "w-9/12 text-[#942928]"
                             }
                         >
-                            <span className=" ml-5 text-2xl font-semibold block ">
+                            <span className=" ml-5 text-base lg:text-2xl font-semibold block w-[200px] lg:w-full">
                                 TOTAL: {balance} {homeCurrency}
                             </span>
                         </div>

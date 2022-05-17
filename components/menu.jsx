@@ -15,9 +15,11 @@ import { GrLinkedinOption, GrInstagram } from "react-icons/gr";
 import { FaXing } from "react-icons/fa";
 import { MdFoodBank } from "react-icons/md";
 import { TiWeatherStormy } from "react-icons/ti";
-import {GiNotebook} from "react-icons/gi";
-import {HiMenu} from "react-icons/hi";
-
+import { GiNotebook } from "react-icons/gi";
+import { HiMenu } from "react-icons/hi";
+import { GiMoneyStack } from "react-icons/gi";
+import { FaUserFriends } from "react-icons/fa";
+import { BiMap } from "react-icons/bi";
 
 export const icons = {
     IoIosArrowForward,
@@ -25,9 +27,8 @@ export const icons = {
     GrLinkedinOption,
     GrInstagram,
     FaXing,
-    FaUserAlt:<FaUserAlt/>,
+    FaUserAlt: <FaUserAlt />,
 };
-
 
 export const clickables = [
     {
@@ -80,10 +81,22 @@ export const clickables = [
     },
     {
         path: "/",
-        icon:<GiNotebook/>,
+        icon: <GiNotebook />,
     },
     {
         path: "/",
-        icon:<HiMenu/>,
+        icon: <HiMenu />,
+    },
+    {
+        path: "/",
+        icon: <GiMoneyStack />,
+    },
+    {
+        path: "/",
+        icon: <FaUserFriends />,
+    },
+    {
+        path: "/",
+        icon: <BiMap />,
     },
 ];

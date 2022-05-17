@@ -4,26 +4,56 @@ import { useState, useEffect } from "react";
 import { createOptionsForUnits } from "./Budget.CreateOptionsForUnits.jsx";
 import { exchangeUnits } from "./Budget.ExchangeUnits.js";
 
-function BudgetIncomeExpense() {
+function BudgetIncomeExpense({ tripID }) {
     const {
         handlePostBudgetItem,
         setIncomeOrExpense,
         incomeOrExpense,
         setCategory,
         homeCurrency,
+        setHomeCurrency,
         category,
         localCurrencyValueInHomeCurrency,
         setLocalCurrencyValueInHomeCurrency,
+        tripSeedMoney,
+        getTripData,
     } = useAppData();
 
-    const [localCurrency, setLocalCurrency] = useState("EUR");
+    useEffect(() => {
+        if (tripSeedMoney.length > 0) {
+            setHomeCurrency(tripSeedMoney[0].currency);
+        }
+    }, []);
+
+    const [localCurrency, setLocalCurrency] = useState(homeCurrency);
     const [localCurrencyValue, setLocalCurrencyValue] = useState(0);
+
+    function submitBudget(e) {
+        e.preventDefault();
+        const budgetItem = {
+            trip: tripID,
+            type: incomeOrExpense,
+            value: localCurrencyValueInHomeCurrency,
+            date: e.target.date.value,
+            category: category,
+            description: e.target.description.value,
+        };
+        handlePostBudgetItem(budgetItem);
+        getTripData(tripID);
+        e.target.date.value = "";
+        e.target.description.value = "";
+        e.target.localcurrency.value = "";
+    }
 
     function handleSelectIncomeExpense(e) {
         setIncomeOrExpense(e.target.value);
     }
     function handleLocalCurrency(e) {
-        setLocalCurrency(e.target.value);
+        if (e.target.value === "currency") {
+            setLocalCurrency(homeCurrency);
+        } else {
+            setLocalCurrency(e.target.value);
+        }
     }
     function handleLocalCurrencyValue(e) {
         setLocalCurrencyValue(e.target.value);
@@ -76,7 +106,7 @@ function BudgetIncomeExpense() {
         <div>
             <form
                 className="flex flex-col w-[375px] p-2"
-                onSubmit={handlePostBudgetItem}
+                onSubmit={submitBudget}
             >
                 <fieldset
                     className={
@@ -128,8 +158,8 @@ function BudgetIncomeExpense() {
                             name="amount"
                             placeholder={
                                 incomeOrExpense === "income"
-                                    ? "Income in EUR"
-                                    : "Expense in EUR"
+                                    ? `Income in ${homeCurrency}`
+                                    : `Expense in ${homeCurrency}`
                             }
                             disabled
                             value={localCurrencyValueInHomeCurrency}

@@ -120,6 +120,10 @@ function AppState(props) {
     const [inviteFriends, setInviteFriends] = useState(false);
     const [inviteFriendsVisibility, setInviteFriendsVisibility] =
         useState(false);
+    const [tripImages, setTripImages] = useState([]);
+    const [tripDiary, setTripDiary] = useState([]);
+    const [tripPeople, setTripPeople] = useState([]);
+    const [tripData, setTripData] = useState({});
 
     //-------------------------------------- NAV BAR  ---------------------------------------------------//
     //
@@ -128,8 +132,9 @@ function AppState(props) {
 
     //-------------------------------------- BUDGET  ---------------------------------------------------//
     //
-
-    const [budgetItems, setBudgetItems] = useState([]);
+    const [isActivePageBudget, setIsActivePageBudget] = useState("budget");
+    const [tripSeedMoney, setTripSeedMoney] = useState([]);
+    const [tripBudget, setTripBudget] = useState([]);
     const [incomeOrExpense, setIncomeOrExpense] = useState("expense");
     const [category, setCategory] = useState("general");
     const [seedMoney, setSeedMoney] = useState("");
@@ -140,18 +145,7 @@ function AppState(props) {
     ] = useState(undefined);
 
     //--------------------------- POST ITEM ----------------------//
-    async function handlePostBudgetItem(e) {
-        e.preventDefault();
-
-        const budgetItem = {
-            type: incomeOrExpense,
-            value: e.target.amount.value,
-            date: e.target.date.value,
-            category: category,
-            description: e.target.description.value,
-            user: Cookies.get("user"),
-        };
-
+    async function handlePostBudgetItem(param) {
         try {
             const response = await fetch(
                 process.env.NEXT_PUBLIC_FETCH_URL_BUDGET,
@@ -162,7 +156,7 @@ function AppState(props) {
                         Accept: "application/json",
                         Authorization: `Bearer ${Cookies.get("token")}`,
                     },
-                    body: JSON.stringify(budgetItem),
+                    body: JSON.stringify(param),
                 }
             );
 
@@ -173,23 +167,12 @@ function AppState(props) {
             console.log(error);
         }
 
-        e.target.date.value = "";
-        e.target.description.value = "";
-        e.target.localcurrency.value = "";
         setLocalCurrencyValueInHomeCurrency(undefined);
     }
 
     //--------------------------- POST SEED MONEY -----------------//
 
-    async function handlePostSeedMoney(e) {
-        e.preventDefault();
-
-        const budgetItem = {
-            total: e.target.seedmoney.value,
-            currency: homeCurrency,
-            user: Cookies.get("user"),
-        };
-
+    async function handlePostSeedMoney(param) {
         try {
             const response = await fetch(
                 process.env.NEXT_PUBLIC_FETCH_URL_SEEDMONEY,
@@ -200,7 +183,7 @@ function AppState(props) {
                         Accept: "application/json",
                         Authorization: `Bearer ${Cookies.get("token")}`,
                     },
-                    body: JSON.stringify(budgetItem),
+                    body: JSON.stringify(param),
                 }
             );
 
@@ -214,12 +197,10 @@ function AppState(props) {
 
     //--------------------------- DELETE SEED MONEY ----------------//
 
-    async function handleDeleteSeedMoney(e) {
-        e.preventDefault();
+    async function handleDeleteSeedMoney(param) {
         try {
             const response = await fetch(
-                process.env.NEXT_PUBLIC_FETCH_URL_SEEDMONEY +
-                    `${seedMoney[0]._id}`,
+                process.env.NEXT_PUBLIC_FETCH_URL_SEEDMONEY + param,
                 {
                     method: "DELETE",
                     headers: {
@@ -261,6 +242,11 @@ function AppState(props) {
         }
     }
 
+    //-------------------------------------- Trips  -----------------------------------------------------//
+    //
+
+    const [userTrips, setUserTrips] = useState([]);
+
     //-------------------------------------- FETCH USER  ------------------------------------------------//
     //
 
@@ -282,13 +268,9 @@ function AppState(props) {
         if (response.status === 200) {
             const data = await response.json();
             setUser(data.user);
-            // setBudgetItems(data.user.budget ? data.user.budget : []);
             setUserId(data.user.id);
-            // setSeedMoney(data.user.seedMoney ? data.user.seedMoney : []);
             setAccountPhoto(data.user.avatar);
-            // setHomeCurrency(
-            //     data.user.seedMoney[0] ? data.user.seedMoney[0].currency : "EUR"
-            // );
+            setUserTrips(data.user.trips);
             setList_Friends_FriendRequests(data.user.friends);
         } else {
             setUser(null);
@@ -345,6 +327,43 @@ function AppState(props) {
 
     const [dataOfOneFriend, setDataOfOneFriend] = useState([]);
 
+    //-------------------------------------- Get Trip Data  ----------------------------------------------//
+    //
+
+    async function getTripData(param) {
+        const header = {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+            Authorization: `Bearer ${Cookies.get("token")}`,
+        };
+
+        const rawResponse = await fetch(
+            process.env.NEXT_PUBLIC_FETCH_URL_TRIP + `${param}`,
+            {
+                method: "GET",
+                headers: header,
+            }
+        );
+        const data = await rawResponse.json();
+
+        const getImages = data.trip.diary.map((diary) => {
+            return diary.images;
+        });
+
+        setTripData(data.trip);
+        setTripSeedMoney(data.trip.seedMoney);
+        setTripDiary(data.trip.diary);
+        setTripBudget(data.trip.budget);
+        setTripImages(getImages);
+        setTripPeople(data.trip.participants);
+
+        const getPhotos = data.trip.diary.map((diary) => {
+            return diary.images;
+        });
+
+        setTripImages(getPhotos);
+    }
+
     //-------------------------------------- UseEffect ---------------------------------------------------//
     //
 
@@ -374,7 +393,6 @@ function AppState(props) {
                 setUserId,
                 userId,
                 handlePostBudgetItem,
-                budgetItems,
                 user,
                 setUser,
                 setIncomeOrExpense,
@@ -402,7 +420,6 @@ function AppState(props) {
                 setNewHome,
                 defaultMapStyle,
                 setDefaultMapStyle,
-                setBudgetItems,
                 datePickerVisibility,
                 setDatePickerVisibility,
                 buttonIndex,
@@ -418,6 +435,23 @@ function AppState(props) {
                 setInviteFriends,
                 inviteFriendsVisibility,
                 setInviteFriendsVisibility,
+                userTrips,
+                setUserTrips,
+                tripImages,
+                setTripImages,
+                tripDiary,
+                setTripDiary,
+                tripSeedMoney,
+                setTripSeedMoney,
+                tripPeople,
+                setTripPeople,
+                tripBudget,
+                setTripBudget,
+                isActivePageBudget,
+                setIsActivePageBudget,
+                tripData,
+                setTripData,
+                getTripData,
             }}
         >
             {props.children}

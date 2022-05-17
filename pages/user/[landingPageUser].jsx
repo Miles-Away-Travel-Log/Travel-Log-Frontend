@@ -119,27 +119,41 @@ export default function LandingPageUser() {
                                 home
                             </li>
                         ) : null}
+                        <li>
+                            <p
+                                onClick={() => router.replace("/weather")}
+                                className="block py-2 px-4 text-sm text-[#942928] hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white cursor-pointer"
+                            >
+                                Weather
+                            </p>
+                        </li>
 
                         {user.userName === userFromRouterPath ? (
                             <ul className="cursor-pointer">
-                                <li>
-                                    <p
-                                        onClick={() =>
-                                            router.replace("/user/friends")
-                                        }
-                                        className="block py-2 px-4 text-sm text-[#942928] hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
-                                    >
-                                        Friends
-                                    </p>
+                                <li
+                                    className="block py-2 px-4 text-sm text-[#942928] hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
+                                    onClick={() =>
+                                        router.replace("/user/trips")
+                                    }
+                                >
+                                    Trips
                                 </li>
-                                <li>
+                                <li
+                                    onClick={() =>
+                                        router.replace("/user/friends")
+                                    }
+                                    className="block py-2 px-4 text-sm text-[#942928] hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
+                                >
+                                    Friends
+                                </li>
+                                {/*       <li>
                                     <a
                                         href="#"
                                         className="block py-2 px-4 text-sm text-[#90A5A9] hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
                                     >
                                         Export Data
                                     </a>
-                                </li>
+                                </li> */}
                                 <li>
                                     <p
                                         onClick={deleteAccount}
@@ -150,6 +164,7 @@ export default function LandingPageUser() {
                                 </li>
                             </ul>
                         ) : null}
+
                         <li>
                             <p
                                 onClick={logout}
