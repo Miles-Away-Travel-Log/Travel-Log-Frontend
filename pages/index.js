@@ -2,9 +2,17 @@ import styles from "../styles/Home.module.css";
 import { useRouter } from "next/router";
 import { useAppData } from "../Context/DataStorage.js";
 import Cookies from "js-cookie";
+import { useEffect, useState } from "react";
 
 export default function Home() {
     const router = useRouter();
+    const [isCookie, setIsCookie] = useState(false);
+
+    useEffect(() => {
+        if (Cookies.get("token")) {
+            setIsCookie(true);
+        }
+    }, []);
 
     const { user } = useAppData();
 
@@ -27,7 +35,7 @@ export default function Home() {
                 </div>
             </div>
             <div className="bg-[#c4c4c4] text-white m-3 rounded-lg h-min-screen">
-                <div>
+                {/* <div> */}
                     <h1 className="text-6xl text-center mt-3 pt-12">
                         WELCOME TO MILES AWAY
                     </h1>
@@ -43,13 +51,13 @@ export default function Home() {
                             experiences.
                         </div>
                     </div>
-                </div>
+                {/* </div> */}
                 <div className={styles.landingpageContainerGlobe}>
                     <div className={styles.landingpageGlobe}>
                         <img src="./images/images-landingpage/logo.svg" />
                     </div>
                 </div>
-                {!Cookies.get("token") ? (
+                {!isCookie ? (
                     <div>
                         <div className={styles.landingpageContainerButton}>
                             <button

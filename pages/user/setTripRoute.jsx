@@ -434,7 +434,13 @@ function SetTripRoute() {
 
     return (
         // <div className="h-screen w-screen">
-        <div className={tripSidebar ? "h-screen w-screen grid grid-cols-3" : "h-screen w-screen"}>
+        <div
+            className={
+                tripSidebar
+                    ? "h-screen w-screen grid grid-cols-3"
+                    : "h-screen w-screen"
+            }
+        >
             {!user.userName && !tripData && (
                 <div className="w-screen h-screen grid place-content-center content-center">
                     <TailSpin color="#00BFFF" height={80} width={80} />
@@ -442,7 +448,9 @@ function SetTripRoute() {
             )}
             {user.userName && tripData && (
                 // <div className="w-screen h-screen">
-                <div className={ tripSidebar ? "col-span-2" : "w-screen h-screen"}>
+                <div
+                    className={tripSidebar ? "col-span-2" : "w-screen h-screen"}
+                >
                     <div
                         ref={geocoderContainerRef}
                         style={{
@@ -594,7 +602,7 @@ function SetTripRoute() {
                         <div className="absolute top-0 left-0 right-0 w-auto font-bold text-base">
                             <div className="bg-gray-500/[.65] flex justify-center">
                                 <button
-                                    className="bg-slate-500 rounded-md py-1 px-3 font-bold"
+                                    className="bg-blue-500 rounded-md py-1 px-3 ml-4 font-bold"
                                     onClick={() => (
                                         setDragAndDrop(false),
                                         setDeleteClick(false),
@@ -603,10 +611,10 @@ function SetTripRoute() {
                                 >
                                     Click to Add Location
                                 </button>
-                                <span className="ml-4  my-auto">
+                                {/* <span className="ml-4  my-auto">
                                     Active: {active.toString()}
-                                </span>
-                                <button
+                                </span> */}
+                                {/* <button
                                     className="bg-blue-500 rounded-md py-1 px-3 ml-4 font-bold"
                                     onClick={() => (
                                         setActive(false),
@@ -614,10 +622,10 @@ function SetTripRoute() {
                                     )}
                                 >
                                     Drag & Drop
-                                </button>
-                                <span className="ml-4 my-auto">
+                                </button> */}
+                                {/* <span className="ml-4 my-auto">
                                     Drag & Drop: {dragAndDrop.toString()}
-                                </span>
+                                </span> */}
                                 <button
                                     className="bg-purple-500 rounded-md py-1 px-3 ml-4 font-bold"
                                     onClick={() => (
@@ -628,9 +636,21 @@ function SetTripRoute() {
                                 >
                                     Delete Point
                                 </button>
-                                <span className="ml-4 my-auto">
+                                {/* <span className="ml-4 my-auto">
                                     Delete: {deleteClick.toString()}
-                                </span>
+                                </span> */}
+
+                                <button
+                                    className="bg-green-500 rounded-md py-1 px-3 ml-4 font-bold"
+                                    onClick={() => {
+                                        setActive(false);
+                                        setDragAndDrop(false);
+                                        setDeleteClick(false);
+                                        setCreateDiary(true);
+                                    }}
+                                >
+                                    Create Diary
+                                </button>
                                 <button
                                     className="bg-red-500 rounded-md py-1 px-3 ml-4 font-bold"
                                     onClick={() => (
@@ -644,17 +664,6 @@ function SetTripRoute() {
                                     )}
                                 >
                                     RESET
-                                </button>
-                                <button
-                                    className="bg-green-500 rounded-md py-1 px-3 ml-4 font-bold"
-                                    onClick={() => {
-                                        setActive(false);
-                                        setDragAndDrop(false);
-                                        setDeleteClick(false);
-                                        setCreateDiary(true);
-                                    }}
-                                >
-                                    Create Diary
                                 </button>
                                 <button
                                     className="bg-yellow-500 rounded-md py-1 px-3 ml-4 font-bold"
@@ -676,11 +685,12 @@ function SetTripRoute() {
                     </Map>
                 </div>
             )}
-            { tripSidebar && (<DiaryMaskComponent 
-            // className="col-span-2" 
-            />)}
+            {tripSidebar && (
+                <DiaryMaskComponent
+                // className="col-span-2"
+                />
+            )}
         </div>
-        
     );
 }
 
