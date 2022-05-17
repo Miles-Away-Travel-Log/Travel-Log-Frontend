@@ -21,7 +21,7 @@ function Navbar() {
 
     const buttonRefArray = [
         buttonRefUser,
-        buttonRefBudget,
+        // buttonRefBudget,
         buttonRefFriends,
         buttonRefMap,
         buttonRefWeather,
@@ -29,7 +29,7 @@ function Navbar() {
         buttonRefMenu,
     ];
 
-    const marginButtons = buttonWidth / 7;
+    const marginButtons = buttonWidth / 6;
     const buttonContainer = buttonWidth + marginButtons;
 
     useEffect(() => {
@@ -44,20 +44,20 @@ function Navbar() {
         switch ("routerPathnaem:",router.pathname) {
             case `/user/${user.userName}`:
                 return setButtonIndex(0);
-            case "/user/budget":
-                return setButtonIndex(1);
+            // case "/user/budget":
+            //     return setButtonIndex(1);
             case "/user/friends":
+                return setButtonIndex(1);
+            case "/user/trips":
                 return setButtonIndex(2);
-            case "/map":
-                return setButtonIndex(3);
             case "/weather":
-                return setButtonIndex(4);
+                return setButtonIndex(3);
             case "/location/[city]":
+                return setButtonIndex(3);
+            case "/user/newTrip":
                 return setButtonIndex(4);
-            case "/user/diary":
-                return setButtonIndex(5);
             case "/dummy":
-                return setButtonIndex(6);
+                return setButtonIndex(5);
             default:
                 return setButtonIndex(0);
         }
@@ -89,7 +89,7 @@ function Navbar() {
                     </div>
                 </button>
 
-                <button
+                {/* <button
                     ref={buttonRefBudget}
                     title="budget"
                     className={
@@ -110,20 +110,20 @@ function Navbar() {
                     >
                         {clickables[0].icon}
                     </div>
-                </button>
+                </button> */}
 
                 <button
                     ref={buttonRefFriends}
                     title="friends"
                     className={
-                        buttonIndex === 2 ? "menu__item active" : "menu__item"
+                        buttonIndex === 1 ? "menu__item active" : "menu__item"
                     }
                     style={{
                         backgroundColor: "#90A5A9",
                         marginRight: marginButtons,
                     }}
                     onClick={() => {
-                        setButtonIndex(2);
+                        setButtonIndex(1);
                         router.replace("/user/friends");
                     }}
                 >
@@ -139,6 +139,27 @@ function Navbar() {
                 <button
                     ref={buttonRefMap}
                     className={
+                        buttonIndex === 2 ? "menu__item active" : "menu__item"
+                    }
+                    style={{
+                        backgroundColor: "#90A5A9",
+                        marginRight: marginButtons,
+                    }}
+                    onClick={() => setButtonIndex(2)}
+                >
+                    <div
+                        className="icon navIcon text-white flex justify-center flex"
+                        viewBox="0 0 24 24"
+                        onClick={() => {setButtonIndex(2);
+                            router.replace("/user/trips")}}
+                    >
+                        {clickables[9].icon}
+                    </div>
+                </button>
+
+                <button
+                    ref={buttonRefWeather}
+                    className={
                         buttonIndex === 3 ? "menu__item active" : "menu__item"
                     }
                     style={{
@@ -150,14 +171,17 @@ function Navbar() {
                     <div
                         className="icon navIcon text-white flex justify-center flex"
                         viewBox="0 0 24 24"
-                        onClick={() => setButtonIndex(3)}
+                        onClick={() => {
+                            setButtonIndex(3);
+                            router.replace("/weather");
+                        }}
                     >
-                        {clickables[9].icon}
+                        {clickables[11].icon}
                     </div>
                 </button>
 
                 <button
-                    ref={buttonRefWeather}
+                    ref={buttonRefDiary}
                     className={
                         buttonIndex === 4 ? "menu__item active" : "menu__item"
                     }
@@ -172,15 +196,15 @@ function Navbar() {
                         viewBox="0 0 24 24"
                         onClick={() => {
                             setButtonIndex(4);
-                            router.replace("/weather");
+                            router.replace("/user/newTrip");
                         }}
                     >
-                        {clickables[11].icon}
+                        {clickables[12].icon}
                     </div>
                 </button>
 
                 <button
-                    ref={buttonRefDiary}
+                    ref={buttonRefMenu}
                     className={
                         buttonIndex === 5 ? "menu__item active" : "menu__item"
                     }
@@ -191,33 +215,10 @@ function Navbar() {
                     onClick={() => setButtonIndex(5)}
                 >
                     <div
-                        className="icon navIcon text-white flex justify-center flex"
-                        viewBox="0 0 24 24"
-                        onClick={() => {
-                            setButtonIndex(5);
-                            router.replace("/user/diary");
-                        }}
-                    >
-                        {clickables[12].icon}
-                    </div>
-                </button>
-
-                <button
-                    ref={buttonRefMenu}
-                    className={
-                        buttonIndex === 6 ? "menu__item active" : "menu__item"
-                    }
-                    style={{
-                        backgroundColor: "#90A5A9",
-                        marginRight: marginButtons,
-                    }}
-                    onClick={() => setButtonIndex(6)}
-                >
-                    <div
                         className="icon navIcon text-white flex justify-center"
                         viewBox="0 0 24 24"
                         onClick={() => {
-                            setButtonIndex(6);
+                            setButtonIndex(5);
                             router.replace("/dummy");
                         }}
                     >
