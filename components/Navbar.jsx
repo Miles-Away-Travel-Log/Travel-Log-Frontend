@@ -54,7 +54,7 @@ function Navbar() {
                 return setButtonIndex(4);
             case "/location/[city]":
                 return setButtonIndex(4);
-            case "/user/diary":
+            case "/user/newTrip":
                 return setButtonIndex(5);
             case "/dummy":
                 return setButtonIndex(6);
@@ -195,7 +195,7 @@ function Navbar() {
                         viewBox="0 0 24 24"
                         onClick={() => {
                             setButtonIndex(5);
-                            router.replace("/user/diary");
+                            router.replace("/user/newTrip");
                         }}
                     >
                         {clickables[12].icon}
