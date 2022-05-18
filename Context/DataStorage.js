@@ -124,6 +124,7 @@ function AppState(props) {
     const [tripDiary, setTripDiary] = useState([]);
     const [tripPeople, setTripPeople] = useState([]);
     const [tripData, setTripData] = useState({});
+    const [tripImage, setTripImage] = useState([]);
 
     //-------------------------------------- DIARY  -----------------------------------------------------//
     //
@@ -465,6 +466,8 @@ function AppState(props) {
                 setCurrentTripId,
                 cancelDiaryCreation,
                 setCancelDiaryCreation,
+                setTripImage,
+                tripImage,
             }}
         >
             {props.children}

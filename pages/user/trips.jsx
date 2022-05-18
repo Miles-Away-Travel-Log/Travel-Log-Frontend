@@ -23,10 +23,14 @@ function Trips() {
                 >
                     <a className="trips-child-color rounded-xl h-62 md:h-96 w-[250px]">
                         <img
-                            src="http://res.cloudinary.com/milesaway/image/upload/v1651238129/quod9hwh5xsu6gdddlre.jpg"
-                            className="rounded-t-xl max-h-44"
+                            src={
+                                trip.tripImage && trip.tripImage.length > 0
+                                    ? trip.tripImage
+                                    : "../../images/images-trip/TripPlaceholder.jpeg"
+                            }
+                            className="rounded-t-xl h-48 object-cover"
                         />
-                        <p className="text-xl md:text-3xl text-gray-50 pt-5 pl-3">
+                        <p className="text-xl md:text-2xl text-gray-50 pt-5 pl-3">
                             {trip.tripName}
                         </p>
                         <p className="text-xs md:text-base font-light text-gray-50 pt-3 pl-3 pb-10">

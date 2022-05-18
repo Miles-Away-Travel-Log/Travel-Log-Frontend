@@ -6,6 +6,7 @@ import { useRouter } from "next/router";
 import { TailSpin } from "react-loader-spinner";
 import Cookies from "js-cookie";
 import InviteFriendToTrip from "../../components/InviteFriendToTrip.jsx";
+import Axios from "axios";
 
 export default function NewTrip() {
     const router = useRouter();
@@ -24,6 +25,8 @@ export default function NewTrip() {
         setInviteFriends,
         inviteFriendsVisibility,
         setInviteFriendsVisibility,
+        setTripImage,
+        tripImage,
     } = useAppData();
 
     const [isSubmit, setIsSubmit] = useState(false);
@@ -41,6 +44,7 @@ export default function NewTrip() {
         endDate: "",
         mapStyle: user.mapStyle,
         startPoint: user.home,
+        tripImage: "",
         visible: "private",
     };
 
@@ -68,6 +72,14 @@ export default function NewTrip() {
     function handleChange(event) {
         const { name, value } = event.target;
         setNewTripData({ ...newTripData, [name]: value });
+    }
+
+    function changeDateFormat(param) {
+        const date = new Date(param);
+        const getYear = date.getFullYear();
+        const getMonth = date.getMonth() + 1;
+        const getDay = date.getDate();
+        return `${getYear}-${getMonth}-${getDay}`;
     }
 
     async function saveTrip(event) {
@@ -98,12 +110,13 @@ export default function NewTrip() {
                         tripName: newTripData.tripName,
                         tripType: newTripData.tripType,
                         description: newTripData.description,
-                        startDate: newTripData.startDate,
-                        endDate: newTripData.endDate,
+                        startDate: changeDateFormat(newTripData.startDate),
+                        endDate: changeDateFormat(newTripData.endDate),
                         mapStyle: mapStyle,
                         startPoint: start,
                         participants: participants,
                         visible: newTripData.visible,
+                        tripImage: tripImage,
                     }),
                 }
             );
@@ -123,6 +136,20 @@ export default function NewTrip() {
                 //console.log("backend error", err);
             }
         }
+    }
+
+    function getImageFromCloud(e) {
+        const file = e.target.files[0];
+        const formDataTitleImage = new FormData();
+        formDataTitleImage.append("file", file);
+        formDataTitleImage.append("upload_preset", "pvsqrbgk");
+
+        Axios.post(
+            "https://api.cloudinary.com/v1_1/milesaway/image/upload",
+            formDataTitleImage
+        ).then((response) => {
+            setTripImage(response.data.url);
+        });
     }
 
     function validate(values) {
@@ -177,6 +204,22 @@ export default function NewTrip() {
                                 <p className="text-sm text-red-600 mb-4">
                                     {isSubmit && errors.tripName}
                                 </p>
+                            </div>
+                            <div
+                                action="/file-upload"
+                                className="mb-4 border-white solid-2 flex flex-col"
+                            >
+                                <span className="px-3 font-bold">
+                                    IMAGES UPLOADER
+                                </span>
+                                <div className="fallback hover:bg-[#942928] px-3 mt-4">
+                                    <input
+                                        name="file"
+                                        type="file"
+                                        multiple
+                                        onChange={getImageFromCloud}
+                                    />
+                                </div>
                             </div>
                             <div className="flex flex-col mb-4">
                                 <label

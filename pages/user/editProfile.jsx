@@ -1,6 +1,4 @@
 import { useRouter } from "next/router";
-import Image from "next/image";
-import avatar from "../../public/images/images-register/avatar.svg";
 import { useAppData } from "../../Context/DataStorage.js";
 import { useEffect, useState } from "react";
 import { ImEyeBlocked, ImEye } from "react-icons/im";
