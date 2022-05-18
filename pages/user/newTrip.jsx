@@ -148,237 +148,328 @@ export default function NewTrip() {
     }
 
     return (
-        <div className="h-screen w-screen container max-w-sm mx-auto flex-1 flex flex-col items-center justify-center px-2 bg-blue-300">
-            {!user.userName && (
-                <div className="w-screen h-screen grid place-content-center content-center">
-                    <TailSpin color="#00BFFF" height={80} width={80} />
-                </div>
-            )}
-            {user.userName && (
-                <div className="h-screen w-screen container max-w-sm mx-auto flex-1 flex flex-col items-center justify-center px-2 bg-blue-300">
-                    <h1 className="text-xl font-bold mb-3">
-                        Create a new trip
-                    </h1>
-                    <form onSubmit={saveTrip}>
-                        <div>
-                            <label htmlFor="tripName">Name of the trip:</label>
-                            <input
-                                type="text"
-                                name="tripName"
-                                className="ml-2"
-                                placeholder={
-                                    newTripData.tripName !== ""
-                                        ? null
-                                        : "Trip Name"
-                                }
-                                value={newTripData.tripName}
-                                onChange={handleChange}
-                            />
-                            <p className="text-sm text-red-600 mb-4">
-                                {isSubmit && errors.tripName}
-                            </p>
-                        </div>
-                        <div>
-                            <label htmlFor="tripType" className="mt-3">
-                                Type of trip
-                            </label>
-                            <select
-                                name="tripType"
-                                onChange={handleChange}
-                                value={newTripData.tripType}
-                            >
-                                <option value="day trip">day trip</option>
-                                <option value="weekend trip">
-                                    weekend trip
-                                </option>
-                                <option value="short trip">short trip</option>
-                                <option value="hiking">hiking</option>
-                                <option value="business trip">
-                                    business trip
-                                </option>
-                                <option value="vacation">vacation</option>
-                                <option value="honeymoon">honeymoon</option>
-                                <option value="sabbatical">sabbatical</option>
-                                <option value="trip around the world">
-                                    trip around the world
-                                </option>
-                            </select>
-                        </div>
-                        <div className="mt-2">
-                            <label htmlFor="description" className="mt-3">
-                                Description
-                            </label>
-                            <textarea
-                                rows="4"
-                                type="text"
-                                name="description"
-                                placeholder="description"
-                                value={newTripData.description}
-                                onChange={handleChange}
-                            />
-                            <p className="text-sm text-red-600 mb-4">
-                                {isSubmit && errors.description}
-                            </p>
-                        </div>
-                        <div className="grid grid-cols-2 gap-4 mt-4">
-                            <input
-                                type="text"
-                                name="startDate"
-                                placeholder="Start Date"
-                                disabled
-                                value={
-                                    newTripData.startDate &&
-                                    newTripData.startDate.getFullYear() +
-                                        "-" +
-                                        (newTripData.startDate.getMonth() + 1) +
-                                        "-" +
-                                        newTripData.startDate.getDate()
-                                }
-                            />
-                            <p className="text-sm text-red-600 mb-4">
-                                {isSubmit && errors.startDate}
-                            </p>
-                            <input
-                                type="text"
-                                name="endDate"
-                                placeholder="End Date"
-                                disabled
-                                value={
-                                    newTripData.endDate &&
-                                    newTripData.endDate.getFullYear() +
-                                        "-" +
-                                        (newTripData.endDate.getMonth() + 1) +
-                                        "-" +
-                                        newTripData.endDate.getDate()
-                                }
-                            />
-                            <p className="text-sm text-red-600 mb-4">
-                                {isSubmit && errors.endDate}
-                            </p>
-
-                            <button
-                                className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded z-0 mt-4"
-                                onClick={() => setDatePickerVisibility(true)}
-                            >
-                                Set Date
-                            </button>
-                            {datePickerVisibility && <DatePicker />}
-                        </div>
-
-                        <div className="mt-4 font-bold">
-                            Set travel map style and starting location
-                        </div>
-
-                        <div className="grid grid-cols-2 gap-4">
-                            <div>MapStyle:</div>
-                            <div>
-                                {defaultMapStyle
-                                    ? defaultMapStyle.name
-                                    : user.mapStyle.name}
-                            </div>
-                            <div className="col-span-2">Start Location:</div>
-                            <div>City:</div>
-                            <div>
-                                {startPoint ? startPoint.city : user.home.city}
-                            </div>
-                            <div>Country:</div>
-                            <div>
-                                {startPoint
-                                    ? startPoint.country
-                                    : user.home.country}
-                            </div>
-                        </div>
-                        <button
-                            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded z-0"
-                            onClick={handleMapStyleSubmit}
-                        >
-                            Set Map Style
-                        </button>
-                        <div className="mt-6">
-                            Privacy Settings - Trip visible for:
-                        </div>
-                        <div className="grid grid-cols-3 gap-4">
-                            <div>
+        <div className="bg-[url('../public/images/images-diary/dariusz-sankowski-3OiYMgDKJ6k-unsplash.jpg')] bg-cover min-h-screen flex flex-col">
+            <div className="h-screen w-screen container max-w-sm mx-auto flex-1 flex flex-col items-center justify-center px-2 bg-[#942928]">
+                {!user.userName && (
+                    <div className="w-screen h-screen grid place-content-center content-center">
+                        <TailSpin color="#00BFFF" height={80} width={80} />
+                    </div>
+                )}
+                {user.userName && (
+                    <div className="h-screen w-screen container max-w-sm mx-auto flex-1 flex flex-col items-center justify-center px-2 bg-[#C4C4C4]">
+                        <h1 className="text-xl font-bold mb-3 mt-4">
+                            Create a new trip
+                        </h1>
+                        <form onSubmit={saveTrip}>
+                            <div className="mt-2 grid grid-cols gap-4 mt-4">
                                 <input
-                                    type="radio"
-                                    name="visible"
-                                    value="private"
-                                    id="private"
+                                    type="text"
+                                    name="tripName"
+                                    className="border rounded py-2 px-3 ml-2"
+                                    placeholder={
+                                        newTripData.tripName !== ""
+                                            ? null
+                                            : "Trip Name"
+                                    }
+                                    value={newTripData.tripName}
                                     onChange={handleChange}
-                                    checked={newTripData.visible === "private"}
                                 />
-                                <label htmlFor="private">Private</label>
+                                <p className="text-sm text-red-600 mb-4">
+                                    {isSubmit && errors.tripName}
+                                </p>
                             </div>
-                            <div>
+                            <div className="flex flex-col mb-4">
+                                <label
+                                    htmlFor="tripType"
+                                    className="mb-2 px-3 font-bold text-sm"
+                                >
+                                    Type of trip
+                                </label>
+                                <select
+                                    name="tripType"
+                                    className="border rounded py-2 px-3 ml-2"
+                                    onChange={handleChange}
+                                    value={newTripData.tripType}
+                                >
+                                    <option value="day trip">day trip</option>
+                                    <option value="weekend trip">
+                                        weekend trip
+                                    </option>
+                                    <option value="short trip">
+                                        short trip
+                                    </option>
+                                    <option value="hiking">hiking</option>
+                                    <option value="business trip">
+                                        business trip
+                                    </option>
+                                    <option value="vacation">vacation</option>
+                                    <option value="honeymoon">honeymoon</option>
+                                    <option value="sabbatical">
+                                        sabbatical
+                                    </option>
+                                    <option value="trip around the world">
+                                        trip around the world
+                                    </option>
+                                </select>
+                            </div>
+                            <div className="mt-2 grid grid-cols gap-4">
+                                <textarea
+                                    rows="4"
+                                    type="text"
+                                    name="description"
+                                    className="border rounded py-2 px-3 ml-2"
+                                    placeholder="description"
+                                    value={newTripData.description}
+                                    onChange={handleChange}
+                                />
+                                <p className="text-sm text-red-600 mb-4">
+                                    {isSubmit && errors.description}
+                                </p>
+                            </div>
+                            <div className="grid grid-cols-4 gap-4">
                                 <input
-                                    type="radio"
-                                    name="visible"
-                                    value="friends"
-                                    id="friends"
-                                    onChange={handleChange}
-                                    checked={newTripData.visible === "friends"}
+                                    type="text"
+                                    name="startDate"
+                                    className="border rounded py-2 px-3 ml-2"
+                                    placeholder="Start Date"
+                                    disabled
+                                    value={
+                                        newTripData.startDate &&
+                                        newTripData.startDate.getFullYear() +
+                                            "-" +
+                                            (newTripData.startDate.getMonth() +
+                                                1) +
+                                            "-" +
+                                            newTripData.startDate.getDate()
+                                    }
                                 />
-                                <label htmlFor="friends">Friends</label>
-                            </div>
-                            <div>
+                                <p className="text-sm text-red-600 mb-4">
+                                    {isSubmit && errors.startDate}
+                                </p>
                                 <input
-                                    type="radio"
-                                    name="visible"
-                                    value="public"
-                                    id="public"
-                                    onChange={handleChange}
-                                    checked={newTripData.visible === "public"}
+                                    type="text"
+                                    name="endDate"
+                                    className="border rounded py-2 px-3 ml-2"
+                                    placeholder="End Date"
+                                    disabled
+                                    value={
+                                        newTripData.endDate &&
+                                        newTripData.endDate.getFullYear() +
+                                            "-" +
+                                            (newTripData.endDate.getMonth() +
+                                                1) +
+                                            "-" +
+                                            newTripData.endDate.getDate()
+                                    }
                                 />
-                                <label htmlFor="public">Public</label>
+                                <p className="text-sm text-red-600 mb-4">
+                                    {isSubmit && errors.endDate}
+                                </p>
+
+                                <button
+                                    className="ml-2 bg-[#942928] hover:bg-gray-300 text-white font-bold py-2 px-4 rounded z-0 mt-4"
+                                    onClick={() =>
+                                        setDatePickerVisibility(true)
+                                    }
+                                >
+                                    Set Date
+                                </button>
+                                {datePickerVisibility && <DatePicker />}
                             </div>
-                        </div>
-                        <div className="mt-6">Invite friends to your trip</div>
-                        <div className="flex justify-around flex-wrap w-[80%]">
-                            {inviteFriends &&
-                                !inviteFriendsVisibility &&
-                                inviteFriends.map(
-                                    (friend) =>
-                                        friend.checked === true && (
-                                            <div
-                                                key={friend.userName}
-                                                className="bg-slate-300 p-1 rounded-full"
-                                            >
-                                                <div>{friend.userName}</div>
-                                            </div>
-                                        )
-                                )}
-                        </div>
-                        <button
-                            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded z-0"
-                            onClick={() => setInviteFriendsVisibility(true)}
-                        >
-                            Invite Friends
-                        </button>
-                        {inviteFriendsVisibility && <InviteFriendToTrip />}
-                        <div className="grid grid-cols-2 gap-4 mt-6">
+
+                            <div className="text-lg mt-8 mb-6 px-2 font-bold text-sm">
+                                Set travel map style and starting location
+                            </div>
+
+                            <div className="ml-2 grid grid-cols-2 gap-4">
+                                <div>MapStyle:</div>
+                                <div>
+                                    {defaultMapStyle
+                                        ? defaultMapStyle.name
+                                        : user.mapStyle.name}
+                                </div>
+                                <div className="col-span-2">
+                                    Start Location:
+                                </div>
+                                <div>City:</div>
+                                <div>
+                                    {startPoint
+                                        ? startPoint.city
+                                        : user.home.city}
+                                </div>
+                                <div>Country:</div>
+                                <div>
+                                    {startPoint
+                                        ? startPoint.country
+                                        : user.home.country}
+                                </div>
+                            </div>
                             <button
-                                type="submit"
-                                className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded z-0"
-                                /* onClick={(e) => saveTrip(e)} */
+                                className="ml-2 mt-4 bg-[#942928] hover:bg-gray-300 text-white font-bold py-2 px-4 rounded z-0"
+                                onClick={handleMapStyleSubmit}
                             >
-                                Save new Trip
+                                Set Map Style
                             </button>
+                            <div className="ml-2 mt-6">
+                                Privacy Settings - Trip visible for:
+                            </div>
+                            {/* ---------------- Custom Radio Buttons ---------------- */}
+                            <div
+                                className="grid w-[40rem] grid-cols-3 space-x-2 rounded-xl bg-gray-300 p-2"
+                                x-data="app"
+                            >
+                                <div>
+                                    <input
+                                        type="radio"
+                                        name="visible"
+                                        value="private"
+                                        id="private"
+                                        className="peer hidden"
+                                        onChange={handleChange}
+                                        checked={
+                                            newTripData.visible === "private"
+                                        }
+                                    />
+                                    <label
+                                        htmlFor="private"
+                                        className="block cursor-pointer select-none rounded-xl p-2 text-center peer-checked:bg-[#942928] peer-checked:font-bold peer-checked:text-white"
+                                    >
+                                        Private
+                                    </label>
+                                </div>
+
+                                <div>
+                                    <input
+                                        type="radio"
+                                        name="visible"
+                                        value="friends"
+                                        id="friends"
+                                        className="peer hidden"
+                                        onChange={handleChange}
+                                        checked={
+                                            newTripData.visible === "friends"
+                                        }
+                                    />
+                                    <label
+                                        htmlFor="friends"
+                                        className="block cursor-pointer select-none rounded-xl p-2 text-center peer-checked:bg-[#942928] peer-checked:font-bold peer-checked:text-white"
+                                    >
+                                        Friends
+                                    </label>
+                                </div>
+
+                                <div>
+                                    <input
+                                        type="radio"
+                                        name="visible"
+                                        value="public"
+                                        id="public"
+                                        className="peer hidden"
+                                        onChange={handleChange}
+                                        checked={
+                                            newTripData.visible === "public"
+                                        }
+                                    />
+                                    <label
+                                        htmlFor="public"
+                                        className="block cursor-pointer select-none rounded-xl p-2 text-center peer-checked:bg-[#942928] peer-checked:font-bold peer-checked:text-white"
+                                    >
+                                        Public
+                                    </label>
+                                </div>
+                            </div>
+                            {/* --------------- Vorhandene Radio Buttons ----------------*/}
+                            {/* <div className="ml-2 mt-4 grid grid-cols-3 gap-4">
+                                <div>
+                                    <input
+                                        type="radio"
+                                        name="visible"
+                                        value="private"
+                                        id="private"
+                                        onChange={handleChange}
+                                        checked={
+                                            newTripData.visible === "private"
+                                        }
+                                    />
+                                    <label htmlFor="private">Private</label>
+                                </div>
+                                <div>
+                                    <input
+                                        type="radio"
+                                        name="visible"
+                                        value="friends"
+                                        id="friends"
+                                        onChange={handleChange}
+                                        checked={
+                                            newTripData.visible === "friends"
+                                        }
+                                    />
+                                    <label htmlFor="friends">Friends</label>
+                                </div>
+                                <div>
+                                    <input
+                                        type="radio"
+                                        name="visible"
+                                        value="public"
+                                        id="public"
+                                        onChange={handleChange}
+                                        checked={
+                                            newTripData.visible === "public"
+                                        }
+                                    />
+                                    <label htmlFor="public">Public</label>
+                                </div>
+                            </div> */}
+                            <div className="ml-2 mt-6 mb-2">
+                                Invite friends to your trip
+                            </div>
+                            <div className="flex justify-around flex-wrap w-[80%]">
+                                {inviteFriends &&
+                                    !inviteFriendsVisibility &&
+                                    inviteFriends.map(
+                                        (friend) =>
+                                            friend.checked === true && (
+                                                <div
+                                                    key={friend.userName}
+                                                    className="bg-slate-300 p-1 rounded-full"
+                                                >
+                                                    <div>{friend.userName}</div>
+                                                </div>
+                                            )
+                                    )}
+                            </div>
                             <button
-                                className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded z-0"
-                                onClick={(e) => (
-                                    e.preventDefault(),
-                                    setStartPoint(false),
-                                    setDefaultMapStyle(false),
-                                    setNewTripData(userInitialValues),
-                                    router.replace(`/user/${user.userName}`)
-                                )}
+                                className="ml-2 mt-2 bg-[#942928] hover:bg-gray-300 text-white font-bold py-2 px-4 rounded z-0"
+                                onClick={() => setInviteFriendsVisibility(true)}
                             >
-                                Cancel
+                                Invite Friends
                             </button>
-                        </div>
-                    </form>
-                </div>
-            )}
+                            {inviteFriendsVisibility && <InviteFriendToTrip />}
+                            <div className="grid grid-cols-2 gap-4 mt-6">
+                                <button
+                                    type="submit"
+                                    className="ml-2 bg-[#942928] hover:bg-gray-300 text-white font-bold py-2 px-4 rounded z-0"
+                                    /* onClick={(e) => saveTrip(e)} */
+                                >
+                                    Save new Trip
+                                </button>
+                                <button
+                                    className="bg-[#90A5A9] hover:bg-gray-300 text-white font-bold py-2 px-4 rounded z-0"
+                                    onClick={(e) => (
+                                        e.preventDefault(),
+                                        setStartPoint(false),
+                                        setDefaultMapStyle(false),
+                                        setNewTripData(userInitialValues),
+                                        router.replace(`/user/${user.userName}`)
+                                    )}
+                                >
+                                    Cancel
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                )}
+            </div>
         </div>
     );
 }
