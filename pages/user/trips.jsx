@@ -1,12 +1,10 @@
 import React from "react";
-import Cookies from "js-cookie";
 import { useAppData } from "../../Context/DataStorage.js";
-import { useEffect, useState } from "react";
-import { useRouter } from "next/router";
+import { useEffect } from "react";
 import Link from "next/link";
+import Navbar from "../../components/Navbar.jsx";
 
 function Trips() {
-    const router = useRouter();
     const { user, userTrips, setUserTrips } = useAppData();
 
     useEffect(() => {
@@ -52,6 +50,9 @@ function Trips() {
             </div>
             <div className="flex flex-wrap justify-center px-18 gap-5 py-4">
                 {createListForTrips()}
+            </div>
+            <div className="fixed bottom-0 left-0 w-full">
+                <Navbar />
             </div>
         </div>
     );

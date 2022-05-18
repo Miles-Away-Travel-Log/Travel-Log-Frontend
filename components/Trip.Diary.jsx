@@ -1,5 +1,4 @@
-import React, { useState } from "react";
-import Cookies from "js-cookie";
+import React from "react";
 
 function TripDiary({ tripDiary }) {
     function showContent() {
