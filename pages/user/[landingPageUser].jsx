@@ -7,6 +7,7 @@ import { useRouter } from "next/router";
 import Cookies from "js-cookie";
 import Image from "next/image";
 import avatar from "../../public/images/images-register/avatar.svg";
+// import { icons, clickables } from "../../components/menu.jsx";
 
 export default function LandingPageUser() {
     const router = useRouter();
@@ -131,12 +132,29 @@ export default function LandingPageUser() {
                         {user.userName === userFromRouterPath ? (
                             <ul className="cursor-pointer">
                                 <li
-                                    className="block py-2 px-4 text-sm text-[#942928] hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
+                                    className="block py-2 px-4 text-sm text-[#942928] hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white flex"
                                     onClick={() =>
                                         router.replace("/user/trips")
                                     }
                                 >
                                     Trips
+                                    {/* <div
+                                        className="ml-3 "
+                                        title="create new trip"
+                                        onClick={() =>
+                                            router.replace("/user/newTrip")
+                                        }
+                                    >
+                                        {clickables[17].icon}
+                                    </div> */}
+                                </li>
+                                <li
+                                    className="block py-2 px-4 text-sm text-[#942928] hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
+                                    onClick={() =>
+                                        router.replace("/user/newTrip")
+                                    }
+                                >
+                                    Create New Trip
                                 </li>
                                 <li
                                     onClick={() =>
