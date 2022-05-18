@@ -138,6 +138,7 @@ function Navbar() {
 
                 <button
                     ref={buttonRefMap}
+                    title="trips"
                     className={
                         buttonIndex === 2 ? "menu__item active" : "menu__item"
                     }
@@ -159,6 +160,7 @@ function Navbar() {
 
                 <button
                     ref={buttonRefWeather}
+                    title="weather"
                     className={
                         buttonIndex === 3 ? "menu__item active" : "menu__item"
                     }
@@ -182,6 +184,7 @@ function Navbar() {
 
                 <button
                     ref={buttonRefDiary}
+                    title="create new trip"
                     className={
                         buttonIndex === 4 ? "menu__item active" : "menu__item"
                     }
@@ -205,6 +208,7 @@ function Navbar() {
 
                 <button
                     ref={buttonRefMenu}
+                    title="all features"
                     className={
                         buttonIndex === 5 ? "menu__item active" : "menu__item"
                     }
