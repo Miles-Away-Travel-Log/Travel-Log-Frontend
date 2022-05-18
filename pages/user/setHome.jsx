@@ -1,13 +1,11 @@
 import React, { useState, useRef, useCallback, useEffect } from "react";
 import Map, { Marker, NavigationControl } from "react-map-gl";
 import { useAppData } from "../../Context/DataStorage.js";
-import "mapbox-gl/dist/mapbox-gl.css";
-import "react-map-gl-geocoder/dist/mapbox-gl-geocoder.css";
 import Geocoder from "../../components/Geocoder.jsx";
 import SetMapStyle from "../../components/SetDefaultMapStyle.jsx";
 import mapStyleList from "../../components/MapStyleList.jsx";
 import { FaHome } from "react-icons/fa";
-import Navbar from "../../components/Navbar.jsx";
+// import Navbar from "../../components/Navbar.jsx";
 import { TailSpin } from "react-loader-spinner";
 
 const TOKEN = process.env.NEXT_PUBLIC_MAPBOX_API_KEY;

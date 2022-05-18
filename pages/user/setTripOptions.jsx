@@ -1,8 +1,6 @@
 import React, { useState, useRef, useCallback, useEffect } from "react";
 import Map, { Marker, NavigationControl } from "react-map-gl";
 import { useAppData } from "../../Context/DataStorage.js";
-import "mapbox-gl/dist/mapbox-gl.css";
-import "react-map-gl-geocoder/dist/mapbox-gl-geocoder.css";
 import Geocoder from "../../components/Geocoder.jsx";
 import SetMapStyle from "../../components/SetTripMapStyle.jsx";
 import mapStyleList from "../../components/MapStyleList.jsx";

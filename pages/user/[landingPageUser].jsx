@@ -7,6 +7,7 @@ import { useRouter } from "next/router";
 import Cookies from "js-cookie";
 import Image from "next/image";
 import avatar from "../../public/images/images-register/avatar.svg";
+import UserLandingPageMap from "../../components/UserLandingPageMap.jsx";
 // import { icons, clickables } from "../../components/menu.jsx";
 
 export default function LandingPageUser() {
@@ -234,9 +235,12 @@ export default function LandingPageUser() {
                 </div>
             </div>
             {user.userName === userFromRouterPath ? (
-                <div className="m-3 my-9 rounded-lg bg-[#C4C4C4] text-white text-xl text-center">{`Hello ${dataOfOneFriend.userName}`}</div>
+                <div className="ml-3 mr-3 mt-9 rounded-lg bg-[#C4C4C4] text-white text-xl text-center">{`Hello ${dataOfOneFriend.userName}`}</div>
             ) : null}
-            <div className="mt-9">
+            <div className="sm:mt-[-20px] mt-[-22px]">
+                <UserLandingPageMap />
+            </div>
+            <div className="mt-9 fixed bottom-0 left-0 w-full">
                 <Navbar />
             </div>
         </div>
