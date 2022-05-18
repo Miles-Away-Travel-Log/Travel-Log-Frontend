@@ -124,7 +124,7 @@ export default function LandingPageUser() {
                         <li>
                             <p
                                 onClick={() => router.replace("/weather")}
-                                className="block py-2 px-4 text-sm text-[#942928] hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white cursor-pointer"
+                                className="block py-2 px-4 text-sm text-[#90A5A9] hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white cursor-pointer"
                             >
                                 Weather
                             </p>
@@ -133,7 +133,7 @@ export default function LandingPageUser() {
                         {user.userName === userFromRouterPath ? (
                             <ul className="cursor-pointer">
                                 <li
-                                    className="block py-2 px-4 text-sm text-[#942928] hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white flex"
+                                    className="block py-2 px-4 text-sm text-[#90A5A9] hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white flex"
                                     onClick={() =>
                                         router.replace("/user/trips")
                                     }
@@ -150,7 +150,7 @@ export default function LandingPageUser() {
                                     </div> */}
                                 </li>
                                 <li
-                                    className="block py-2 px-4 text-sm text-[#942928] hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
+                                    className="block py-2 px-4 text-sm text-[#90A5A9] hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
                                     onClick={() =>
                                         router.replace("/user/newTrip")
                                     }
@@ -161,7 +161,7 @@ export default function LandingPageUser() {
                                     onClick={() =>
                                         router.replace("/user/friends")
                                     }
-                                    className="block py-2 px-4 text-sm text-[#942928] hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
+                                    className="block py-2 px-4 text-sm text-[#90A5A9] hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
                                 >
                                     Friends
                                 </li>
