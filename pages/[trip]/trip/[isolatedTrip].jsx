@@ -36,8 +36,6 @@ function TripOverview() {
         setIsOpenRoute(false);
     }
 
-    console.log("tripData", tripData);
-
     return (
         /* <!-- This is an example component --> */
         <div className="w-[375px] lg:w-screen">
@@ -52,7 +50,7 @@ function TripOverview() {
                         className="h-20 w-20 lg:h-40 lg:w-40 rounded-full object-fill"
                         alt="username"
                     />
-                    <div className="lg:ml-10 ml-6">
+                    <div className="lg:ml-10 ml-6 w-1/2">
                         <div className="flex items-center">
                             <h2 className="block leading-relaxed font-light text-gray-700 text-sm lg:text-3xl">
                                 {tripData.tripName}

@@ -4,10 +4,12 @@ import { useEffect } from "react";
 import Link from "next/link";
 import { icons, clickables } from "../../components/menu.jsx";
 import Navbar from "../../components/Navbar.jsx";
+import { useRouter } from "next/router";
 
 function Trips() {
     const { user, userTrips, setUserTrips } = useAppData();
 
+    const router = useRouter();
     useEffect(() => {
         if (user) {
             setUserTrips(user.trips);
