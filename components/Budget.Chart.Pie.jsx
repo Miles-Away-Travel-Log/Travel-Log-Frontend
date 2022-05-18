@@ -96,8 +96,10 @@ function PieChart() {
     };
 
     return (
-        <div className="flex items-center w-full lg:w-1/3">
-            <Pie options={options} data={data} />
+        <div className="flex items-center justify-center lg:p-16">
+            <div className="lg:w-1/4 mt-16 lg:mt-0">
+                <Pie options={options} data={data} />
+            </div>
         </div>
     );
 }

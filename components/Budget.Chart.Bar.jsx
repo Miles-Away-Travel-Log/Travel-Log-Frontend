@@ -87,8 +87,10 @@ function BarChart() {
         ],
     };
     return (
-        <div className="w-full lg:w-2/3">
-            <Bar options={options} data={data} />
+        <div className="flex justify-center items-center pb-16">
+            <div className="w-full lg:w-2/4 mt-10">
+                <Bar options={options} data={data} />
+            </div>
         </div>
     );
 }

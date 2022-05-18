@@ -9,7 +9,7 @@ import { RiDeleteBinLine } from "react-icons/ri";
 function ListIncomeExpense({ budgetItems, tripID }) {
     const router = useRouter();
 
-    const { userId, deleteOneItem, setIsActivePageBudget } = useAppData();
+    const { deleteOneItem, setIsActivePageBudget } = useAppData();
 
     const [showDropdown, setShowDropdown] = useState(false);
 
@@ -146,13 +146,7 @@ function ListIncomeExpense({ budgetItems, tripID }) {
         });
     }
     return (
-        <div className="flex flex-col items-center">
-            <button
-                className="m-7 bg-[#90A5A9] text-white  border border-solid shadow rounded-full w-[200px] h-[50px]"
-                onClick={() => setIsActivePageBudget("budget")}
-            >
-                Back to Budget
-            </button>
+        <div className="flex flex-col items-center lg:pb-16 mb-32">
             <div className="flex justify-center w-full pt-16">
                 <div
                     className="mb-9 rounded-lg w-3/4 lg:w-1/2 xl:w-1/3 p-4 border border-[#C4C4C4]"
@@ -160,18 +154,17 @@ function ListIncomeExpense({ budgetItems, tripID }) {
                 >
                     {createItem()}
                 </div>
-                <div className="w-1/2 hidden">{createItem()}</div>
                 <div
                     id="dropdown"
                     className={
                         (showDropdown === true ? "visible" : "hidden") +
-                        " z-10 w-16 text-base list-none rounded divide-y divide-gray-100 h-[100px] absolute right-[40px] lg:right-[640px]"
+                        " w-16 text-base list-none rounded divide-y divide-gray-100 h-[100px] absolute right-[40px] lg:right-[640px]"
                     }
                     data-popper-reference-hidden=""
                     data-popper-escaped=""
                     data-popper-placement="top"
                 >
-                    <ul className="py-1" aria-labelledby="dropdownButton">
+                    <ul className="py-1">
                         <li title="Download as PDF">
                             <GrDocumentPdf
                                 className="text-[2rem] mt-2 cursor-pointer"
