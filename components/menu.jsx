@@ -6,7 +6,7 @@ import { GiThreeFriends } from "react-icons/gi";
 import { MdHotel } from "react-icons/md";
 import { AiFillLock } from "react-icons/ai";
 import { FaUserAlt } from "react-icons/fa";
-import { AiFillPicture } from "react-icons/ai";
+import { AiFillPicture, AiOutlinePlus } from "react-icons/ai";
 import { ImStatsBars } from "react-icons/im";
 import { GiCompass } from "react-icons/gi";
 import { SiYourtraveldottv } from "react-icons/si";
@@ -98,5 +98,9 @@ export const clickables = [
     {
         path: "/",
         icon: <BiMap />,
+    },
+    {
+        path: "/",
+        icon: <AiOutlinePlus />,
     },
 ];

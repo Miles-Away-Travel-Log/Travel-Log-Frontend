@@ -2,6 +2,7 @@ import React from "react";
 import { useAppData } from "../../Context/DataStorage.js";
 import { useEffect } from "react";
 import Link from "next/link";
+import { icons, clickables } from "../../components/menu.jsx";
 import Navbar from "../../components/Navbar.jsx";
 
 function Trips() {
@@ -40,18 +41,31 @@ function Trips() {
         });
         return list;
     }
-
+    const hasTrips = userTrips.length > 0;
     return (
         <div className="h-screen flex flex-col items-center bg-white">
-            <div className="mt-4">
-                <p className="text-gray-800 text-3xl font-semibold">
-                    {userTrips.length > 0 ? "Your Trips" : "No Trips"}
+            <div className="mt-4 flex">
+                <p className="text-[#90A5A9] text-3xl font-semibold">
+                    {/* {userTrips.length > 0 ? "YOUR TRIPS" : "NO TRIPS"} */}
+                    {hasTrips ? "YOUR TRIPS" : "NO TRIPS"}
                 </p>
+                <div
+                    className="ml-3 text-[#90A5A9]"
+                    title="create new trip"
+                    onClick={() => router.replace("/user/newTrip")}
+                >
+                    {clickables[17].icon}
+                </div>
             </div>
+            <div
+                className="bg-[url('../public/images/images-diary/dariusz-sankowski-3OiYMgDKJ6k-unsplash.jpg')] bg-cover min-h-screen w-full"
+                style={hasTrips ? { visibility: 'hidden' }: { visibility: 'visible' } }
+            ></div>
+
             <div className="flex flex-wrap justify-center px-18 gap-5 py-4">
                 {createListForTrips()}
             </div>
-            <div className="fixed bottom-0 left-0 w-full">
+            <div className="fixed bottom-0 left-0 mt-9">
                 <Navbar />
             </div>
         </div>
