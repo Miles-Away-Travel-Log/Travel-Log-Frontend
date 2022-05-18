@@ -4,7 +4,8 @@ import { useAppData } from "../../../Context/DataStorage.js";
 import TripBudget from "../../../components/Trip.Budget.jsx";
 import TripDiary from "../../../components/Trip.Diary.jsx";
 import TripPeople from "../../../components/Trip.People.jsx";
-import TripRoutes from "../../../components/Trip.Routes.jsx";
+import TripViewRoute from "../../../components/Trip.View.Route.jsx";
+import TripEditRoute from "../../../components/Trip.Edit.Route.jsx";
 import TripPhotos from "../../../components/Trip.Photos.jsx";
 import Navbar from "../../../components/Navbar.jsx";
 import { RiArrowDropDownLine } from "react-icons/ri";
@@ -13,15 +14,16 @@ import BarChart from "../../../components/Budget.Chart.Bar.jsx";
 import PieChart from "../../../components/Budget.Chart.Pie.jsx";
 import Transactions from "../../../components/Budget.Transactions.jsx";
 
-function Test2() {
+function TripOverview() {
     const router = useRouter();
     const tripFromRouter = router.asPath.split("/")[3];
 
     const { getTripData, tripData } = useAppData();
 
     const [submenu, setSubmenu] = useState("");
-    const [isOpen, setIsOpen] = useState(false);
+    const [isOpenBudget, setIsOpenBudget] = useState(false);
     const [isOpenCharts, setIsOpenCharts] = useState(false);
+    const [isOpenRoute, setIsOpenRoute] = useState(false);
 
     useEffect(() => {
         getTripData(tripFromRouter);
@@ -29,9 +31,12 @@ function Test2() {
 
     function handleClickSubmenu(param) {
         setSubmenu(param);
-        setIsOpen(false);
+        setIsOpenBudget(false);
         setIsOpenCharts(false);
+        setIsOpenRoute(false);
     }
+
+    console.log("tripData", tripData);
 
     return (
         /* <!-- This is an example component --> */
@@ -86,9 +91,9 @@ function Test2() {
                             Budget
                         </button>
                         <RiArrowDropDownLine
-                            onClick={() => setIsOpen(!isOpen)}
+                            onClick={() => setIsOpenBudget(!isOpenBudget)}
                         />
-                        {isOpen && (
+                        {isOpenBudget && (
                             <div className="flex flex-col items-start absolute top-10 right-0 z-50">
                                 <button
                                     className="block px-4 py-2 text-sm text-gray-800 border-b hover:bg-gray-200 bg-slate-100 w-32 text-left"
@@ -140,12 +145,36 @@ function Test2() {
                     >
                         Photos
                     </button>
-                    <button
-                        className="hover:text-blue-600 w-20 text-sm lg:text-base"
-                        onClick={() => setSubmenu("routes")}
-                    >
-                        Routes
-                    </button>
+                    <div className="flex items-center relative text-sm lg:text-base">
+                        <button
+                            className="hover:text-blue-600 w-20 text-sm lg:text-base"
+                            // onClick={() => setSubmenu("routes")}
+                            onClick={() => setIsOpenRoute(!isOpenRoute)}
+                        >
+                            Routes
+                            <RiArrowDropDownLine className="inline ml-2" />
+                        </button>
+                        {isOpenRoute && (
+                            <div className="flex flex-col items-start absolute top-10 right-0 z-50">
+                                <button
+                                    className="block px-4 py-2 text-sm text-gray-800 border-b hover:bg-gray-200 bg-slate-100 w-32 text-left"
+                                    onClick={() =>
+                                        handleClickSubmenu("viewRoute")
+                                    }
+                                >
+                                    View Route
+                                </button>
+                                <button
+                                    className="block px-4 py-2 text-sm text-gray-800 border-b hover:bg-gray-200 bg-slate-100 w-32 text-left"
+                                    onClick={() =>
+                                        handleClickSubmenu("editRoute")
+                                    }
+                                >
+                                    Edit Route
+                                </button>
+                            </div>
+                        )}
+                    </div>
                     <button
                         className="hover:text-blue-600 w-20 text-sm lg:text-base"
                         onClick={() => setSubmenu("people")}
@@ -166,8 +195,10 @@ function Test2() {
                     />
                 ) : submenu === "photos" ? (
                     <TripPhotos />
-                ) : submenu === "routes" ? (
-                    <TripRoutes tripRoutes={tripData.route} />
+                ) : submenu === "viewRoute" ? (
+                    <TripViewRoute tripRoutes={tripData.route} />
+                ) : submenu === "editRoute" ? (
+                    <TripEditRoute tripRoutes={tripData.route} />
                 ) : submenu === "people" ? (
                     <TripPeople tripPeople={tripData.participants} />
                 ) : submenu === "transactions" ? (
@@ -185,4 +216,4 @@ function Test2() {
     );
 }
 
-export default Test2;
+export default TripOverview;
