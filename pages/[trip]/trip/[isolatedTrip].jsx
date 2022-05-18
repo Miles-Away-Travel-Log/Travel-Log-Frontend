@@ -39,8 +39,12 @@ function Test2() {
             <div className="fixed top-0 w-full bg-white z-10">
                 <div className="flex justify-center pb-10 pt-10 flex-shrink-0 w-[375px] lg:w-full pl-2 bg-white">
                     <img
-                        src="http://res.cloudinary.com/milesaway/image/upload/v1651238129/quod9hwh5xsu6gdddlre.jpg"
-                        className="h-20 w-20 lg:h-40 lg:w-40 rounded-full object-cover"
+                        src={
+                            tripData.tripImage && tripData.tripImage.length > 0
+                                ? tripData.tripImage
+                                : "../../images/images-trip/TripPlaceholder.jpeg"
+                        }
+                        className="h-20 w-20 lg:h-40 lg:w-40 rounded-full object-fill"
                         alt="username"
                     />
                     <div className="lg:ml-10 ml-6">
