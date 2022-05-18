@@ -61,10 +61,16 @@ function Trips() {
                     {clickables[17].icon}
                 </div>
             </div>
-            <div
-                className="bg-[url('../public/images/images-diary/dariusz-sankowski-3OiYMgDKJ6k-unsplash.jpg')] bg-cover min-h-screen w-full"
-                style={hasTrips ? { visibility: 'hidden' }: { visibility: 'visible' } }
-            ></div>
+            {!hasTrips && (
+                <div
+                    className="bg-[url('../public/images/images-diary/dariusz-sankowski-3OiYMgDKJ6k-unsplash.jpg')] bg-cover min-h-screen w-full"
+                    /*  style={
+                        hasTrips
+                            ? { visibility: "hidden" }
+                            : { visibility: "visible" }
+                    } */
+                ></div>
+            )}
 
             <div className="flex flex-wrap justify-center px-18 gap-5 py-4">
                 {createListForTrips()}
