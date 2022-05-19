@@ -21,7 +21,7 @@ function TripDiary({ tripDiary }) {
                             </p>
 
                             <p className="font-semibold p-2 text-sm text-gray-500 text-center">
-                                by item.userName
+                                by {item.authorName}
                             </p>
 
                             <p className="px-10 py-2 text-gray-500 text-center">
