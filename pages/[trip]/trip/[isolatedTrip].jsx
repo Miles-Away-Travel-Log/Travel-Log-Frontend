@@ -198,9 +198,9 @@ function TripOverview() {
                 ) : submenu === "photos" ? (
                     <TripPhotos />
                 ) : submenu === "viewRoute" ? (
-                    <TripViewRoute tripRoutes={tripData.route} />
+                    <TripViewRoute tripData={tripData} />
                 ) : submenu === "editRoute" ? (
-                    <TripEditRoute tripRoutes={tripData.route} />
+                    <TripEditRoute tripData={tripData} />
                 ) : submenu === "people" ? (
                     <TripPeople tripPeople={tripData.participants} />
                 ) : submenu === "transactions" ? (

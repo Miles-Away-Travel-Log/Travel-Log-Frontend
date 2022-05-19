@@ -65,7 +65,7 @@ export default function MapTestCenter() {
                         >
                             <p
                                 onClick={(e) => {
-                                    e.stopPropagation(); // super wichtig, sonst funktioniert die Popups nicht!
+                                    e.stopPropagation();        // super wichtig, sonst funktionieren die Popups nicht!
                                     setSelectedLocation(result);
                                 }}
                                 className="cursor-pointer text-2xl animate-bounce"

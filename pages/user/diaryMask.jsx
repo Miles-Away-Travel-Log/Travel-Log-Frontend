@@ -102,7 +102,7 @@ export default function DiaryMask() {
     }
 
     return (
-        <div className="bg-[url('../public/images/images-diary/dariusz-sankowski-3OiYMgDKJ6k-unsplash.jpg')] bg-cover min-h-screen flex flex-col">
+        <div className="bg-[url('../public/images/images-diary/dariusz-sankowski-3OiYMgDKJ6k-unsplash.webp')] bg-cover min-h-screen flex flex-col">
             {!user.userName && !diaryLocation && (
                 <div className="w-screen h-screen grid place-content-center content-center">
                     <TailSpin color="#00BFFF" height={80} width={80} />
