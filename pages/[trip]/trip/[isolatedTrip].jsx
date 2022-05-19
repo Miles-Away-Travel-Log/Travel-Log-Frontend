@@ -204,7 +204,7 @@ function TripOverview() {
                 ) : submenu === "people" ? (
                     <TripPeople tripPeople={tripData.participants} />
                 ) : submenu === "transactions" ? (
-                    <Transactions />
+                    <Transactions tripID={tripFromRouter} />
                 ) : submenu === "bar" ? (
                     <BarChart />
                 ) : submenu === "pie" ? (
