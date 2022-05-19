@@ -19,7 +19,16 @@ function TripDiary({ tripDiary }) {
                             <p className="font-bold pt-3 pb-2 text-center">
                                 {item.diaryName}
                             </p>
-
+                            {item.location.city !== "" &&
+                            item.location.country !== "" ? (
+                                <p className="italic p-2 text-sm text-gray-500 text-center">
+                                    {item.location.city} ,{" "}
+                                    {item.location.country}
+                                </p>
+                            ) : null}
+                            <p className="p-2 text-sm text-gray-500 text-center">
+                                {item.date}
+                            </p>
                             <p className="font-semibold p-2 text-sm text-gray-500 text-center">
                                 by {item.authorName}
                             </p>
