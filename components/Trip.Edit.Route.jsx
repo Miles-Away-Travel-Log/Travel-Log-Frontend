@@ -611,7 +611,13 @@ function SetTripRoute({ tripData }) {
                                                     ))
                                             }
                                         >
-                                            <p className="cursor-pointer text-2xl">
+                                            <p
+                                            className={`cursor-pointer text-4xl ${
+                                                tripData
+                                                    ? tripData.mapStyle.iconColor
+                                                    : "text-black"
+                                                // "text-blue-500"
+                                            }`}>
                                                 <GoPrimitiveDot />
                                             </p>
                                         </Marker>
@@ -630,8 +636,7 @@ function SetTripRoute({ tripData }) {
                                         <p
                                             className={`cursor-pointer text-4xl ${
                                                 tripData
-                                                    ? tripData.mapStyle
-                                                          .iconColor
+                                                    ? tripData.mapStyle.iconColor
                                                     : "text-black"
                                                 // "text-blue-500"
                                             }`}
