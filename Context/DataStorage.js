@@ -130,8 +130,9 @@ function AppState(props) {
     //
 
     const [diaryLocation, setDiaryLocation] = useState(false);
-    const [currentTripId, setCurrentTripId] = useState(null);
     const [cancelDiaryCreation, setCancelDiaryCreation] = useState(false);
+    const [savedDiary, setSavedDiary] = useState(false);
+    const [createDiarySidebar, setCreateDiarySidebar] = useState(false);
 
     //-------------------------------------- NAV BAR  ---------------------------------------------------//
     //
@@ -462,12 +463,14 @@ function AppState(props) {
                 getTripData,
                 diaryLocation,
                 setDiaryLocation,
-                currentTripId,
-                setCurrentTripId,
                 cancelDiaryCreation,
                 setCancelDiaryCreation,
                 setTripImage,
                 tripImage,
+                createDiarySidebar,
+                setCreateDiarySidebar,
+                savedDiary,
+                setSavedDiary,
             }}
         >
             {props.children}

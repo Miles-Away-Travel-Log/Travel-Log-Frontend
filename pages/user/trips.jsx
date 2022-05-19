@@ -65,7 +65,7 @@ function Trips() {
             </div>
             {!hasTrips && (
                 <div
-                    className="bg-[url('../public/images/images-diary/dariusz-sankowski-3OiYMgDKJ6k-unsplash.jpg')] bg-cover min-h-screen w-full"
+                    className="bg-[url('../public/images/images-diary/dariusz-sankowski-3OiYMgDKJ6k-unsplash.webp')] bg-cover min-h-screen w-full"
                     /*  style={
                         hasTrips
                             ? { visibility: "hidden" }

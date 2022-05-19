@@ -7,21 +7,24 @@ import { useAppData } from "../Context/DataStorage.js";
 import { TailSpin } from "react-loader-spinner";
 
 export default function DiaryMaskComponent() {
-    const router = useRouter();
     const {
         user,
         diaryLocation,
-        setDiaryLocation,
-        currentTripId,
-        setCurrentTripId,
-        cancelDiaryCreation,
+        // setDiaryLocation,
+        // cancelDiaryCreation,
         setCancelDiaryCreation,
+        // createDiarySidebar,
+        setCreateDiarySidebar,
+        tripData,
+        getTripData,
+        savedDiary,
+        setSavedDiary,
     } = useAppData();
 
     const [textData, setTextData] = useState("");
     const [date, setDate] = useState("");
     const [diaryName, setDiaryName] = useState("");
-    const [author, setAuthor] = useState("");
+    // const [author, setAuthor] = useState("");
     const [titleImageFromCloud, setTitleImageFromCloud] = useState("");
     const [imagesFromCloud, setImagesFromCloud] = useState([]);
 
@@ -60,10 +63,11 @@ export default function DiaryMaskComponent() {
 
     function cancelForm(e) {
         e.preventDefault();
-        setCancelDiaryCreation({ id: diaryLocation.id });
-        setDiaryLocation(false);
-        setCurrentTripId(false);
-        router.replace(`/user/${user.userName}`);
+        // setCancelDiaryCreation({ id: diaryLocation.id });
+        setCancelDiaryCreation(true);
+        // setDiaryLocation(false);
+        // router.replace(`/user/${user.userName}`);
+        setCreateDiarySidebar(false);
     }
 
     async function uploadDiaryEntry(e) {
@@ -92,24 +96,30 @@ export default function DiaryMaskComponent() {
                         city: diaryLocation.city,
                         country: diaryLocation.country,
                     },
-                    trip: currentTripId,
+                    trip: tripData.id,
                     pointId: diaryLocation.id,
                 }),
             }
         );
-        setCurrentTripId(false);
-        router.replace(`/user/setTripRoute`);
+        // router.replace(`/user/setTripRoute`);
+        // getTripData(tripData.id);
+        setSavedDiary(true);
+        setCreateDiarySidebar(false);
     }
 
     return (
-        <div className="bg-[url('../public/images/images-diary/dariusz-sankowski-3OiYMgDKJ6k-unsplash.jpg')] bg-cover bg-center min-h-screen flex flex-col col-span-1">
+        <div className="bg-[url('../public/images/images-diary/dariusz-sankowski-3OiYMgDKJ6k-unsplash.webp')] bg-cover bg-center min-h-screen flex flex-col col-span-1 overflow-y-scroll"
+        //  overflow-y-auto
+        >
             {!user.userName && !diaryLocation && (
                 <div className="w-screen h-screen grid place-content-center content-center">
                     <TailSpin color="#00BFFF" height={80} width={80} />
                 </div>
             )}
             {user.userName && diaryLocation && (
-                <form onSubmit={uploadDiaryEntry}>
+                <form onSubmit={uploadDiaryEntry} 
+                // className="overflow-y-scroll"
+                >
                     <div className="flex flex-col items-center">
                         <h3 className="text-white mt-3">
                             CREATE YOUR DIARY ENTRY

@@ -175,7 +175,7 @@ export default function NewTrip() {
     }
 
     return (
-        <div className="bg-[url('../public/images/images-diary/dariusz-sankowski-3OiYMgDKJ6k-unsplash.jpg')] bg-cover min-h-screen flex flex-col">
+        <div className="bg-[url('../public/images/images-diary/dariusz-sankowski-3OiYMgDKJ6k-unsplash.webp')] bg-cover min-h-screen flex flex-col">
             <div className="h-screen w-screen container max-w-sm mx-auto flex-1 flex flex-col items-center justify-center px-2 bg-[#942928]">
                 {!user.userName && (
                     <div className="w-screen h-screen grid place-content-center content-center">
