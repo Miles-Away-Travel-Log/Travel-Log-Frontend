@@ -117,7 +117,8 @@ function SetTripRoute({ tripData }) {
     // }
 
     function setInitialCoordinates() {
-        const startArray = [tripData.startPoint, ...tripData.route];
+        const start = tripData.startPoint ? tripData.startPoint : user.home;
+        const startArray = [start, ...tripData.route];
         bounds = GetBoundsForPoints(startArray);
         setViewState({ ...bounds, width: "100%", height: "100%" });
         setStartPoint(tripData.startPoint);
@@ -144,7 +145,7 @@ function SetTripRoute({ tripData }) {
         )
             setHome(user.home);
         else setHome(false);
-    }, [user]);
+    }, [home]);
 
     // useEffect(() => {
     //     if (startPoint)
@@ -365,7 +366,7 @@ function SetTripRoute({ tripData }) {
     useEffect(() => {
         mapRef.current && updateRoute();
         // console.log("Route: ", routeJSON.geometry.coordinates);
-        //console.log("pointArray: ", pointArray);
+        // console.log("pointArray: ", pointArray);
         // }, [pointArray]);
     }, [routeJSON]);
     // }, [active]);
@@ -403,10 +404,11 @@ function SetTripRoute({ tripData }) {
 
     async function saveUpdatedTrip(event) {
         // event.preventDefault();
-        const start =
+        let start =
             startPoint !== tripData.startPoint
                 ? startPoint
                 : tripData.startPoint;
+        if (!start) start = user.home;
         const rawResponse = await fetch(
             process.env.NEXT_PUBLIC_FETCH_URL_TRIP + `${TripID}`,
             {
