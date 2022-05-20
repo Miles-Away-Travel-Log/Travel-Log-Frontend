@@ -226,7 +226,7 @@ export default function LandingPageUser() {
                 <div className="ml-3 mr-3 mt-9 rounded-lg bg-[#C4C4C4] text-white text-xl text-center">{`Hello ${dataOfOneFriend.userName}`}</div>
             ) : null}
             <div className="sm:mt-[-20px] mt-[-22px]">
-                <UserLandingPageMap />
+                <UserLandingPageMap dataOfOneFriend={dataOfOneFriend} />
             </div>
             <div className="mt-9 fixed bottom-0 left-0 w-full">
                 <Navbar />

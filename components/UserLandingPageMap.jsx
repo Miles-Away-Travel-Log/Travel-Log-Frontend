@@ -7,8 +7,8 @@ import { TailSpin } from "react-loader-spinner";
 
 const TOKEN = process.env.NEXT_PUBLIC_MAPBOX_API_KEY;
 
-function UserLandingPageMap() {
-    const { user } = useAppData();
+function UserLandingPageMap({ dataOfOneFriend }) {
+    // const { user } = useAppData();
     const [viewport, setViewState] = useState({
         latitude: 37.7577,
         longitude: -122.4376,
@@ -16,13 +16,13 @@ function UserLandingPageMap() {
     });
 
     useEffect(() => {
-        if (user.home && user.home.latitude)
+        if (dataOfOneFriend.home && dataOfOneFriend.home.latitude)
             setViewState({
                 ...viewport,
-                latitude: user.home.latitude,
-                longitude: user.home.longitude,
+                latitude: dataOfOneFriend.home.latitude,
+                longitude: dataOfOneFriend.home.longitude,
             });
-    }, [user]);
+    }, [dataOfOneFriend]);
 
     const geocoderContainerRef = useRef();
     const mapRef = useRef();
@@ -50,12 +50,12 @@ function UserLandingPageMap() {
 
     return (
         <div className="flex justify-center">
-            {!user.userName && (
+            {!dataOfOneFriend.userName && (
                 <div className="w-screen h-screen grid place-content-center content-center">
                     <TailSpin color="#00BFFF" height={80} width={80} />
                 </div>
             )}
-            {user.userName && (
+            {dataOfOneFriend.userName && (
                 <div className="sm:w-[90vw] h-[50vh] w-[100vw]">
                     <div
                         ref={geocoderContainerRef}
@@ -74,8 +74,8 @@ function UserLandingPageMap() {
                         // width="100%"
                         // height="100%"
                         mapStyle={
-                            user.mapStyle
-                                ? user.mapStyle.link
+                            dataOfOneFriend.mapStyle
+                                ? dataOfOneFriend.mapStyle.link
                                 : "mapbox://styles/mapbox/streets-v9"
                         }
                         mapboxAccessToken={TOKEN}
@@ -90,18 +90,18 @@ function UserLandingPageMap() {
                             position="top-left"
                         />
                         <NavigationControl />
-                        {user.home && (
-                            <div key={user.home.longitude}>
+                        {dataOfOneFriend.home && (
+                            <div key={dataOfOneFriend.home.longitude}>
                                 <Marker
-                                    longitude={user.home.longitude}
-                                    latitude={user.home.latitude}
+                                    longitude={dataOfOneFriend.home.longitude}
+                                    latitude={dataOfOneFriend.home.latitude}
                                     // draggable
                                     // onDragEnd={(e) => onMarkerDragEnd(e)}
                                 >
                                     <p
                                         className={`cursor-pointer text-4xl ${
-                                            user.mapStyle
-                                                ? user.mapStyle.iconColor
+                                            dataOfOneFriend.mapStyle
+                                                ? dataOfOneFriend.mapStyle.iconColor
                                                 : "text-black"
                                         }`}
                                     >
