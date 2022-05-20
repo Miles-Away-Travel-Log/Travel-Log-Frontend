@@ -30,6 +30,7 @@ function ViewTripRoute({ tripData }) {
     // const router = useRouter();
     const [newSearchLocation, setNewSearchLocation] = useState(false);
     const [home, setHome] = useState(false);
+    // const [startPoint, setStartPoint] = useState(false);
     const [selectedDiary, setSelectedDiary] = useState({});
     const [viewport, setViewState] = useState({
         latitude: 37.7577,
@@ -75,7 +76,8 @@ function ViewTripRoute({ tripData }) {
     };
 
     function setInitialCoordinates() {
-        const startArray = [tripData.startPoint, ...tripData.route];
+        const start = tripData.startPoint ? tripData.startPoint : user.home;
+        const startArray = [start, ...tripData.route];
         bounds = GetBoundsForPoints(startArray);
         setViewState({ ...bounds, width: "100%", height: "100%" });
     }
@@ -86,6 +88,15 @@ function ViewTripRoute({ tripData }) {
             setWindowWidth(mapRef.current.offsetWidth);
         }
         setInitialCoordinates();
+        // if (tripData.startPoint) setStartPoint(tripData.startPoint);
+        // else setStartPoint(user.home);
+        // if (
+        //     user.home &&
+        //     tripData.startPoint.longitude !== user.home.longitude &&
+        //     tripData.startPoint.latitude !== user.home.latitude
+        // )
+        //     setHome(user.home);
+        // else setHome(false);
     }, []);
 
     useEffect(() => {
@@ -96,7 +107,7 @@ function ViewTripRoute({ tripData }) {
         )
             setHome(user.home);
         else setHome(false);
-    }, [user]);
+    }, [home]);
 
     const routeJSON = {
         type: "Feature",
@@ -249,40 +260,45 @@ function ViewTripRoute({ tripData }) {
                                             }`}
                                             // animate-bounce
                                             onClick={(e) => {
-                                                e.stopPropagation();        // super wichtig, sonst funktionieren die Popups nicht!
+                                                e.stopPropagation(); // super wichtig, sonst funktionieren die Popups nicht!
                                                 setSelectedDiary(diary);
                                             }}
                                         >
                                             <ImLocation2 />
                                         </p>
                                     </Marker>
-                                    {selectedDiary.location && selectedDiary.location.longitude ===
-                                        diary.location.longitude && (
-                                        <div>
-                                            <Popup
-                                                // className="w-[120px]"
-                                                // onClose={() => setSelectedLocation({})}
-                                                // closeOnClick={true}
-                                                latitude={diary.location.latitude}
-                                                longitude={diary.location.longitude}
-                                                closeButton={false}
-                                                anchor="top"
-                                                // onClose={() => console.log("close")}
-                                            >
-                                                <div className="font-bold text-lg underline mb-3 text-center">
-                                                    {diary.diaryName}
-                                                </div>
-                                                <div className="text-clip mb-2">
-                                                    {diary.description}
-                                                </div>
-                                                {/* <img
+                                    {selectedDiary.location &&
+                                        selectedDiary.location.longitude ===
+                                            diary.location.longitude && (
+                                            <div>
+                                                <Popup
+                                                    // className="w-[120px]"
+                                                    // onClose={() => setSelectedLocation({})}
+                                                    // closeOnClick={true}
+                                                    latitude={
+                                                        diary.location.latitude
+                                                    }
+                                                    longitude={
+                                                        diary.location.longitude
+                                                    }
+                                                    closeButton={false}
+                                                    anchor="top"
+                                                    // onClose={() => console.log("close")}
+                                                >
+                                                    <div className="font-bold text-lg underline mb-3 text-center">
+                                                        {diary.diaryName}
+                                                    </div>
+                                                    <div className="text-clip mb-2">
+                                                        {diary.description}
+                                                    </div>
+                                                    {/* <img
                                                     src="https://e6.pngbyte.com/pngpicture/138188/png-Hiking-Backpack-Clip-Art-Clip-Art-Picture-Download-Huge-backpack-clipart_thumbnail.png"
                                                     alt="picture"
                                                     className="w-[100px] place-content-center"
                                                 /> */}
-                                            </Popup>
-                                        </div>
-                                    )}
+                                                </Popup>
+                                            </div>
+                                        )}
                                 </div>
                             ))}
                         <Source

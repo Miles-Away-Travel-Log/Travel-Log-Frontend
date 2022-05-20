@@ -95,7 +95,7 @@ function UserLandingPageMap() {
                                 <Marker
                                     longitude={user.home.longitude}
                                     latitude={user.home.latitude}
-                                    draggable
+                                    // draggable
                                     // onDragEnd={(e) => onMarkerDragEnd(e)}
                                 >
                                     <p
