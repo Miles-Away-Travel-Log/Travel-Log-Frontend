@@ -6,16 +6,20 @@ function TripDiary({ tripDiary }) {
             return tripDiary.map((item, index) => {
                 return (
                     <card
-                        className="w-[375px] lg:w-1/5 border border-gray-100 rounded-lg hover:shadow-lg align-center"
+                        className="border w-80 border-gray-100 rounded-lg hover:shadow-lg align-center mr-4"
                         key={index}
                     >
                         <a href="">
                             <img
-                                src={item.titleImage}
-                                className="rounded-t-lg w-full h-full object-cover"
+                                src={
+                                    item.titleImage
+                                        ? item.titleImage
+                                        : "../../images/images-trip/TripPlaceholder.webp"
+                                }
+                                className="rounded-t-lg h-56 object-cover"
                             />
                         </a>
-                        <div className="bg-slate-100 h-full">
+                        <div className="bg-slate-100 w-80">
                             <p className="font-bold pt-3 pb-2 text-center">
                                 {item.diaryName}
                             </p>

@@ -1,29 +1,34 @@
 import { useRouter } from "next/router";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Axios from "axios";
 import Image from "next/image";
 import Cookies from "js-cookie";
-import { useAppData } from "../../Context/DataStorage.js";
+import { useAppData } from "../Context/DataStorage.js";
 import { TailSpin } from "react-loader-spinner";
 
-export default function DiaryMask() {
-    const router = useRouter();
+export default function DiaryMaskComponent() {
     const {
         user,
         diaryLocation,
-        setDiaryLocation,
-        currentTripId,
-        setCurrentTripId,
-        cancelDiaryCreation,
+        // setDiaryLocation,
+        // cancelDiaryCreation,
         setCancelDiaryCreation,
+        // createDiarySidebar,
+        setCreateDiarySidebar,
+        tripData,
+        getTripData,
+        savedDiary,
+        setSavedDiary,
     } = useAppData();
 
     const [textData, setTextData] = useState("");
     const [date, setDate] = useState("");
     const [diaryName, setDiaryName] = useState("");
-    const [author, setAuthor] = useState("");
+    // const [author, setAuthor] = useState("");
     const [titleImageFromCloud, setTitleImageFromCloud] = useState("");
     const [imagesFromCloud, setImagesFromCloud] = useState([]);
+
+    const [countImages, setCountImages] = useState(0);
 
     function getTitleImageFromCloud(e) {
         const file = e.target.files[0];
@@ -41,6 +46,9 @@ export default function DiaryMask() {
 
     function getImagesFromCloud(e) {
         const files = e.target.files;
+        const filesLength = files.length;
+        console.log(filesLength);
+        setCountImages(filesLength);
         for (let file of files) {
             const formDataImages = new FormData();
             formDataImages.append("file", file);
@@ -60,56 +68,107 @@ export default function DiaryMask() {
 
     function cancelForm(e) {
         e.preventDefault();
-        setCancelDiaryCreation({ id: diaryLocation.id });
-        setDiaryLocation(false);
-        setCurrentTripId(false);
-        router.replace(`/user/${user.userName}`);
+        // setCancelDiaryCreation({ id: diaryLocation.id });
+        setCancelDiaryCreation(true);
+        // setDiaryLocation(false);
+        // router.replace(`/user/${user.userName}`);
+        setCreateDiarySidebar(false);
     }
 
     async function uploadDiaryEntry(e) {
         e.preventDefault();
-        const rawResponse = await fetch(
-            process.env.NEXT_PUBLIC_FETCH_URL_DIARY,
-            {
-                method: "POST",
-                headers: {
-                    Accept: "application/json",
-                    "Content-Type": "application/json",
-                    Authorization: `Bearer ${Cookies.get("token")}`,
-                },
-                body: JSON.stringify({
-                    author: user.id,
-                    authorName: user.userName,
-                    diaryName: diaryName,
-                    date: date,
-                    description: textData,
-                    visible: false,
-                    images: imagesFromCloud,
-                    titleImage: titleImageFromCloud,
-                    location: {
-                        longitude: diaryLocation.longitude,
-                        latitude: diaryLocation.latitude,
-                        city: diaryLocation.city,
-                        country: diaryLocation.country,
+        console.log({ countImages });
+        console.log("imagesFromCloud", imagesFromCloud.length);
+        if (countImages === imagesFromCloud.length) {
+            const rawResponse = await fetch(
+                process.env.NEXT_PUBLIC_FETCH_URL_DIARY,
+                {
+                    method: "POST",
+                    headers: {
+                        Accept: "application/json",
+                        "Content-Type": "application/json",
+                        Authorization: `Bearer ${Cookies.get("token")}`,
                     },
-                    trip: currentTripId,
-                    pointId: diaryLocation.id,
-                }),
-            }
-        );
-        setCurrentTripId(false);
-        router.replace(`/user/setTripRoute`);
+                    body: JSON.stringify({
+                        author: user.id,
+                        diaryName: diaryName,
+                        authorName: user.userName,
+                        date: date,
+                        description: textData,
+                        visible: false,
+                        images: imagesFromCloud,
+                        titleImage: titleImageFromCloud,
+                        location: {
+                            longitude: diaryLocation.longitude,
+                            latitude: diaryLocation.latitude,
+                            city: diaryLocation.city,
+                            country: diaryLocation.country,
+                        },
+                        trip: tripData.id,
+                        pointId: diaryLocation.id,
+                    }),
+                }
+            );
+            // router.replace(`/user/setTripRoute`);
+            // getTripData(tripData.id);
+            setSavedDiary(true);
+            setCreateDiarySidebar(false);
+        } else {
+            /*             setTimeout(async () => {
+                if (countImages === imagesFromCloud.length) {
+                    const rawResponse = await fetch(
+                        process.env.NEXT_PUBLIC_FETCH_URL_DIARY,
+                        {
+                            method: "POST",
+                            headers: {
+                                Accept: "application/json",
+                                "Content-Type": "application/json",
+                                Authorization: `Bearer ${Cookies.get("token")}`,
+                            },
+                            body: JSON.stringify({
+                                body: JSON.stringify({
+                                    author: user.id,
+                                    diaryName: diaryName,
+                                    authorName: user.userName,
+                                    date: date,
+                                    description: textData,
+                                    visible: false,
+                                    images: imagesFromCloud,
+                                    titleImage: titleImageFromCloud,
+                                    location: {
+                                        longitude: diaryLocation.longitude,
+                                        latitude: diaryLocation.latitude,
+                                        city: diaryLocation.city,
+                                        country: diaryLocation.country,
+                                    },
+                                    trip: tripData.id,
+                                    pointId: diaryLocation.id,
+                                }),
+                            }),
+                        }
+                    );
+                    alert("Diary entry created");
+                }
+            }, 5000); */
+            alert("Please wait for images to upload");
+        }
     }
 
     return (
-        <div className="bg-[url('../public/images/images-diary/dariusz-sankowski-3OiYMgDKJ6k-unsplash.webp')] bg-cover min-h-screen flex flex-col">
+        <div
+            className="bg-[url('../public/images/images-diary/dariusz-sankowski-3OiYMgDKJ6k-unsplash.webp')] bg-cover bg-center min-h-screen flex flex-col col-span-1 overflow-y-scroll"
+            //  overflow-y-auto
+        >
             {!user.userName && !diaryLocation && (
                 <div className="w-screen h-screen grid place-content-center content-center">
                     <TailSpin color="#00BFFF" height={80} width={80} />
                 </div>
             )}
             {user.userName && diaryLocation && (
-                <form onSubmit={uploadDiaryEntry}>
+                <form
+                    onSubmit={uploadDiaryEntry}
+                    // className="overflow-y-scroll"
+                >
                     <div className="flex flex-col items-center">
                         <h3 className="text-white mt-3">
                             CREATE YOUR DIARY ENTRY

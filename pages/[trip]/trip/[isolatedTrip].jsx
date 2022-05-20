@@ -16,7 +16,7 @@ import Transactions from "../../../components/Budget.Transactions.jsx";
 
 function TripOverview() {
     const router = useRouter();
-    const tripFromRouter = router.asPath.split("/")[3];
+    const { isolatedTrip } = router.query;
 
     const { getTripData, tripData } = useAppData();
 
@@ -26,7 +26,7 @@ function TripOverview() {
     const [isOpenRoute, setIsOpenRoute] = useState(false);
 
     useEffect(() => {
-        getTripData(tripFromRouter);
+        getTripData(isolatedTrip);
     }, []);
 
     function handleClickSubmenu(param) {
@@ -193,7 +193,7 @@ function TripOverview() {
                     <TripBudget
                         tripSeedMoney={tripData.seedMoney}
                         tripBudget={tripData.budget}
-                        tripID={tripFromRouter}
+                        tripID={isolatedTrip}
                     />
                 ) : submenu === "photos" ? (
                     <TripPhotos />
@@ -204,7 +204,7 @@ function TripOverview() {
                 ) : submenu === "people" ? (
                     <TripPeople tripPeople={tripData.participants} />
                 ) : submenu === "transactions" ? (
-                    <Transactions tripID={tripFromRouter} />
+                    <Transactions tripID={isolatedTrip} />
                 ) : submenu === "bar" ? (
                     <BarChart />
                 ) : submenu === "pie" ? (
@@ -219,3 +219,9 @@ function TripOverview() {
 }
 
 export default TripOverview;
+
+export async function getServerSideProps(context) {
+    return {
+        props: {},
+    };
+}
