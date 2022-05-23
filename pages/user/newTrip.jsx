@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import DatePicker from "../../components/DatePicker";
 import { useAppData } from "../../Context/DataStorage.js";
-import { format } from "date-fns";
 import { useRouter } from "next/router";
 import { TailSpin } from "react-loader-spinner";
 import Cookies from "js-cookie";

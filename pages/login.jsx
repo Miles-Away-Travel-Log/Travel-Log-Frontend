@@ -82,7 +82,7 @@ export default function Login() {
                         Username
                     </label>
                     <input
-                        className="shadow appearance-none border rounded-full w-full px-3 text-grey-darker"
+                        className="shadow appearance-none border rounded-full w-full px-4 text-grey-darker"
                         id="username"
                         type="text"
                         placeholder="Username"
@@ -103,9 +103,9 @@ export default function Login() {
                         placeholder="******************"
                         name="password"
                     />
-                    <p className="text-white text-xs italic">
+                    {/* <p className="text-white text-xs italic">
                         Please choose a password.
-                    </p>
+                    </p> */}
                 </div>
                 <div className="flex items-center justify-center">
                     <button

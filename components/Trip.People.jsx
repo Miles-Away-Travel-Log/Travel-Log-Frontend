@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from "react";
 import Cookies from "js-cookie";
+import { useRouter } from "next/router";
 
 function TripPeople({ tripPeople }) {
     const [participants, setParticipants] = useState([]);
+    const router = useRouter();
 
     async function friendsData() {
         const fetchTheDataOfEachFriends = await Promise.all(
@@ -31,6 +33,10 @@ function TripPeople({ tripPeople }) {
         friendsData();
     }, []);
 
+    function handleOpenFriendPage(id) {
+        router.replace(`/user/${id}`);
+    }
+
     return (
         <div className="w-screen h-screen p-12">
             <div className="mx-auto max-w-6xl space-y-4 sm:space-y-0 sm:grid sm:grid-cols-2 lg:grid-cols-3 gap-3 ">
@@ -50,13 +56,23 @@ function TripPeople({ tripPeople }) {
                                 </div>
                             </div>
 
-                            <div className="flex h-12 w-full rounded-lg bg-slate-100 pl-[98px] shadow-xl">
+                            <div
+                                className="flex h-12 w-full rounded-lg bg-slate-100 pl-[98px] shadow-xl cursor-pointer"
+                                onClick={() =>
+                                    handleOpenFriendPage(friend.user.userName)
+                                }
+                            >
                                 <small className="my-auto text-lg font-medium text-slate-700">
                                     {friend.user.userName}
                                 </small>
                             </div>
 
-                            <div className="absolute top-2 left-6 h-16 w-16 rounded-full border-2 border-white shadow-md">
+                            <div
+                                className="absolute top-2 left-6 h-16 w-16 rounded-full border-2 border-white shadow-md cursor-pointer"
+                                onClick={() =>
+                                    handleOpenFriendPage(friend.user.userName)
+                                }
+                            >
                                 {friend.user.avatar ? (
                                     <img
                                         className="rounded-full object-cover w-16 h-16 object-center"

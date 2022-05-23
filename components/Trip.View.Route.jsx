@@ -17,21 +17,18 @@ import { useAppData } from "../Context/DataStorage.js";
 import Geocoder from "./Geocoder.jsx";
 import { TailSpin } from "react-loader-spinner";
 import { WebMercatorViewport } from "@deck.gl/core";
-// import { useWindowSize } from "@react-hook/window-size";
-// import { useRouter } from "next/router";
 import { ImLocation2 } from "react-icons/im";
+import TripViewRouteSidebar from "./Trip.View.Route.Sidebar.jsx";
 
 const TOKEN = process.env.NEXT_PUBLIC_MAPBOX_API_KEY;
 
 function ViewTripRoute({ tripData }) {
     // console.log("tripData:", tripData);
-    const { user } = useAppData();
+    const { user, viewDiarySidebar, setViewDiarySidebar } = useAppData();
     let bounds;
-    // const router = useRouter();
     const [newSearchLocation, setNewSearchLocation] = useState(false);
+    const [sidebar, setSidebar] = useState(false);
     const [home, setHome] = useState(false);
-    // const [startPoint, setStartPoint] = useState(false);
-    const [selectedDiary, setSelectedDiary] = useState({});
     const [viewport, setViewState] = useState({
         latitude: 37.7577,
         longitude: -122.4376,
@@ -83,6 +80,8 @@ function ViewTripRoute({ tripData }) {
     }
 
     useEffect(() => {
+        setViewDiarySidebar(false);
+        setSidebar(false);
         if (mapRef.current) {
             setWindowHeight(mapRef.current.offsetHeight);
             setWindowWidth(mapRef.current.offsetWidth);
@@ -159,7 +158,14 @@ function ViewTripRoute({ tripData }) {
     );
 
     return (
-        <div className="pt-[23px] h-[65vh] w-screen">
+        <div
+            className={
+                viewDiarySidebar && 
+                sidebar
+                    ? "pt-[23px] h-[65vh] w-screen grid grid-cols-3"
+                    : "pt-[23px] h-[65vh] w-screen"
+            }
+        >
             {!user.userName && !tripData && (
                 <div className="w-screen h-screen grid place-content-center content-center">
                     <TailSpin color="#00BFFF" height={80} width={80} />
@@ -169,8 +175,10 @@ function ViewTripRoute({ tripData }) {
                 // <div className="w-screen h-screen">
                 <div
                     className={
-                        // tripSidebar ? "col-span-2" :
-                        "w-[100%] h-[100%] mt-[-36px]"
+                        viewDiarySidebar && 
+                        sidebar
+                            ? "col-span-2 w-[100%] h-[100%] mt-[-36px]"
+                            : "w-[100%] h-[100%] mt-[-36px]"
                     }
                 >
                     <div
@@ -196,6 +204,7 @@ function ViewTripRoute({ tripData }) {
                         height="100%"
                         ref={mapRef}
                         onMove={(e) => setViewState(e.viewState)}
+                        onClick={(e) => {setViewDiarySidebar(false), setSidebar(false)}}
                     >
                         <Geocoder
                             mapRef={mapRef}
@@ -256,19 +265,25 @@ function ViewTripRoute({ tripData }) {
                                                     ? tripData.mapStyle
                                                           .iconColor
                                                     : "text-black"
-                                                // "text-blue-500"
+                                            }
+                                            ${
+                                                diary.pointId ===
+                                                viewDiarySidebar.pointId
+                                                    ? "animate-bounce"
+                                                    : null
                                             }`}
                                             // animate-bounce
                                             onClick={(e) => {
                                                 e.stopPropagation(); // super wichtig, sonst funktionieren die Popups nicht!
-                                                setSelectedDiary(diary);
+                                                setViewDiarySidebar(diary);
+                                                setSidebar(true);
                                             }}
                                         >
                                             <ImLocation2 />
                                         </p>
                                     </Marker>
-                                    {selectedDiary.location &&
-                                        selectedDiary.location.longitude ===
+                                    {viewDiarySidebar.location &&
+                                        viewDiarySidebar.location.longitude ===
                                             diary.location.longitude && (
                                             <div>
                                                 <Popup
@@ -288,9 +303,9 @@ function ViewTripRoute({ tripData }) {
                                                     <div className="font-bold text-lg underline mb-3 text-center">
                                                         {diary.diaryName}
                                                     </div>
-                                                    <div className="text-clip mb-2">
+                                                    {/* <div className="text-clip mb-2">
                                                         {diary.description}
-                                                    </div>
+                                                    </div> */}
                                                     {/* <img
                                                     src="https://e6.pngbyte.com/pngpicture/138188/png-Hiking-Backpack-Clip-Art-Clip-Art-Picture-Download-Huge-backpack-clipart_thumbnail.png"
                                                     alt="picture"
@@ -322,6 +337,12 @@ function ViewTripRoute({ tripData }) {
                         </Source>
                     </Map>
                 </div>
+            )}
+            {
+            viewDiarySidebar && 
+            sidebar && (
+                <TripViewRouteSidebar
+                />
             )}
         </div>
     );

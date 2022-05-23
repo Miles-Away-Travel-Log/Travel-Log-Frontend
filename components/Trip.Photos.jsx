@@ -11,7 +11,7 @@ function TripPhotos() {
                     <img
                         src={image}
                         className="foto w-full h-full object-cover"
-                        alt="image"
+                        alt={`image ${index}`}
                     />
                 </div>
             );

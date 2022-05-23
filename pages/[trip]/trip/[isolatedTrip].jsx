@@ -37,8 +37,7 @@ function TripOverview() {
     }
 
     return (
-        /* <!-- This is an example component --> */
-        <div className="w-[375px] lg:w-screen">
+        <div className="w-[375px] lg:w-screen overflow-hidden">
             <div className="fixed top-0 w-full bg-white z-10">
                 <div className="flex justify-center pb-10 pt-10 flex-shrink-0 w-[375px] lg:w-full pl-2 bg-white">
                     <img

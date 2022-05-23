@@ -19,8 +19,6 @@ import Geocoder from "./Geocoder.jsx";
 import Cookies from "js-cookie";
 import { TailSpin } from "react-loader-spinner";
 import { WebMercatorViewport } from "@deck.gl/core";
-// import { useWindowSize } from "@react-hook/window-size";
-import { useRouter } from "next/router";
 import { ImLocation2 } from "react-icons/im";
 import DiaryMaskComponent from "./Trip.DiaryMaskComponent.jsx";
 
@@ -47,6 +45,7 @@ function SetTripRoute({ tripData }) {
     const [home, setHome] = useState(false);
     // const [tripData, setTripData] = useState(false);
     const [active, setActive] = useState(false);
+    const [sidebar, setSidebar] = useState(false);
     // const [dragAndDrop, setDragAndDrop] = useState(false);
     const [deleteClick, setDeleteClick] = useState(false);
     const [createDiary, setCreateDiary] = useState(false);
@@ -125,6 +124,7 @@ function SetTripRoute({ tripData }) {
     }
 
     useEffect(() => {
+        setSidebar(false);
         if (mapRef.current) {
             setWindowHeight(mapRef.current.offsetHeight);
             setWindowWidth(mapRef.current.offsetWidth);
@@ -397,8 +397,9 @@ function SetTripRoute({ tripData }) {
             id: location.id,
             diary: true,
         });
-        // await saveUpdatedTrip();
+        await saveUpdatedTrip();
         setCreateDiarySidebar(true);
+        setSidebar(true);
         // router.replace(`/user/diaryMask`);
     }
 
@@ -499,7 +500,7 @@ function SetTripRoute({ tripData }) {
         // <div className="pt-[23px] h-[65vh] w-screen">
         <div
             className={
-                createDiarySidebar
+                createDiarySidebar && sidebar
                     ? "pt-[23px] h-[65vh] w-screen grid grid-cols-3"
                     : "pt-[23px] h-[65vh] w-screen"
             }
@@ -513,7 +514,7 @@ function SetTripRoute({ tripData }) {
                 // <div className="w-screen h-screen">
                 <div
                     className={
-                        createDiarySidebar
+                        createDiarySidebar && sidebar
                             ? "col-span-2 w-[100%] h-[100%] mt-[-36px]"
                             : "w-[100%] h-[100%] mt-[-36px]"
                     }
@@ -763,7 +764,7 @@ function SetTripRoute({ tripData }) {
                     </Map>
                 </div>
             )}
-            {createDiarySidebar && (
+            {createDiarySidebar && sidebar && (
                 <DiaryMaskComponent className="col-span-2" />
             )}
         </div>

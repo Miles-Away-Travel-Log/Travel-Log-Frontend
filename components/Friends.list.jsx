@@ -113,7 +113,7 @@ function FriendsList(props) {
             <div className="mx-auto max-w-6xl">
                 {/* <!-- title --> */}
                 <div className="pt-12 pb-6 mx-auto space-y-2 px-4">
-                    <h3 className="text-center text-3xl font-medium text-white">
+                    <h3 className="text-center text-3xl font-medium text-[#942928]">
                         {isFriend === true ? "My Friends" : "My Requests"}
                     </h3>
                 </div>
@@ -189,7 +189,7 @@ function FriendsList(props) {
                                     </div>
 
                                     <div
-                                        className="flex h-12 w-full rounded-lg bg-white pl-[98px] shadow-xl"
+                                        className="flex h-12 w-full rounded-lg bg-white pl-[98px] shadow-xl cursor-pointer"
                                         onClick={() =>
                                             handleOpenFriendPage(
                                                 friend.friendsData.user.userName
@@ -201,19 +201,29 @@ function FriendsList(props) {
                                         </small>
                                     </div>
 
-                                    <div className="absolute top-2 left-6 h-16 w-16 rounded-full border-2 border-white shadow-md">
+                                    <div
+                                        className="absolute top-2 left-6 h-16 w-16 rounded-full border-2 border-white shadow-md"
+                                        onClick={() =>
+                                            handleOpenFriendPage(
+                                                friend.friendsData.user.userName
+                                            )
+                                        }
+                                    >
                                         {friend.friendsData.user.avatar ? (
                                             <img
-                                                className="rounded-full object-cover w-16 h-16 object-center"
+                                                className="rounded-full object-cover w-16 h-16 object-center cursor-pointer"
                                                 src={
                                                     friend.friendsData.user
                                                         .avatar
                                                 }
-                                                alt=""
+                                                alt={
+                                                    friend.friendsData.user
+                                                        .userName
+                                                }
                                             />
                                         ) : (
                                             <img
-                                                className="rounded-full object-cover object-center"
+                                                className="rounded-full object-cover object-center cursor-pointer"
                                                 src="https://images.pexels.com/photos/1654748/pexels-photo-1654748.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
                                                 alt=""
                                             />
