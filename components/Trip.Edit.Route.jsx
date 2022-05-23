@@ -45,6 +45,7 @@ function SetTripRoute({ tripData }) {
     const [home, setHome] = useState(false);
     // const [tripData, setTripData] = useState(false);
     const [active, setActive] = useState(false);
+    const [toSave, setToSave] = useState(false);
     const [sidebar, setSidebar] = useState(false);
     // const [dragAndDrop, setDragAndDrop] = useState(false);
     const [deleteClick, setDeleteClick] = useState(false);
@@ -125,12 +126,14 @@ function SetTripRoute({ tripData }) {
 
     useEffect(() => {
         setSidebar(false);
+        setSavedDiary(false);
+        setCreateDiarySidebar(false);
+        setToSave(false);
         if (mapRef.current) {
             setWindowHeight(mapRef.current.offsetHeight);
             setWindowWidth(mapRef.current.offsetWidth);
         }
         setInitialCoordinates();
-        setCreateDiarySidebar(false);
         dispatchPointArray({
             type: "restore",
             payload: tripData.route,
@@ -208,7 +211,7 @@ function SetTripRoute({ tripData }) {
                 type: "createDiary",
                 payload: newDiary,
             });
-            await setSavedDiary(false);
+            await setToSave(true);
             // await saveUpdatedTrip();
             // await getTripData();
         }
@@ -216,10 +219,12 @@ function SetTripRoute({ tripData }) {
     }, [savedDiary]);
 
     useEffect(() => {
-        if (!savedDiary) {
+        if (toSave) {
             saveUpdatedTrip();
+            setSavedDiary(false);
+            setToSave(false);
         }
-    }, [savedDiary]);
+    }, [toSave]);
 
     function handleClick(e) {
         const payload = {
@@ -501,8 +506,8 @@ function SetTripRoute({ tripData }) {
         <div
             className={
                 createDiarySidebar && sidebar
-                ? "h-[100%] w-screen grid grid-cols-3 overflow-hidden "
-                : "h-[100%] w-screen overflow-hidden"
+                    ? "h-[100%] w-screen grid grid-cols-3 overflow-hidden "
+                    : "h-[100%] w-screen overflow-hidden"
             }
         >
             {!user.userName && !tripData && (
@@ -515,8 +520,8 @@ function SetTripRoute({ tripData }) {
                 <div
                     className={
                         createDiarySidebar && sidebar
-                        ? "col-span-2 w-[100%] h-[100%] overflow-hidden relative"
-                        : "w-[100%] h-[100%] overflow-hidden relative"
+                            ? "col-span-2 w-[100%] h-[100%] overflow-hidden relative"
+                            : "w-[100%] h-[100%] overflow-hidden relative"
                     }
                 >
                     <div
@@ -674,8 +679,8 @@ function SetTripRoute({ tripData }) {
                                 }}
                             />
                         </Source>
-                        <div className="relative top-0 left-0 right-0 w-auto font-bold text-base">
-                            <div className="bg-gray-500/[.65] flex justify-center">
+                        <div className="relative top-0 left-0 right-0 w-auto font-bold text-base pt-2">
+                            <div className="flex justify-center">
                                 <button
                                     className="bg-blue-500 rounded-md py-1 px-3 ml-4 font-bold"
                                     onClick={() => (
