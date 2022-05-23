@@ -27,8 +27,9 @@ export default function DiaryMaskComponent() {
     // const [author, setAuthor] = useState("");
     const [titleImageFromCloud, setTitleImageFromCloud] = useState("");
     const [imagesFromCloud, setImagesFromCloud] = useState([]);
-
-    const [countImages, setCountImages] = useState(0);
+    const [selectedFileLength, setSelectedFileLength] = useState(0);
+    const [isSelectedFile, setIsSelectedFile] = useState(false);
+    const [uploadedValue, setUploadedValue] = useState(0);
 
     function getTitleImageFromCloud(e) {
         const file = e.target.files[0];
@@ -46,9 +47,8 @@ export default function DiaryMaskComponent() {
 
     function getImagesFromCloud(e) {
         const files = e.target.files;
-        const filesLength = files.length;
-        console.log(filesLength);
-        setCountImages(filesLength);
+        setIsSelectedFile(true);
+        setSelectedFileLength(files.length);
         for (let file of files) {
             const formDataImages = new FormData();
             formDataImages.append("file", file);
@@ -62,6 +62,7 @@ export default function DiaryMaskComponent() {
                     ...imagesFromCloud,
                     response.data.url,
                 ]);
+                setUploadedValue((uploadedValue) => uploadedValue + 1);
             });
         }
     }
@@ -77,9 +78,10 @@ export default function DiaryMaskComponent() {
 
     async function uploadDiaryEntry(e) {
         e.preventDefault();
-        console.log({ countImages });
-        console.log("imagesFromCloud", imagesFromCloud.length);
-        if (countImages === imagesFromCloud.length) {
+        if (
+            selectedFileLength === 0 ||
+            uploadedValue / selectedFileLength === 1
+        ) {
             const rawResponse = await fetch(
                 process.env.NEXT_PUBLIC_FETCH_URL_DIARY,
                 {
@@ -109,48 +111,8 @@ export default function DiaryMaskComponent() {
                     }),
                 }
             );
-            // router.replace(`/user/setTripRoute`);
-            // getTripData(tripData.id);
             setSavedDiary(true);
             setCreateDiarySidebar(false);
-        } else {
-            /*             setTimeout(async () => {
-                if (countImages === imagesFromCloud.length) {
-                    const rawResponse = await fetch(
-                        process.env.NEXT_PUBLIC_FETCH_URL_DIARY,
-                        {
-                            method: "POST",
-                            headers: {
-                                Accept: "application/json",
-                                "Content-Type": "application/json",
-                                Authorization: `Bearer ${Cookies.get("token")}`,
-                            },
-                            body: JSON.stringify({
-                                body: JSON.stringify({
-                                    author: user.id,
-                                    diaryName: diaryName,
-                                    authorName: user.userName,
-                                    date: date,
-                                    description: textData,
-                                    visible: false,
-                                    images: imagesFromCloud,
-                                    titleImage: titleImageFromCloud,
-                                    location: {
-                                        longitude: diaryLocation.longitude,
-                                        latitude: diaryLocation.latitude,
-                                        city: diaryLocation.city,
-                                        country: diaryLocation.country,
-                                    },
-                                    trip: tripData.id,
-                                    pointId: diaryLocation.id,
-                                }),
-                            }),
-                        }
-                    );
-                    alert("Diary entry created");
-                }
-            }, 5000); */
-            alert("Please wait for images to upload");
         }
     }
 
@@ -333,19 +295,36 @@ export default function DiaryMaskComponent() {
                                         onChange={getImagesFromCloud}
                                     />
                                 </div>
-                                {/* <div className="dz-message" data-dz-message>
-                        <div className="text-lg font-medium">
-                            Drop files here or click to upload.
-                        </div>
-                    </div> */}
+                                {isSelectedFile && (
+                                    <div>
+                                        <progress
+                                            value={uploadedValue}
+                                            max={selectedFileLength}
+                                        />
+                                        <span>
+                                            {Math.round(
+                                                (uploadedValue /
+                                                    selectedFileLength) *
+                                                    100
+                                            )}
+                                            %
+                                        </span>
+                                    </div>
+                                )}
                             </div>
                             <div className="flex flex-wrap">
                                 <button
                                     type="submit"
+                                    disabled={
+                                        selectedFileLength !== 0 &&
+                                        uploadedValue / selectedFileLength !== 1
+                                    }
+                                    onSubmit={uploadDiaryEntry}
                                     className="p-3 text-center rounded-full bg-[#90A5A9] text-white hover:bg-[#C4C4C4] focus:outline-none my-1"
                                 >
                                     Create
                                 </button>
+
                                 <button
                                     type="submit"
                                     onClick={(e) => cancelForm(e)}
