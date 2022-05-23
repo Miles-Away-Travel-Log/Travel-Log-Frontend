@@ -63,8 +63,8 @@ function SearchBar() {
     }
 
     return (
-        <div className="flex flex-col justify-center items-center w-full mt-3">
-            <form className="flex border-2 rounded-lg text-sm mr-[27px] mt-2">
+        <div className="flex flex-col justify-center items-center w-full mt-3 relative">
+            <form className="flex border-2 rounded-lg text-sm mr-[27px] mt-2 relative">
                 <input
                     type="text"
                     className="px-4 py-2 w-[200px]"
@@ -89,13 +89,13 @@ function SearchBar() {
             </form>
 
             {searchStringFriends.length != 0 && (
-                <div className=" mt-1 w-full lg:flex lg:justify-center">
-                    <div className="scrollbarHidden border-2 rounded-lg text-sm w-[200px] ml-12 overflow-hidden lg:ml-[-80px]">
+                <div className=" mt-1 w-full lg:flex lg:justify-center absolute z-10 top-[98%] left-[0%]">
+                    <div className="scrollbarHidden border-2 rounded-lg text-sm w-[200px] ml-12 overflow-hidden lg:ml-[-80px] bg-white">
                         {searchStringFriends.slice(0, 10).map((user) => {
                             return (
                                 <p
                                     key={user.id}
-                                    className="pl-2 cursor-pointer"
+                                    className="pl-2 cursor-pointer hover:bg-[#C4C4C4] hover:text-white"
                                     onClick={() => sendFriendRequest(user.id)}
                                 >
                                     {user.userName}

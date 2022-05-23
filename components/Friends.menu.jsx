@@ -1,5 +1,5 @@
 import React from "react";
-import FriendsList from "./Friends.list.js";
+import FriendsList from "./Friends.list.jsx";
 import { useState } from "react";
 import { useAppData } from "../Context/DataStorage.js";
 

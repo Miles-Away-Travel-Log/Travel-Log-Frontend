@@ -1,6 +1,13 @@
 import React from "react";
+import { useRouter } from "next/router";
 
 function TripDiary({ tripDiary }) {
+    const router = useRouter();
+
+    function handleOpenFriendPage(id) {
+        router.replace(`/user/${id}`);
+    }
+
     function showContent() {
         if (tripDiary.length > 0) {
             return tripDiary.map((item, index) => {
@@ -20,24 +27,31 @@ function TripDiary({ tripDiary }) {
                             />
                         </a>
                         <div className="bg-slate-100 w-80">
-                            <p className="font-bold pt-3 pb-2 text-center">
+                            <div className="flex justify-between items-center pt-2 px-2">
+                                {item.location.city !== "" &&
+                                item.location.country !== "" ? (
+                                    <p className="italic p-2 text-xs text-gray-500">
+                                        {item.location.city},{" "}
+                                        {item.location.country}
+                                    </p>
+                                ) : null}
+                                <p className="italic p-2 text-xs text-gray-500 text-center">
+                                    {item.date}
+                                </p>
+                            </div>
+                            <p className="font-bold pt-2 text-center text-lg">
                                 {item.diaryName}
                             </p>
-                            {item.location.city !== "" &&
-                            item.location.country !== "" ? (
-                                <p className="italic p-2 text-sm text-gray-500 text-center">
-                                    {item.location.city} ,{" "}
-                                    {item.location.country}
-                                </p>
-                            ) : null}
-                            <p className="p-2 text-sm text-gray-500 text-center">
-                                {item.date}
-                            </p>
-                            <p className="font-semibold p-2 text-sm text-gray-500 text-center">
+                            <p
+                                className="font-semibold px-2 py-0.5 text-sm text-gray-500 text-center cursor-pointer"
+                                onClick={() =>
+                                    handleOpenFriendPage(item.authorName)
+                                }
+                            >
                                 by {item.authorName}
                             </p>
 
-                            <p className="px-10 py-2 text-gray-500 text-center">
+                            <p className="px-10 pt-4 pb-5 text-gray-500 text-center">
                                 {item.description}
                             </p>
                         </div>

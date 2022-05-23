@@ -209,7 +209,7 @@ export default function LandingPageUser() {
                                 className="inline-flex items-center py-2 px-4 text-sm font-medium text-center text-white bg-[#90A5A9] rounded-lg hover:bg-[#942928] focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
                                 onClick={() => router.replace("/user/friends")}
                             >
-                                Add friend
+                                Friends
                             </button>
                         ) : null}
                         <button

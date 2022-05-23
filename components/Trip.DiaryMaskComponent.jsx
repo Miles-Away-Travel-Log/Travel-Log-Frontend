@@ -156,7 +156,7 @@ export default function DiaryMaskComponent() {
 
     return (
         <div
-            className="bg-[url('../public/images/images-diary/dariusz-sankowski-3OiYMgDKJ6k-unsplash.webp')] bg-cover bg-center min-h-screen flex flex-col col-span-1 overflow-y-scroll"
+            className="bg-[url('../public/images/images-diary/dariusz-sankowski-3OiYMgDKJ6k-unsplash.webp')] bg-cover bg-center min-h-screen flex flex-col col-span-1 overflow-y-scroll px-10 pb-100"
             //  overflow-y-auto
         >
             {!user.userName && !diaryLocation && (
@@ -174,13 +174,13 @@ export default function DiaryMaskComponent() {
                             CREATE YOUR DIARY ENTRY
                         </h3>
 
-                        <div className="flex w-1/2 mt-3">
-                            <div className="flex w-2/3 flex-wrap">
+                        <div className="flex w-full mt-3">
+                            <div className="flex w-full flex-wrap">
                                 <label className="text-white">
                                     AUTHOR
                                     <input
                                         type="text"
-                                        className="block border border-grey-light w-1/2 rounded-lg mb-1 text-black"
+                                        className="block border border-grey-light w-3/4 rounded-lg mb-1 text-black px-2"
                                         name="author"
                                         // placeholder="user"
                                         // onChange={(e) =>
@@ -194,7 +194,7 @@ export default function DiaryMaskComponent() {
                                     TITLE
                                     <input
                                         type="text"
-                                        className="block border border-grey-light w-1/2 rounded-lg mb-1 text-black"
+                                        className="block border border-grey-light w-3/4 rounded-lg mb-1 text-black px-2"
                                         name="title"
                                         placeholder="title"
                                         onChange={(e) =>
@@ -219,16 +219,16 @@ export default function DiaryMaskComponent() {
                                         onChange={(e) =>
                                             setDate(e.target.value)
                                         }
-                                        className="block border border-grey-light rounded-lg mb-1 text-black w-5/5"
+                                        className="block border border-grey-light rounded-lg mb-1 text-black w-5/5 px-2"
                                     />
                                 </label>
                             </div>
-                            <div className="flex w-1/3 ">
+                            <div className="flex w-full justify-end">
                                 <label className="text-white flex flex-col items-end">
                                     LOCATION
                                     <input
                                         type="text"
-                                        className="block border border-grey-light w-1/2 rounded-lg mb-1 text-black"
+                                        className="block border border-grey-light w-3/4 text-right rounded-lg mb-1 text-black px-2"
                                         name="city"
                                         disabled
                                         value={
@@ -239,7 +239,7 @@ export default function DiaryMaskComponent() {
                                     />
                                     <input
                                         type="text"
-                                        className="block border border-grey-light w-1/2 rounded-lg mb-1 text-black"
+                                        className="block border border-grey-light w-3/4 text-right rounded-lg mb-1 text-black px-2"
                                         name="country"
                                         disabled
                                         value={
@@ -252,7 +252,7 @@ export default function DiaryMaskComponent() {
                             </div>
                         </div>
 
-                        <div className="rounded-xl shadow-xl bg-gray-50 w-1/2 mt-3 mb-3">
+                        <div className="rounded-xl shadow-xl bg-gray-50 w-full mt-3 mb-3">
                             <div className="m-4">
                                 <label className="inline-block mb-2 text-gray-500">
                                     UPLOAD TITLE-IMAGE(jpg,png,svg,jpeg)
@@ -307,8 +307,8 @@ export default function DiaryMaskComponent() {
                             </div>
                         </div>
 
-                        <label className="block text-left w-1/2 mb-3">
-                            <span className="text-white">TEXTAREA</span>
+                        <label className="block text-left w-full mb-3">
+                            <span className="text-white">YOUR DIARY TEXT</span>
                             <textarea
                                 className="form-textarea mt-1 block w-full rounded-lg p-2 text-black"
                                 rows="10"

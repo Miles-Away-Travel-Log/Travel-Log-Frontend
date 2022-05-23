@@ -3,7 +3,6 @@ import {
     useContext,
     useState,
     useEffect,
-    useReducer,
 } from "react";
 import Cookies from "js-cookie";
 import { useRouter } from "next/router";
@@ -34,59 +33,6 @@ function AppState(props) {
             country: "United Kingdom",
         },
     };
-
-    const markerTest = [
-        {
-            name: "Andreas",
-            visible: false,
-            coordinates: {
-                latitude: 51.3233680719318,
-                longitude: 12.372418865370589,
-            },
-        },
-        {
-            name: "Albert",
-            visible: false,
-            coordinates: {
-                latitude: 51.33907051907917,
-                longitude: 12.401449243834573,
-            },
-        },
-        {
-            name: "Zoo",
-            visible: false,
-            coordinates: {
-                latitude: 51.348486599994935,
-                longitude: 12.370997422085791,
-            },
-        },
-    ];
-
-    const mapMarkerTestReducer = (originalArray, action) => {
-        switch (action.type) {
-            case "toggle":
-                const toggleArray = [...originalArray];
-                return toggleArray.map((item) => {
-                    if (item.name === action.name) {
-                        return { ...item, visible: !action.visible };
-                    }
-                    return item;
-                });
-                break;
-
-            default:
-                return originalArray;
-                break;
-        }
-    };
-
-    const [mapLayoutTest, setMapLayoutTest] = useState(
-        "mapbox://styles/mapbox/streets-v9"
-    );
-    const [mapMarkerTest, dispatchMapMarkerTest] = useReducer(
-        mapMarkerTestReducer,
-        markerTest
-    );
 
     //-------------------------------------- REGISTER  --------------------------------------------------//
     //
@@ -133,6 +79,7 @@ function AppState(props) {
     const [cancelDiaryCreation, setCancelDiaryCreation] = useState(false);
     const [savedDiary, setSavedDiary] = useState(false);
     const [createDiarySidebar, setCreateDiarySidebar] = useState(false);
+    const [viewDiarySidebar, setViewDiarySidebar] = useState(false);
 
     //-------------------------------------- NAV BAR  ---------------------------------------------------//
     //
@@ -390,10 +337,6 @@ function AppState(props) {
     return (
         <DataStorage.Provider
             value={{
-                mapLayoutTest,
-                setMapLayoutTest,
-                mapMarkerTest,
-                dispatchMapMarkerTest,
                 registerInitialValues,
                 registerFormValues,
                 setRegisterFormValues,
@@ -469,6 +412,8 @@ function AppState(props) {
                 tripImage,
                 createDiarySidebar,
                 setCreateDiarySidebar,
+                viewDiarySidebar,
+                setViewDiarySidebar,
                 savedDiary,
                 setSavedDiary,
             }}

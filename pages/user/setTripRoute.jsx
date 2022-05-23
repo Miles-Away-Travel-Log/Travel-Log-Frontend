@@ -23,7 +23,7 @@ import { WebMercatorViewport } from "@deck.gl/core";
 import { useWindowSize } from "@react-hook/window-size";
 import { useRouter } from "next/router";
 import { ImLocation2 } from "react-icons/im";
-import DiaryMaskComponent from "../../components/DiaryMaskComponent.jsx";
+import DiaryMaskComponent from "../../components/Trip.DiaryMaskComponent.jsx";
 
 const TOKEN = process.env.NEXT_PUBLIC_MAPBOX_API_KEY;
 const TripAPI = process.env.NEXT_PUBLIC_FETCH_URL_TRIP;
