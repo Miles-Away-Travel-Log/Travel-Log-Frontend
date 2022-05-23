@@ -38,6 +38,27 @@
         background-color: rgb(180 83 9);
     }
 
+    .tripPageGrid {
+        display: grid;
+        grid-template-rows: 273px calc(100vh - 273px - 95px) 95px;
+        grid-template-areas:
+            "header"
+            "map"
+            "footer";
+    }
+
+    .header {
+        grid-area: header;
+    }
+
+    .middle {
+        grid-area: map;
+    }
+
+    .footer {
+        grid-area: footer;
+    }
+
     @media print {
         #content-pdf {
             width: 50%;

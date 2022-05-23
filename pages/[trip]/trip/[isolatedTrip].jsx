@@ -37,8 +37,8 @@ function TripOverview() {
     }
 
     return (
-        <div className="w-[375px] lg:w-screen overflow-hidden">
-            <div className="fixed top-0 w-full bg-white z-10">
+        <div className="w-[375px] lg:w-screen h-[100vh] tripPageGrid">
+            <div className="top-0 w-full bg-white z-10 header">
                 <div className="flex justify-center pb-10 pt-10 flex-shrink-0 w-[375px] lg:w-full pl-2 bg-white">
                     <img
                         src={
@@ -185,7 +185,8 @@ function TripOverview() {
                 </div>
                 <div className="border-b border-red-800 mt-2"></div>
             </div>
-            <div className="h-2/3 mt-[270px] lg:mt-[250px] mb-10">
+            <div className="h-[100%] middle overflow-y-scroll">
+            {/* mt-[270px] lg:mt-[250px] */}
                 {submenu === "diary" ? (
                     <TripDiary tripDiary={tripData.diary} />
                 ) : submenu === "budget" ? (
@@ -210,7 +211,7 @@ function TripOverview() {
                     <PieChart />
                 ) : null}
             </div>
-            <div className="fixed bottom-0 left-0 w-full">
+            <div className="bottom-0 left-0 w-full footer">
                 <Navbar />
             </div>
         </div>

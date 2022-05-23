@@ -18,7 +18,7 @@ function TripPhotos() {
         });
     }
     return (
-        <div className="w-screen p-10">
+        <div className="w-screen px-10 py-8">
             <article className="grid grid-cols-6 gap-10">
                 {tripImages.length > 0 ? showImages() : <p>No images</p>}
             </article>

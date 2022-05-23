@@ -7,7 +7,7 @@ import { useAppData } from "../Context/DataStorage.js";
 function TripBudget({ tripID }) {
     const { tripSeedMoney, tripBudget } = useAppData();
     return (
-        <div className="flex flex-col justify-center items-center mt-8 mb-32 p-6">
+        <div className="flex flex-col justify-center items-center mt-6 mb-10">
             <div className="w-full flex flex-col justify-center items-center">
                 <BudgetSeedMoney
                     tripSeedMoney={tripSeedMoney}

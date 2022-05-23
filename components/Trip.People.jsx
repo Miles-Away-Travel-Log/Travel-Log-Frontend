@@ -38,7 +38,7 @@ function TripPeople({ tripPeople }) {
     }
 
     return (
-        <div className="w-screen h-screen p-12">
+        <div className="w-screen h-screen px-6 my-8">
             <div className="mx-auto max-w-6xl space-y-4 sm:space-y-0 sm:grid sm:grid-cols-2 lg:grid-cols-3 gap-3 ">
                 {participants.length !== 0 &&
                     participants.map((friend) => (
