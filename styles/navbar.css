@@ -16,12 +16,11 @@ html *::after {
     background-color: #c4c4c4;
 }
 .menu {
-    position: sticky;
     bottom: 0;
     display: flex;
     width:100vw;
     padding: 0 2em;
-    position: relative;
+    position: sticky;
     justify-content: center;
     background-color: var(--bgColorMenu);
     margin: 0 auto;

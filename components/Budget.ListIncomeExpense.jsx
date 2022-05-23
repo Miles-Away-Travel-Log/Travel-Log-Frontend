@@ -146,7 +146,7 @@ function ListIncomeExpense({ budgetItems, tripID }) {
         });
     }
     return (
-        <div className="flex flex-col items-center lg:pb-16 mb-32">
+        <div className="flex flex-col items-center lg:pb-16 mb-10">
             <div className="flex justify-center w-full pt-16">
                 <div
                     className="mb-9 rounded-lg w-3/4 lg:w-1/2 xl:w-1/3 p-4 border border-[#C4C4C4]"

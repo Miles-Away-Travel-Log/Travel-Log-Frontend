@@ -156,7 +156,7 @@ export default function DiaryMaskComponent() {
 
     return (
         <div
-            className="bg-[url('../public/images/images-diary/dariusz-sankowski-3OiYMgDKJ6k-unsplash.webp')] bg-cover bg-center min-h-screen flex flex-col col-span-1 overflow-y-scroll px-10 pb-100"
+            className="bg-[url('../public/images/images-diary/dariusz-sankowski-3OiYMgDKJ6k-unsplash.webp')] bg-cover bg-center flex flex-col col-span-1 overflow-y-scroll px-10 w-full h-[100%]"
             //  overflow-y-auto
         >
             {!user.userName && !diaryLocation && (

@@ -25,7 +25,7 @@ function BalanceSheet() {
         sumExpense;
 
     return (
-        <div className="flex justify-center w-[375px] lg:w-full mt-6 p-2 ">
+        <div className="flex justify-center w-[375px] lg:w-full mt-6 p-2">
             <div className="rounded-full w-5/6 lg:w-1/2 xl:w-1/3 p-4 shadow border-double border-4 border-[#90A5A9]">
                 <div>
                     <span className="ml-6 relative inline-block  uppercase font-medium tracking-widest text-[#C4C4C4]">

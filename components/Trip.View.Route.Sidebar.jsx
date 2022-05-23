@@ -24,7 +24,7 @@ function TripViewRouteSidebar() {
     }, []);
 
     return (
-        <div className="bg-[url('../public/images/images-diary/dariusz-sankowski-3OiYMgDKJ6k-unsplash.webp')] bg-cover bg-center min-h-screen flex justify-self-center items-center flex-col overflow-y-scroll w-full h-full">
+        <div className="bg-[url('../public/images/images-diary/dariusz-sankowski-3OiYMgDKJ6k-unsplash.webp')] bg-cover bg-center flex justify-self-center items-center flex-col overflow-y-scroll w-full h-[100%]">
             <button
                 className="bg-slate-400 hover:bg-slate-500 text-white font-bold px-2 py-1 rounded-full self-end mt-3 mr-3"
                 onClick={() => setViewDiarySidebar(false)}
@@ -75,7 +75,7 @@ function TripViewRouteSidebar() {
                     </p>
                 </div>
             </card>
-            <div className="w-full pt-5 flex flex-wrap flex-column">
+            <div className="w-full pt-5 flex flex-wrap flex-column pb-2">
                 <article className="">
                     {/* grid grid-cols-2 gap-10 */}
                     {viewDiarySidebar.images.length > 0 ? showImages() : null}

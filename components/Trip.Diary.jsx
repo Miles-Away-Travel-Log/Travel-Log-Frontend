@@ -67,7 +67,7 @@ function TripDiary({ tripDiary }) {
         }
     }
     return (
-        <div className="flex items-center flex-wrap p-10 mt-8 mb-8">
+        <div className="flex items-center flex-wrap px-10 mt-8">
             {showContent()}
         </div>
     );

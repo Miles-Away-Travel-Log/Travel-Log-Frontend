@@ -162,8 +162,8 @@ function ViewTripRoute({ tripData }) {
             className={
                 viewDiarySidebar && 
                 sidebar
-                    ? "pt-[23px] h-[65vh] w-screen grid grid-cols-3"
-                    : "pt-[23px] h-[65vh] w-screen"
+                    ? "h-[100%] w-screen grid grid-cols-3 overflow-hidden "
+                    : "h-[100%] w-screen overflow-hidden"
             }
         >
             {!user.userName && !tripData && (
@@ -177,15 +177,15 @@ function ViewTripRoute({ tripData }) {
                     className={
                         viewDiarySidebar && 
                         sidebar
-                            ? "col-span-2 w-[100%] h-[100%] mt-[-36px]"
-                            : "w-[100%] h-[100%] mt-[-36px]"
+                            ? "col-span-2 w-[100%] h-[100%] overflow-hidden relative"
+                            : "w-[100%] h-[100%] overflow-hidden relative"
                     }
                 >
                     <div
                         ref={geocoderContainerRef}
                         style={{
-                            position: "relative",
-                            top: 42,
+                            position: "absolute",
+                            top: 6,
                             left: 6,
                             zIndex: 1,
                         }}
