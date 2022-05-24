@@ -133,7 +133,7 @@ export default function EditProfile() {
         e.preventDefault();
         setIsSubmit(true);
         if (Object.keys(formErrors).length === 0) {
-            const home = newHome ? newHome : user.mapStyle;
+            const home = newHome ? newHome : user.home;
             const mapStyle = defaultMapStyle ? defaultMapStyle : user.mapStyle;
             // user erstellen
             const rawResponse = await fetch(
