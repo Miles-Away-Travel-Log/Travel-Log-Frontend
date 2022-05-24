@@ -39,7 +39,9 @@ function TripOverview() {
     return (
         <div className="w-[375px] lg:w-screen h-[100vh] tripPageGrid">
             <div className="top-0 w-full bg-white z-10 header">
-                <div className="flex justify-center pb-10 pt-10 flex-shrink-0 w-[375px] lg:w-full pl-2 bg-white">
+                <div className="flex justify-center pb-10 pt-10 flex-shrink-0 w-[375px] lg:w-full pl-2 bg-white"
+                            onClick={() => (setIsOpenRoute(false), setIsOpenBudget(false))}
+                >
                     <img
                         src={
                             tripData.tripImage && tripData.tripImage.length > 0
@@ -92,10 +94,10 @@ function TripOverview() {
                             Budget
                         </button>
                         <RiArrowDropDownLine
-                            onClick={() => setIsOpenBudget(!isOpenBudget)}
+                            onClick={() => (setIsOpenBudget(!isOpenBudget), setIsOpenRoute(false))}
                         />
                         {isOpenBudget && (
-                            <div className="flex flex-col items-start absolute top-10 right-0 z-50">
+                            <div className="flex flex-col items-start absolute top-7 right-0 z-50">
                                 <button
                                     className="block px-4 py-2 text-sm text-gray-800 border-b hover:bg-gray-200 bg-slate-100 w-32 text-left"
                                     onClick={() =>
@@ -149,14 +151,13 @@ function TripOverview() {
                     <div className="flex items-center relative text-sm lg:text-base">
                         <button
                             className="hover:text-blue-600 w-20 text-sm lg:text-base"
-                            // onClick={() => setSubmenu("routes")}
-                            onClick={() => setIsOpenRoute(!isOpenRoute)}
+                            onClick={() => (setIsOpenRoute(!isOpenRoute), setIsOpenBudget(false))}
                         >
                             Routes
                             <RiArrowDropDownLine className="inline ml-2" />
                         </button>
                         {isOpenRoute && (
-                            <div className="flex flex-col items-start absolute top-10 right-0 z-50">
+                            <div className="flex flex-col items-start absolute top-7 right-0 z-50">
                                 <button
                                     className="block px-4 py-2 text-sm text-gray-800 border-b hover:bg-gray-200 bg-slate-100 w-32 text-left"
                                     onClick={() =>

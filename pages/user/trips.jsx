@@ -49,7 +49,7 @@ function Trips() {
     }
     const hasTrips = userTrips.length > 0;
     return (
-        <div className="h-screen flex flex-col items-center bg-white">
+        <div className="h-screen flex flex-col items-center bg-white mb-12">
             <div className="mt-4 flex">
                 <p className="text-[#90A5A9] text-3xl font-semibold">
                     {/* {userTrips.length > 0 ? "YOUR TRIPS" : "NO TRIPS"} */}

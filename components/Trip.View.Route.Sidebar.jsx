@@ -7,10 +7,10 @@ function TripViewRouteSidebar() {
     function showImages() {
         return viewDiarySidebar.images.flat().map((image, index) => {
             return (
-                <div key={index} className="cursor-pointer relative">
+                <div key={index} className="cursor-pointer">
                     <img
                         src={image}
-                        className="foto w-1/2 h-auto object-cover"
+                        className="foto w-[100%] h-auto object-cover"
                         alt={`image ${index}`}
                     />
                 </div>
@@ -32,7 +32,7 @@ function TripViewRouteSidebar() {
                 X
             </button>
             <card
-                className="border mt-10 w-80 border-gray-100 rounded-lg hover:shadow-lg align-center"
+                className="border mt-5 w-80 border-gray-100 rounded-lg hover:shadow-lg align-center"
                 key={viewDiarySidebar._id}
             >
                 <a href="">
@@ -75,9 +75,8 @@ function TripViewRouteSidebar() {
                     </p>
                 </div>
             </card>
-            <div className="w-full pt-5 flex flex-wrap flex-column pb-2">
-                <article className="">
-                    {/* grid grid-cols-2 gap-10 */}
+            <div>
+                <article className="grid grid-cols-2 gap-4 w-full px-3 pb-3 pt-5">
                     {viewDiarySidebar.images.length > 0 ? showImages() : null}
                 </article>
             </div>
