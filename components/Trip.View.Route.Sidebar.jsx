@@ -19,7 +19,7 @@ function TripViewRouteSidebar() {
     }
 
     useEffect(() => {
-        console.log("viewDiarySidebar", viewDiarySidebar);
+        //console.log("viewDiarySidebar", viewDiarySidebar);
         if (!viewDiarySidebar) setViewDiarySidebar(false);
     }, []);
 

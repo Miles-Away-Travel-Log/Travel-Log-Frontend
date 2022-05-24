@@ -5,7 +5,6 @@ import { useAppData } from "../Context/DataStorage.js";
 
 function FriendsMenu() {
     const [show, setShow] = useState("");
-    const { logout } = useAppData();
 
     return (
         <div className="mt-6">
@@ -21,12 +20,6 @@ function FriendsMenu() {
                     onClick={() => setShow("requests")}
                 >
                     Requests
-                </button>
-                <button
-                    className="bg-[#942928] rounded-full w-20 p-1"
-                    onClick={logout}
-                >
-                    Logout
                 </button>
             </div>
             {show === "friends" ? (

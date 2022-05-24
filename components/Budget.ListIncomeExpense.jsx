@@ -9,7 +9,7 @@ import { RiDeleteBinLine } from "react-icons/ri";
 function ListIncomeExpense({ budgetItems, tripID }) {
     const router = useRouter();
 
-    const { deleteOneItem, setIsActivePageBudget } = useAppData();
+    const { deleteOneItem, setIsActivePageBudget, homeCurrency } = useAppData();
 
     const [showDropdown, setShowDropdown] = useState(false);
 
@@ -131,7 +131,7 @@ function ListIncomeExpense({ budgetItems, tripID }) {
                                         </span>
                                     </div>
                                     <span className="text-sm">
-                                        {item.value} €
+                                        {item.value} {homeCurrency}
                                     </span>
                                     <br />
                                     <span className="text-sm">
